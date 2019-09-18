@@ -1,9 +1,10 @@
 # AusPIX-DGGS-dataset
-Australian rehealpix DGGS implementation dataset as a linked data API
-Includes landing-page with map and data for each AusPIX cell (worldwide).
+Australian rhealPIX DGGS implementation dataset, as a linked data API.
+Includes landing-page with map and data for each AusPIX cell (worldwide including Antarctica).
 Search for any cell.
-Known Issue: a small percentage of cells do not draw the polygon properly, especially large cells near the edge of the main regions. 
-However centroid maker displays properly.
+Known Issue: a small percentage of cells do not draw the polygon properly, especially large cells near the edge of the main regions.
+For example the cell R8.
+However centroid marker displays properly.
 
 Data includes: Map, area, parent cell, child cells, vertices, centroid. 
 
