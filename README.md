@@ -10,5 +10,7 @@ Data includes: Map, area, parent cell, child cells, vertices, centroid.
 
 References:
 https://iopscience.iop.org/article/10.1088/1755-1315/34/1/012012/pdf
+
 https://github.com/GeoscienceAustralia/AusPIX_DGGS
+
 https://raichev.net/files/rhealpix_dggs_preprint.pdf
