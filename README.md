@@ -6,7 +6,7 @@ Known Issue: a small percentage of cells do not draw the polygon properly, espec
 For example the cell R8.
 However centroid marker displays properly.
 
-Data includes: Map, area, parent cell, child cells, vertices, centroid. 
+Data includes: Map, area, parent cell, child cells, vertices, centroid, cell neighbours. 
 
 References:
 https://iopscience.iop.org/article/10.1088/1755-1315/34/1/012012/pdf
