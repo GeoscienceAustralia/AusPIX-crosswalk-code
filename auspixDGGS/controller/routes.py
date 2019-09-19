@@ -36,14 +36,13 @@ def show_map():
     '''
     Function to render a map around the specified coordinates
     '''
-    print('showmap activated')
-    auspix = request.values.get('auspix')
-    #print('name in requests = ', name)  # not working
+    auspix = request.values.get("auspix")
+    auspix='Cell nucleus on ellipsoid'
+    print('auspixinRoutes', auspix)
     corners = (request.values.get('location')).split('),')
-    print('map corners', corners)
 
     #corners is straight from database vis auspix_location.py and auspix_location.html
-    #print('cornersXXroutes', corners[0], corners[1], corners[2], corners[3])
+    print('cornersXXroutes', corners[0], corners[1], corners[2], corners[3])
     # convert the corner information  into a list for the leaflet map
     longLatsList = list()
     for thing in corners:
@@ -53,12 +52,6 @@ def show_map():
         thing = thing.replace("]", "")
         thing = thing.replace("(", "")
         thing = thing.replace(")", "")
-        # thing = thing.replace('-180', '180') # temp fix
-        # thing = thing.replace('-150', '150') # temp fix
-        # thing = thing.replace('-90', '90')  # temp fix
-        # thing = thing.replace('-120', '120')# temp fix
-        print('thing', thing)
-
         split_thing = thing.split(',')
         # needs latitude first
         latLongs = [split_thing[1], split_thing[0]]
@@ -68,15 +61,39 @@ def show_map():
         for item in latLongs:
             coords.append(float(item))
         longLatsList.append(coords)
-    #
+
     x = float(request.values.get('x'))
     y = float(request.values.get('y'))
-    print('centx', x)
-    print('centy' , y)
+    print('x', x)
+    print('y', y)
+    # algorithm designed to make it map properly . . .
+    min_long = min(longLatsList[0][1], longLatsList[1][1], longLatsList[2][1], longLatsList[3][1])
+    max_long = max(longLatsList[0][1], longLatsList[1][1], longLatsList[2][1], longLatsList[3][1])
 
+    print()
 
+    if (max_long - min_long) > 120:
+        print('warning', (max_long - min_long))
 
-    # try for centroid values if available
+        # fix to suit leaflet
+        # find the one that is wrong
+        print('minLong', min_long, 'maxlong', max_long)
+        ll_list = list()
+        for item in longLatsList:
+            print(item[1])
+            if abs(item[1] - x)> 90:  # find any that are more than 180 from centroid x
+                gap = (item[1] - x)
+                print('a large gap is', gap)
+                if gap < 0: #ie when gap is negative
+                    myItem = float(item[1]) + 360  # make come closer to x, the centroid
+                else:# when gap is positive
+                    myItem = float(item[1]) - 360  # make come closer to x, the centroid
+
+                print('360 transform is', myItem)
+                ll_list.append((item[0], myItem))
+            else:
+                ll_list.append(item)
+        longLatsList = ll_list
 
     # create a new map object
     tooltip = 'Click for more information'

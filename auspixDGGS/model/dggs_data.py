@@ -62,6 +62,8 @@ class DGGS_data(Renderer):
         # use DGGS engine to find values
 
         self.auspix = self.id
+        auspix = self.id
+        print('data ausPIX', self.auspix)
         self.hasName = self.id
         dggsLoc = list()  # empty list ready to fill
         for item in self.auspix:  # build a dggs location cell as a list like dggsLoc = ['R', 7, 2, 4, 5, 6, 3, 2, 3, 4, 3, 8, 3]
@@ -78,8 +80,6 @@ class DGGS_data(Renderer):
 
         self.y = self.centroid[1]
         self.x = (self.centroid[0])  # temp repair to get rid of engine problem
-        print('y', self.y)
-        print('x', self.x)
 
         self.corners = cell.vertices(plane=False)
         # print('self.corners', self.corners)
@@ -89,7 +89,7 @@ class DGGS_data(Renderer):
         neighs = list()
         nie = list()
         for keys, values in self.neighbors.items():
-            print(keys, values)
+            #print(keys, values)
             nei = (keys, str(values))
             neighs.append(nei)
         print('neighs', neighs)
@@ -123,10 +123,12 @@ class DGGS_data(Renderer):
             render_template(     # render_template is also a Flask module
                 'auspix_cell.html',   # uses the html template send all this data to it.
                 id=self.auspix,
+                auspix=self.auspix,
                 hasName=self.hasName,
                 dggs = self.auspix,
                 #crns=self.corners,
                 corners=self.corners,
+                centroid = self.centroid,
                 neighbours = self.neighbors,
                 y = self.y,
                 x = self.x,
