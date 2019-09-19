@@ -1,10 +1,14 @@
 # AusPIX-DGGS-dataset
+
 Australian rhealPIX DGGS implementation dataset, as a linked data API.
 Includes landing-page with map and data for each AusPIX cell (worldwide including Antarctica).
 Search for any cell.
+
 Known Issue: a small percentage of cells do not draw the polygon properly, especially large cells near the edge of the main regions.
-For example the cell R8.
-However centroid marker displays properly.
+For example the cells R8, S0. This is related to how some DGGS vertices display in folium and leaflet mapping modules. 
+
+
+However centroid marker display and cell data are correct.
 
 Data includes: Map, area, parent cell, child cells, vertices, centroid, cell neighbours. 
 
