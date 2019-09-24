@@ -21,7 +21,7 @@
 
 
         <h3>AusPIX cell {{ dggs }}</h3>
-        <p><code>{{ uri }}</code></p>
+        <p><code><a href="{{ url_for('controller.auspix_cell', auspix_cell_id=dggs) }}">{{ uri }}</a></code></p>
 
 
         <iframe id="inlineFrameMap"
@@ -36,22 +36,30 @@
         <dd><em>{{ y, x }}</em></dd>
 
         <dt>AusPIX DGGS cell index:</dt>
-        <dd><em>{{ dggs }}</em></dd>
+        <dd><em><a href="{{ url_for('controller.auspix_cell', auspix_cell_id=dggs) }}">{{ dggs }}</a></em></dd>
 
         <dt>cell area_m2 (ellipsoidal):</dt>
         <dd><em>{{ area_km2 }}</em></dd>
 
         <dt>Neighbours of this cell:</dt>
-        <dd><em>{{ neighs }}</em></dd>
+        <dd><em>
+		{% for neighbour in neighs -%}
+        	{{ neighbour[0] }}: <a href="{{ url_for('controller.auspix_cell', auspix_cell_id=neighbour[1]) }}">{{ neighbour[1] }}</a>{% if neighbour != neighs[-1] -%}, {% endif -%}
+        {% endfor -%}
+        </em></dd>
 
         <dt>Corners of cell (long/lat):</dt>
         <dd><em>{{ corners }}</em></dd>
 
         <dt>Contains child cells:</dt>
-        <dd><em>{{ contains }}</em></dd>
+        <dd><em>
+		{% for child in contains -%}
+        	<a href="{{ url_for('controller.auspix_cell', auspix_cell_id=child) }}">{{ child }}</a>{% if child != contains[-1] -%}, {% endif -%}
+        {% endfor -%}
+        </em></dd>
 
         <dt>Part of parent cell:</dt>
-        <dd><em>{{ partOfCell }}</em></dd>
+        <dd><em><a href="{{ url_for('controller.auspix_cell', auspix_cell_id=partOfCell) }}">{{ partOfCell }}</a></em></dd>
 
 
     </dl>

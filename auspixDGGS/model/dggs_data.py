@@ -33,7 +33,7 @@ class DGGS_data(Renderer):
         }
 
         super(DGGS_data, self).__init__(request, uri, views, 'auspix_cell', None)
-        print('this uir', uri)
+        print('this uri', uri)
         self.id = uri.split('/')[-1]   #probably not needed for this DGGS
         print('selfID in DGGS seracher', self.id)  #self ID is the cell id
 
@@ -93,7 +93,7 @@ class DGGS_data(Renderer):
             nei = (keys, str(values))
             neighs.append(nei)
         print('neighs', neighs)
-        self.neighs = str(neighs)
+        self.neighs = neighs
 
         #print('verts', self.corners)
         num = cell.area(plane=False)
@@ -123,6 +123,7 @@ class DGGS_data(Renderer):
             render_template(     # render_template is also a Flask module
                 'auspix_cell.html',   # uses the html template send all this data to it.
                 id=self.auspix,
+                uri=conf.DGGS_PID_PREFIX + self.auspix,
                 auspix=self.auspix,
                 hasName=self.hasName,
                 dggs = self.auspix,
