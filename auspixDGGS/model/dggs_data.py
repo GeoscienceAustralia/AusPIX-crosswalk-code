@@ -98,7 +98,7 @@ class DGGS_data(Renderer):
         #print('verts', self.corners)
         num = cell.area(plane=False)
         num = int(num)
-        num2 = (f"{num:,d}")
+        num2 = str(num) # (f"{num:,d}")
         self.area_km2 = num2
         print('area', self.area_km2)
         # containsList = list()
