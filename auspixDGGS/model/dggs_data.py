@@ -82,25 +82,23 @@ class DGGS_data(Renderer):
         self.x = (self.centroid[0])  # temp repair to get rid of engine problem
 
         self.corners = cell.vertices(plane=False)
-        # print('self.corners', self.corners)
-
         #find the neighbors of the cell
         self.neighbors = cell.neighbors()
         neighs = list()
-        nie = list()
+        #nie = list()
         for keys, values in self.neighbors.items():
             #print(keys, values)
             nei = (keys, str(values))
             neighs.append(nei)
-        print('neighs', neighs)
         self.neighs = neighs
+        print('niebourges', neighs)
 
-        #print('verts', self.corners)
+        print('verts', self.corners)
         num = cell.area(plane=False)
         num = int(num)
         num2 = str(num) # (f"{num:,d}")
-        self.area_km2 = num2
-        print('area', self.area_km2)
+        self.area_m2 = num2
+        print('area', self.area_m2)
         # containsList = list()
         # for x in range(0, 9):  #there is no 9 in Auspix
         #     containsList.append(self.auspix + str(x))
@@ -133,7 +131,7 @@ class DGGS_data(Renderer):
                 neighbours = self.neighbors,
                 y = self.y,
                 x = self.x,
-                area_km2= self.area_km2,
+                area_m2= self.area_m2,
                 contains = self.contains,
                 partOfCell = self.partOfCell,
 
@@ -158,14 +156,20 @@ class DGGS_data(Renderer):
     def export_rdf(self):
         g = Graph()  # make instance of a RDF graph
 
-        PN = Namespace('http://linked.data.gov.au/def/placename/')   #rdf neamespace declaration
-        g.bind('pn', PN)
-
-
-        #loop through the next 3 lines to get subject, predicate, object for the triple store adding each time??
+        apix = Namespace('http://linked.data.gov.au/def/dggs/auspix/')   #rdf namespace declaration
+        g.bind('auspix_cell', apix)
+        # adding the RDF triples using the self. data for this instance
         me = URIRef(self.uri)   # URIRef is a RDF class
-        g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/placename/PlaceName')))  # PN.PlaceName))
-        g.add((me, PN.hasName, Literal(self.hasName['value'], datatype=XSD.string)))
+        g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))
+        g.add((me, apix.hasID, Literal(self.auspix, datatype=XSD.string)))
+        #
+        g.add((me, apix.longitude, Literal(self.x, datatype=XSD.float )))
+        g.add((me, apix.latitude, Literal(self.y, datatype=XSD.float)))
+        g.add((me, apix.hasArea_m2, Literal(self.area_m2, datatype=XSD.string)))
+        g.add((me, apix.hasNeighbours, Literal(self.neighs, datatype=XSD.string)))
+        g.add((me, apix.contains, Literal(self.contains, datatype=XSD.string)))
+        g.add((me, apix.hasParent, Literal(self.partOfCell, datatype=XSD.string)))
+
 
         if self.format == 'text/turtle':
             return Response(

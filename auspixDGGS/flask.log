@@ -9710,3 +9710,144 @@
 2019-10-17 14:04:21 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:04:21] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
 2019-10-17 14:04:21 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:04:21] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
 2019-10-17 14:04:23 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:04:23] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 14:28:22 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:28:22 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:28:29 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:29] "GET / HTTP/1.1" 200 -
+2019-10-17 14:28:30 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:30] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:28:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:32] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-17 14:28:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:32] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:28:39 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:39] "GET /ausPIX/?search=R78523 HTTP/1.1" 200 -
+2019-10-17 14:28:39 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:39] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:28:41 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:41] "GET /ausPIX/R78523 HTTP/1.1" 200 -
+2019-10-17 14:28:41 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:41] "GET /map?name=&location=[(148.88888888888886,%20-35.046925600158296),%20(149.25925925925924,%20-35.046925600158296),%20(149.25925925925924,%20-35.431845250443374),%20(148.88888888888886,%20-35.431845250443374)]%20&x=149.074074074%20&y=-35.2391591092 HTTP/1.1" 200 -
+2019-10-17 14:28:41 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:41] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:28:49 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:49] "GET /ausPIX/R78523?_view=alternates HTTP/1.1" 200 -
+2019-10-17 14:28:49 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:49] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:28:51 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:51] "GET /ausPIX/R78523?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-17 14:28:51 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:51] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-17 14:28:51 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:51] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-17 14:28:51 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:51] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-17 14:28:51 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:51] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 14:28:51 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:51] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-17 14:28:51 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:28:51] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 14:30:27 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:30:27 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:30:36 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:30:36] "GET /ausPIX/R78523?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-17 14:30:36 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:30:36] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-17 14:30:36 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:30:36] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-17 14:30:36 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:30:36] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-17 14:30:36 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:30:36] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 14:30:36 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:30:36] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 14:31:57 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:31:57 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:32:01 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:32:01] "GET /ausPIX/R78523?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-17 14:32:01 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:32:01] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-17 14:32:01 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:32:01] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-17 14:32:01 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:32:01] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-17 14:32:01 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:32:01] "GET /ausPIX/R78523?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 14:32:36 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:32:37 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:32:44 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:32:44] "GET /ausPIX/R78523?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 14:45:02 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:45:02] "GET /ausPIX/R78523?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 14:47:45 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:47:45 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:47:45 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:47:45] "GET /ausPIX/R78523?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 14:49:35 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:49:35] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:49:54 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:49:54] "GET /ausPIX/R78520 HTTP/1.1" 200 -
+2019-10-17 14:49:54 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:49:54] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:49:54 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:49:54] "GET /map?name=&location=[(148.88888888888886,%20-34.663795228918751),%20(149.25925925925924,%20-34.663795228918751),%20(149.25925925925924,%20-35.046925600158289),%20(148.88888888888886,%20-35.046925600158289)]%20&x=149.074074074%20&y=-34.8551393903 HTTP/1.1" 200 -
+2019-10-17 14:50:28 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:50:28] "GET /ausPIX/R78520?_view=alternates HTTP/1.1" 200 -
+2019-10-17 14:50:28 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:50:28] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:50:30 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:50:30] "GET /ausPIX/R78520?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 14:51:42 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:51:42 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:51:45 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:51:45] "GET /ausPIX/R78520?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 14:54:30 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:54:30 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:54:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:54:32] "GET /ausPIX/R78520?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 14:55:00 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:55:00] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:55:04 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:55:04] "GET /ausPIX/R78521 HTTP/1.1" 200 -
+2019-10-17 14:55:04 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:55:04] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:55:04 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:55:04] "GET /map?name=&location=[(149.25925925925924,%20-34.663795228918751),%20(149.62962962962962,%20-34.663795228918751),%20(149.62962962962962,%20-35.046925600158289),%20(149.25925925925924,%20-35.046925600158289)]%20&x=149.444444444%20&y=-34.8551393903 HTTP/1.1" 200 -
+2019-10-17 14:56:31 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:56:31 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:56:33 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:56:33] "GET /ausPIX/R785213 HTTP/1.1" 200 -
+2019-10-17 14:56:33 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:56:33] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:56:33 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:56:33] "GET /map?name=&location=[(149.25925925925924,%20-34.791309143651453),%20(149.38271604938268,%20-34.791309143651453),%20(149.38271604938268,%20-34.919018752805997),%20(149.25925925925924,%20-34.919018752805997)]%20&x=149.320987654%20&y=-34.8551393903 HTTP/1.1" 200 -
+2019-10-17 14:57:47 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:57:47 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:57:53 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:57:53] "GET /ausPIX/R7852130 HTTP/1.1" 200 -
+2019-10-17 14:57:53 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:57:53] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:57:53 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:57:53] "GET /map?name=&location=[(149.25925925925924,%20-34.791309143651453),%20(149.30041152263371,%20-34.791309143651453),%20(149.30041152263371,%20-34.83385719363541),%20(149.25925925925924,%20-34.83385719363541)]%20&x=149.279835391%20&y=-34.8125804471 HTTP/1.1" 200 -
+2019-10-17 15:09:03 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:09:03] "GET /ausPIX/R7852130?_view=alternates HTTP/1.1" 200 -
+2019-10-17 15:09:03 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:09:03] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 15:09:05 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:09:05] "GET /ausPIX/R7852130?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 15:12:06 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 15:12:06 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 15:12:12 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:12:12] "GET /ausPIX/R7852130?_view=alternates HTTP/1.1" 200 -
+2019-10-17 15:12:12 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:12:12] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 15:12:13 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:12:13] "GET /ausPIX/R7852130?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-17 15:12:13 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:12:13] "GET /ausPIX/R7852130?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-17 15:12:13 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:12:13] "GET /ausPIX/R7852130?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-17 15:12:13 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:12:13] "GET /ausPIX/R7852130?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-17 15:12:13 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:12:13] "GET /ausPIX/R7852130?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-17 15:12:13 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:12:13] "GET /ausPIX/R7852130?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 15:12:30 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'http://pid.geoscience.gov.au/dggs/ausPIX/',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 15:12:30 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 15:12:31 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:12:31] "GET /ausPIX/R7852130?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 15:14:14 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 15:14:14] "GET /ausPIX/R7852130?_view=alternates&_format=text/n3 HTTP/1.1" 200 -
+2019-10-17 16:15:45 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:15:45] "GET / HTTP/1.1" 200 -
+2019-10-17 16:15:45 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:15:45] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 16:16:14 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:16:14] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-17 16:16:14 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:16:14] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 16:16:21 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:16:21] "GET /ausPIX/?search=R78523 HTTP/1.1" 200 -
+2019-10-17 16:16:21 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:16:21] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 16:16:23 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:16:23] "GET /ausPIX/R78523 HTTP/1.1" 200 -
+2019-10-17 16:16:23 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:16:23] "GET /map?name=&location=[(148.88888888888886,%20-35.046925600158296),%20(149.25925925925924,%20-35.046925600158296),%20(149.25925925925924,%20-35.431845250443374),%20(148.88888888888886,%20-35.431845250443374)]%20&x=149.074074074%20&y=-35.2391591092 HTTP/1.1" 200 -
+2019-10-17 16:16:23 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:16:23] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 16:16:27 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:16:27] "GET /ausPIX/R78523?_view=alternates HTTP/1.1" 200 -
+2019-10-17 16:16:27 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 16:16:27] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
