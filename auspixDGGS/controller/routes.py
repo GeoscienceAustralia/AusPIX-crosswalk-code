@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect, url_for, Response, render_template, send_file
 import flask
-from auspixDGGS.model.ausPIX_location import Placename
+from auspixDGGS.model.dggs_data import DGGS_data
 from auspixDGGS.model.dggs_data import DGGS_data
 #from auspixDGGS.model.gazetteer import Gazetteer, GAZETTEERS
 from pyldapi import RegisterRenderer
@@ -36,9 +36,9 @@ def show_map():
     '''
     Function to render a map around the specified coordinates
     '''
-    auspix = request.values.get("auspix")
+
     auspix='Cell nucleus on ellipsoid'
-    print('auspixinRoutes', auspix)
+
     corners = (request.values.get('location')).split('),')
 
     #corners is straight from database vis auspix_location.py and auspix_location.html

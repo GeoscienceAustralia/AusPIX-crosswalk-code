@@ -13,7 +13,7 @@ class Renderer(object, metaclass=ABCMeta):
     either registers or objects) and also creates an 'alternates view' for them, based on all available views & formats.
     """
 
-    RDF_MIMETYPES = ['text/turtle', 'application/rdf+xml', 'application/ld+json', 'text/n3', 'application/n-triples']
+    RDF_MIMETYPES = ['text/turtle', 'application/rdf+xml', 'application/ld+json', 'text/n3', 'application/n-triples', 'text/csv']
     RDF_SERIALIZER_MAP = {
         "text/turtle": "turtle",
         "text/n3": "n3",
@@ -29,6 +29,7 @@ class Renderer(object, metaclass=ABCMeta):
         "text/ntriples": "nt",
         "text/n-triples": "nt",
         "text/plain": "nt",  # text/plain is the old/deprecated mimetype for n-triples
+        "text/csv": "csv"
     }
 
     def __init__(self, 

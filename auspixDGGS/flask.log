@@ -9079,3 +9079,634 @@
 2019-09-19 16:06:38 INFO _internal.py:122 127.0.0.1 - - [19/Sep/2019 16:06:38] "GET /ausPIX/S0 HTTP/1.1" 200 -
 2019-09-19 16:06:38 INFO _internal.py:122 127.0.0.1 - - [19/Sep/2019 16:06:38] "GET /map?name=&location=[(149.99999999999997,%20-41.87385774220941),%20(-180.0,%20-41.87385774220941),%20(-150.0,%20-41.87385774220941),%20(-180.0,%20-74.39069094879065)]%20&x=-179.99999999999997%20&y=-58.47067782962736 HTTP/1.1" 200 -
 2019-09-19 16:06:38 INFO _internal.py:122 127.0.0.1 - - [19/Sep/2019 16:06:38] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 13:57:15 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-09-24 13:57:15 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-09-24 13:57:20 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:20] "GET / HTTP/1.1" 200 -
+2019-09-24 13:57:20 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:20] "GET /static/lo.jpg HTTP/1.1" 200 -
+2019-09-24 13:57:20 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:20] "GET /static/ga-logo.jpg HTTP/1.1" 200 -
+2019-09-24 13:57:20 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:20] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2019-09-24 13:57:20 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:20] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 13:57:24 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:24] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-09-24 13:57:24 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:24] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 13:57:29 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:29] "GET /ausPIX/?search=R8 HTTP/1.1" 200 -
+2019-09-24 13:57:29 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:29] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 13:57:32 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:32] "GET /ausPIX/R8 HTTP/1.1" 200 -
+2019-09-24 13:57:32 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:32] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 13:57:32 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 13:57:32] "GET /map?name=&location=[(150.0,%20-12.867323225033056),%20(-180.0,%20-12.867323225033056),%20(-180.0,%20-41.87385774220941),%20(150.0,%20-41.87385774220941)]%20&x=165.0%20&y=-26.4387449231 HTTP/1.1" 200 -
+2019-09-24 14:26:05 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 14:26:05] "GET /ausPIX/R7 HTTP/1.1" 200 -
+2019-09-24 14:26:05 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 14:26:05] "GET /map?name=&location=[(119.99999999999999,%20-12.867323225033056),%20(149.99999999999997,%20-12.867323225033056),%20(149.99999999999997,%20-41.87385774220941),%20(119.99999999999999,%20-41.87385774220941)]%20&x=135.0%20&y=-26.4387449231 HTTP/1.1" 200 -
+2019-09-24 14:26:05 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 14:26:05] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 16:13:03 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:03] "GET / HTTP/1.1" 200 -
+2019-09-24 16:13:03 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:03] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 16:13:07 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:07] "GET / HTTP/1.1" 200 -
+2019-09-24 16:13:07 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:07] "GET /static/master.css HTTP/1.1" 200 -
+2019-09-24 16:13:07 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:07] "GET /static/extra.css HTTP/1.1" 200 -
+2019-09-24 16:13:07 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:07] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2019-09-24 16:13:07 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:07] "GET /static/lo.jpg HTTP/1.1" 200 -
+2019-09-24 16:13:07 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:07] "GET /static/ga-logo.jpg HTTP/1.1" 200 -
+2019-09-24 16:13:07 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:07] "GET /static/by.png HTTP/1.1" 200 -
+2019-09-24 16:13:07 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:07] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 16:13:33 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:33] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-09-24 16:13:33 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:33] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 16:13:48 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:48] "GET /ausPIX/?search=r77 HTTP/1.1" 200 -
+2019-09-24 16:13:48 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:48] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 16:13:50 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:50] "GET /ausPIX/r77 HTTP/1.1" 500 -
+2019-09-24 16:13:50 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:50] "GET /ausPIX/r77?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-09-24 16:13:50 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:50] "GET /ausPIX/r77?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-09-24 16:13:50 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:50] "GET /ausPIX/r77?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-09-24 16:13:50 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:50] "GET /ausPIX/r77?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-09-24 16:13:50 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:50] "GET /ausPIX/r77?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-09-24 16:13:50 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:13:50] "GET /ausPIX/r77?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-09-24 16:14:04 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:14:04] "GET /ausPIX/?search=R77 HTTP/1.1" 200 -
+2019-09-24 16:14:04 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:14:04] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 16:14:06 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:14:06] "GET /ausPIX/R77 HTTP/1.1" 200 -
+2019-09-24 16:14:06 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:14:06] "GET /map?name=&location=[(130.0,%20-31.289651351458652),%20(140.0,%20-31.289651351458652),%20(140.0,%20-41.87385774220941),%20(130.0,%20-41.87385774220941)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-09-24 16:14:06 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:14:06] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 16:15:44 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:15:44] "GET /ausPIX/R70 HTTP/1.1" 200 -
+2019-09-24 16:15:44 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:15:44] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-09-24 16:15:44 INFO _internal.py:122 127.0.0.1 - - [24/Sep/2019 16:15:44] "GET /map?name=&location=[(119.99999999999999,%20-12.867323225033056),%20(129.99999999999997,%20-12.867323225033056),%20(129.99999999999997,%20-21.782489379139871),%20(119.99999999999999,%20-21.782489379139871)]%20&x=125.0%20&y=-17.2715066689 HTTP/1.1" 200 -
+2019-09-24 16:17:33 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-09-24 16:17:33 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-09-24 16:18:35 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-09-24 16:18:35 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-09-24 16:19:38 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-09-24 16:19:38 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-01 09:54:00 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-01 09:54:00 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-01 09:54:08 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 09:54:08] "GET / HTTP/1.1" 200 -
+2019-10-01 09:54:08 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 09:54:08] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-01 09:54:12 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 09:54:12] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-01 09:54:12 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 09:54:12] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-01 09:54:26 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 09:54:26] "GET /ausPIX/?search=R77444 HTTP/1.1" 200 -
+2019-10-01 09:54:26 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 09:54:26] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-01 09:54:28 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 09:54:28] "GET /ausPIX/R77444 HTTP/1.1" 200 -
+2019-10-01 09:54:28 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 09:54:28] "GET /map?name=&location=[(134.81481481481484,%20-36.207225780832921),%20(135.18518518518525,%20-36.207225780832921),%20(135.18518518518525,%20-36.597776866714362),%20(134.81481481481484,%20-36.597776866714362)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-01 09:54:28 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 09:54:28] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-01 10:06:01 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 10:06:01] "GET / HTTP/1.1" 200 -
+2019-10-01 10:06:01 INFO _internal.py:122 127.0.0.1 - - [01/Oct/2019 10:06:01] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:26:32 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-09 15:26:33 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-09 15:26:50 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:26:50] "GET / HTTP/1.1" 200 -
+2019-10-09 15:26:50 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:26:50] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2019-10-09 15:26:50 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:26:50] "GET /static/master.css HTTP/1.1" 200 -
+2019-10-09 15:26:50 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:26:50] "GET /static/extra.css HTTP/1.1" 200 -
+2019-10-09 15:26:50 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:26:50] "GET /static/by.png HTTP/1.1" 200 -
+2019-10-09 15:26:50 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:26:50] "GET /static/ga-logo.jpg HTTP/1.1" 200 -
+2019-10-09 15:26:50 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:26:50] "GET /static/lo.jpg HTTP/1.1" 200 -
+2019-10-09 15:26:51 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:26:51] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:26:56 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:26:56] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-09 15:26:57 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:26:57] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:27:07 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:27:07] "GET /ausPIX/?search=R774444 HTTP/1.1" 200 -
+2019-10-09 15:27:07 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:27:07] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:27:09 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:27:09] "GET /ausPIX/R774444 HTTP/1.1" 200 -
+2019-10-09 15:27:09 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:27:09] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:27:09 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:27:09] "GET /map?name=&location=[(134.93827160493828,%20-36.337193560443936),%20(135.06172839506175,%20-36.337193560443936),%20(135.06172839506175,%20-36.467376671423807),%20(134.93827160493828,%20-36.467376671423807)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-09 15:34:34 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:34:34] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-09 15:34:34 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:34:34] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:34:45 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:34:45] "GET /ausPIX/?search=R774444 HTTP/1.1" 200 -
+2019-10-09 15:34:45 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:34:45] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:34:47 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:34:47] "GET /ausPIX/R774444 HTTP/1.1" 200 -
+2019-10-09 15:34:47 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:34:47] "GET /map?name=&location=[(134.93827160493828,%20-36.337193560443936),%20(135.06172839506175,%20-36.337193560443936),%20(135.06172839506175,%20-36.467376671423807),%20(134.93827160493828,%20-36.467376671423807)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-09 15:34:47 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:34:47] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:38:53 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-09 15:38:53 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-09 15:38:54 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:38:54] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-09 15:38:54 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:38:54] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:39:01 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:39:01] "GET /ausPIX/?search=R8888 HTTP/1.1" 200 -
+2019-10-09 15:39:01 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:39:01] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:39:02 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:39:02] "GET /ausPIX/R8888 HTTP/1.1" 200 -
+2019-10-09 15:39:02 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:39:02] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:39:02 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:39:02] "GET /map?name=&location=[(178.88888888888891,%20-40.62029208678652),%20(-180.0,%20-40.62029208678652),%20(-180.0,%20-41.87385774220941),%20(178.88888888888891,%20-41.87385774220941)]%20&x=179.444444444%20&y=-41.2440915113 HTTP/1.1" 200 -
+2019-10-09 15:41:24 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-09 15:41:24 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-09 15:41:26 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:26] "GET / HTTP/1.1" 200 -
+2019-10-09 15:41:26 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:26] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:41:27 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:27] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-09 15:41:27 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:27] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:41:35 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:35] "GET /ausPIX/?search=R774444 HTTP/1.1" 200 -
+2019-10-09 15:41:36 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:36] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:41:37 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:37] "GET /ausPIX/R774444 HTTP/1.1" 200 -
+2019-10-09 15:41:37 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:37] "GET /map?name=&location=[(134.93827160493828,%20-36.337193560443936),%20(135.06172839506175,%20-36.337193560443936),%20(135.06172839506175,%20-36.467376671423807),%20(134.93827160493828,%20-36.467376671423807)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-09 15:41:37 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:37] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:41:43 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:43] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-09 15:41:43 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:43] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:41:47 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:47] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-09 15:41:47 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:47] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-09 15:41:47 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:47] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-09 15:41:47 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:47] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-09 15:41:48 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:48] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-09 15:41:48 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:48] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-09 15:41:48 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:48] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-09 15:41:55 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:55] "GET /favicon.ico HTTP/1.1" 404 -
+2019-10-09 15:41:57 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:57] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/html HTTP/1.1" 200 -
+2019-10-09 15:41:57 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:57] "GET /map?name=&location=[(134.93827160493828,%20-36.337193560443936),%20(135.06172839506175,%20-36.337193560443936),%20(135.06172839506175,%20-36.467376671423807),%20(134.93827160493828,%20-36.467376671423807)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-09 15:41:57 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:41:57] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:42:03 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:42:03] "GET /ausPIX/R774444?_view=alternates&_format=text/n3 HTTP/1.1" 200 -
+2019-10-09 15:43:07 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-09 15:43:07 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-09 15:43:09 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:09] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-09 15:43:09 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:09] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:43:19 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:19] "GET /ausPIX/?search=R77778 HTTP/1.1" 200 -
+2019-10-09 15:43:19 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:19] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:43:23 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:23] "GET /ausPIX/R77778 HTTP/1.1" 500 -
+2019-10-09 15:43:23 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:23] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-09 15:43:23 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:23] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-09 15:43:23 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:23] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-09 15:43:23 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:23] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-09 15:43:23 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:23] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-09 15:43:23 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:23] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-09 15:43:48 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:48] "GET /ausPIX/R77778 HTTP/1.1" 500 -
+2019-10-09 15:43:48 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:48] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-09 15:43:49 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:49] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-09 15:43:49 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:49] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-09 15:43:49 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:49] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-09 15:43:49 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:49] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-09 15:43:49 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:43:49] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-09 15:44:00 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:00] "GET /ausPIX/R77 HTTP/1.1" 200 -
+2019-10-09 15:44:00 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:00] "GET /static/master.css HTTP/1.1" 200 -
+2019-10-09 15:44:00 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:00] "GET /static/extra.css HTTP/1.1" 200 -
+2019-10-09 15:44:00 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:00] "GET /static/lo.jpg HTTP/1.1" 200 -
+2019-10-09 15:44:00 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:00] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2019-10-09 15:44:00 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:00] "GET /static/ga-logo.jpg HTTP/1.1" 200 -
+2019-10-09 15:44:00 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:00] "GET /static/by.png HTTP/1.1" 200 -
+2019-10-09 15:44:00 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:00] "GET /map?name=&location=[(130.0,%20-31.289651351458652),%20(140.0,%20-31.289651351458652),%20(140.0,%20-41.87385774220941),%20(130.0,%20-41.87385774220941)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-09 15:44:01 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:01] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:44:07 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:07] "GET /ausPIX/R777 HTTP/1.1" 200 -
+2019-10-09 15:44:07 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:07] "GET /map?name=&location=[(133.33333333333334,%20-38.180177138437273),%20(136.66666666666669,%20-38.180177138437273),%20(136.66666666666669,%20-41.87385774220941),%20(133.33333333333334,%20-41.87385774220941)]%20&x=135.0%20&y=-40.0022204091 HTTP/1.1" 200 -
+2019-10-09 15:44:13 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-09 15:44:14 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-09 15:44:18 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:18] "GET /ausPIX/R777 HTTP/1.1" 200 -
+2019-10-09 15:44:18 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:44:18] "GET /map?name=&location=[(133.33333333333334,%20-38.180177138437273),%20(136.66666666666669,%20-38.180177138437273),%20(136.66666666666669,%20-41.87385774220941),%20(133.33333333333334,%20-41.87385774220941)]%20&x=135.0%20&y=-40.0022204091 HTTP/1.1" 200 -
+2019-10-09 15:48:58 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:48:58] "GET /ausPIX/R77778 HTTP/1.1" 500 -
+2019-10-09 15:48:58 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:48:58] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-09 15:48:58 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:48:58] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-09 15:48:58 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:48:58] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-09 15:48:58 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:48:58] "GET /ausPIX/R77778?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-09 15:49:40 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:49:40] "GET / HTTP/1.1" 200 -
+2019-10-09 15:49:40 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:49:40] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:49:48 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-09 15:49:49 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-09 15:49:49 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:49:49] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-09 15:49:49 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:49:49] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:49:51 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:49:51] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-09 15:49:51 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:49:51] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:50:03 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:03] "GET /ausPIX/?search=R774444 HTTP/1.1" 200 -
+2019-10-09 15:50:03 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:03] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:50:04 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:04] "GET /ausPIX/R774444 HTTP/1.1" 200 -
+2019-10-09 15:50:04 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:04] "GET /map?name=&location=[(134.93827160493828,%20-36.337193560443936),%20(135.06172839506175,%20-36.337193560443936),%20(135.06172839506175,%20-36.467376671423807),%20(134.93827160493828,%20-36.467376671423807)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-09 15:50:04 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:04] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:50:22 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:22] "GET /ausPIX/R7744 HTTP/1.1" 200 -
+2019-10-09 15:50:22 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:22] "GET /map?name=&location=[(134.44444444444446,%20-35.81859718358465),%20(135.55555555555557,%20-35.81859718358465),%20(135.55555555555557,%20-36.990297778897038),%20(134.44444444444446,%20-36.990297778897038)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-09 15:50:22 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:22] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:50:31 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:31] "GET /ausPIX/R7744?_view=alternates HTTP/1.1" 200 -
+2019-10-09 15:50:31 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:31] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-09 15:50:40 INFO _internal.py:122 127.0.0.1 - - [09/Oct/2019 15:50:40] "GET /ausPIX/R7744?_view=alternates&_format=application/n-triples HTTP/1.1" 200 -
+2019-10-10 10:18:47 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-10 10:18:47 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-10 10:18:57 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:18:57] "GET / HTTP/1.1" 200 -
+2019-10-10 10:18:57 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:18:57] "GET /static/master.css HTTP/1.1" 200 -
+2019-10-10 10:18:57 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:18:57] "GET /static/extra.css HTTP/1.1" 200 -
+2019-10-10 10:18:57 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:18:57] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2019-10-10 10:18:57 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:18:57] "GET /static/lo.jpg HTTP/1.1" 304 -
+2019-10-10 10:18:57 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:18:57] "GET /static/ga-logo.jpg HTTP/1.1" 304 -
+2019-10-10 10:18:57 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:18:57] "GET /static/by.png HTTP/1.1" 304 -
+2019-10-10 10:18:57 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:18:57] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-10 10:19:03 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:03] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-10 10:19:03 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:03] "GET /static/master.css HTTP/1.1" 304 -
+2019-10-10 10:19:03 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:03] "GET /static/extra.css HTTP/1.1" 304 -
+2019-10-10 10:19:03 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:03] "GET /static/ga_theme.css HTTP/1.1" 304 -
+2019-10-10 10:19:03 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:03] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-10 10:19:13 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:13] "GET /ausPIX/?search=R774444 HTTP/1.1" 200 -
+2019-10-10 10:19:13 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:13] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-10 10:19:15 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:15] "GET /ausPIX/R774444 HTTP/1.1" 200 -
+2019-10-10 10:19:15 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:15] "GET /map?name=&location=[(134.93827160493828,%20-36.337193560443936),%20(135.06172839506175,%20-36.337193560443936),%20(135.06172839506175,%20-36.467376671423807),%20(134.93827160493828,%20-36.467376671423807)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-10 10:19:15 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:15] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-10 10:19:22 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:22] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-10 10:19:22 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:22] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-10 10:19:27 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:27] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-10 10:19:27 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:27] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-10 10:19:27 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:27] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-10 10:19:27 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:27] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-10 10:19:27 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:27] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-10 10:19:27 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:27] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-10 10:19:27 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:19:27] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-10 10:21:45 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:45] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-10 10:21:46 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:46] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-10 10:21:46 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:46] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-10 10:21:46 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:46] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-10 10:21:46 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:46] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-10 10:21:48 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:48] "GET /favicon.ico HTTP/1.1" 404 -
+2019-10-10 10:21:50 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:50] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-10 10:21:50 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:50] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-10 10:21:50 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:50] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-10 10:21:50 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:50] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-10 10:21:50 INFO _internal.py:122 127.0.0.1 - - [10/Oct/2019 10:21:50] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 13:16:56 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 13:16:56 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 13:17:04 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:04] "GET / HTTP/1.1" 200 -
+2019-10-14 13:17:05 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:05] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2019-10-14 13:17:05 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:05] "GET /static/extra.css HTTP/1.1" 200 -
+2019-10-14 13:17:05 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:05] "GET /static/master.css HTTP/1.1" 200 -
+2019-10-14 13:17:05 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:05] "GET /static/by.png HTTP/1.1" 200 -
+2019-10-14 13:17:05 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:05] "GET /static/lo.jpg HTTP/1.1" 200 -
+2019-10-14 13:17:05 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:05] "GET /static/ga-logo.jpg HTTP/1.1" 200 -
+2019-10-14 13:17:05 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:05] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 13:17:08 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:08] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-14 13:17:08 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:08] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 13:17:16 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:16] "GET /ausPIX/?search=R774444 HTTP/1.1" 200 -
+2019-10-14 13:17:16 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:16] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 13:17:17 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:17] "GET /ausPIX/R774444 HTTP/1.1" 200 -
+2019-10-14 13:17:17 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:17] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 13:17:17 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:17] "GET /map?name=&location=[(134.93827160493825,%20-36.3371935604439),%20(135.06172839506172,%20-36.3371935604439),%20(135.06172839506172,%20-36.467376671423786),%20(134.93827160493825,%20-36.467376671423786)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-14 13:17:25 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:25] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-14 13:17:25 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:25] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 13:17:59 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:59] "GET /ausPIX/R774444?_view=auspix_cell HTTP/1.1" 200 -
+2019-10-14 13:17:59 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:59] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 13:17:59 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:17:59] "GET /map?name=&location=[(134.93827160493825,%20-36.3371935604439),%20(135.06172839506172,%20-36.3371935604439),%20(135.06172839506172,%20-36.467376671423786),%20(134.93827160493825,%20-36.467376671423786)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-14 13:18:03 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:03] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/html HTTP/1.1" 200 -
+2019-10-14 13:18:03 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:03] "GET /map?name=&location=[(134.93827160493825,%20-36.3371935604439),%20(135.06172839506172,%20-36.3371935604439),%20(135.06172839506172,%20-36.467376671423786),%20(134.93827160493825,%20-36.467376671423786)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-14 13:18:03 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:03] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 13:18:08 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:08] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-14 13:18:08 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:08] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-14 13:18:08 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:08] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-14 13:18:08 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:08] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-14 13:18:08 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:08] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-14 13:18:08 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:08] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 13:18:08 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:08] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 13:18:19 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:18:19] "GET /ausPIX/R774444?_view=alternates&_format=text/n3 HTTP/1.1" 200 -
+2019-10-14 13:19:59 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:19:59] "GET /ausPIX/R774444?_view=alternates&_format=text/html HTTP/1.1" 200 -
+2019-10-14 13:20:00 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:00] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 13:20:11 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:11] "GET /ausPIX/R774444?_view=alternates&_format=text/html HTTP/1.1" 200 -
+2019-10-14 13:20:11 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:11] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 13:20:43 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 13:20:43 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 13:20:45 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:45] "GET /ausPIX/R774444?_view=alternates&_format=text/html HTTP/1.1" 200 -
+2019-10-14 13:20:45 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:45] "GET /static/master.css HTTP/1.1" 304 -
+2019-10-14 13:20:45 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:45] "GET /static/extra.css HTTP/1.1" 304 -
+2019-10-14 13:20:45 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:45] "GET /static/ga_theme.css HTTP/1.1" 304 -
+2019-10-14 13:20:45 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:45] "GET /static/by.png HTTP/1.1" 200 -
+2019-10-14 13:20:45 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:45] "GET /static/ga-logo.jpg HTTP/1.1" 200 -
+2019-10-14 13:20:45 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:45] "GET /static/lo.jpg HTTP/1.1" 200 -
+2019-10-14 13:20:45 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:20:45] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 13:26:11 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 13:26:11 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 13:26:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:26:14] "GET /ausPIX/R774444?_view=alternates&_format=text/html HTTP/1.1" 200 -
+2019-10-14 13:26:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:26:14] "GET /static/extra.css HTTP/1.1" 304 -
+2019-10-14 13:26:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:26:14] "GET /static/master.css HTTP/1.1" 304 -
+2019-10-14 13:26:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:26:14] "GET /static/ga_theme.css HTTP/1.1" 304 -
+2019-10-14 13:26:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:26:14] "GET /static/ga-logo.jpg HTTP/1.1" 304 -
+2019-10-14 13:26:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:26:14] "GET /static/lo.jpg HTTP/1.1" 304 -
+2019-10-14 13:26:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:26:14] "GET /static/by.png HTTP/1.1" 304 -
+2019-10-14 13:26:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 13:26:14] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 14:41:11 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 14:41:11 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 14:43:05 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 14:43:06 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 14:43:12 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:12] "GET / HTTP/1.1" 200 -
+2019-10-14 14:43:12 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:12] "GET /static/master.css HTTP/1.1" 200 -
+2019-10-14 14:43:12 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:12] "GET /static/extra.css HTTP/1.1" 200 -
+2019-10-14 14:43:12 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:12] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2019-10-14 14:43:12 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:12] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 14:43:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:14] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-14 14:43:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:14] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 14:43:22 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:22] "GET /ausPIX/?search=R774444 HTTP/1.1" 200 -
+2019-10-14 14:43:22 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:22] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 14:43:24 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:24] "GET /ausPIX/R774444 HTTP/1.1" 200 -
+2019-10-14 14:43:24 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:24] "GET /map?name=&location=[(134.93827160493825,%20-36.3371935604439),%20(135.06172839506172,%20-36.3371935604439),%20(135.06172839506172,%20-36.467376671423786),%20(134.93827160493825,%20-36.467376671423786)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-14 14:43:24 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:24] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 14:43:30 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:30] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-14 14:43:30 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:43:30] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 14:45:55 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 14:45:55 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 14:46:04 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:04] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-14 14:46:04 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:04] "GET /static/master.css HTTP/1.1" 304 -
+2019-10-14 14:46:04 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:04] "GET /static/ga_theme.css HTTP/1.1" 304 -
+2019-10-14 14:46:04 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:04] "GET /static/extra.css HTTP/1.1" 304 -
+2019-10-14 14:46:04 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:04] "GET /static/ga-logo.jpg HTTP/1.1" 304 -
+2019-10-14 14:46:04 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:04] "GET /static/by.png HTTP/1.1" 304 -
+2019-10-14 14:46:04 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:04] "GET /static/lo.jpg HTTP/1.1" 304 -
+2019-10-14 14:46:04 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:04] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 14:46:17 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:17] "GET /ausPIX/R774444?_view=alternates&_format=text/csv HTTP/1.1" 500 -
+2019-10-14 14:46:17 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:17] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-14 14:46:17 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:17] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-14 14:46:17 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:17] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-14 14:46:17 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:17] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-14 14:46:17 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:46:17] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 14:52:26 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 14:52:26 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 14:52:31 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:31] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-14 14:52:31 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:31] "GET /static/master.css HTTP/1.1" 304 -
+2019-10-14 14:52:31 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:31] "GET /static/extra.css HTTP/1.1" 304 -
+2019-10-14 14:52:31 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:31] "GET /static/ga_theme.css HTTP/1.1" 304 -
+2019-10-14 14:52:31 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:31] "GET /static/ga-logo.jpg HTTP/1.1" 304 -
+2019-10-14 14:52:31 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:31] "GET /static/lo.jpg HTTP/1.1" 304 -
+2019-10-14 14:52:31 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:31] "GET /static/by.png HTTP/1.1" 304 -
+2019-10-14 14:52:31 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:31] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 14:52:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:33] "GET /ausPIX/R774444?_view=alternates&_format=text/csv HTTP/1.1" 500 -
+2019-10-14 14:52:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:33] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-14 14:52:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:33] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-14 14:52:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:33] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-14 14:52:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:52:33] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 14:53:00 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:53:00] "GET /ausPIX/R774444?_view=alternates&_format=text/csv HTTP/1.1" 500 -
+2019-10-14 14:53:00 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:53:00] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-14 14:53:00 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:53:00] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-14 14:53:00 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:53:00] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-14 14:53:00 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:53:00] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 14:57:12 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 14:57:13 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 14:57:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 14:57:33] "GET /ausPIX/R774444?_view=alternates&_format=text/turtle HTTP/1.1" 200 -
+2019-10-14 15:06:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:06:14] "GET /ausPIX/R774444?_view=alternates&_format=text/csv HTTP/1.1" 500 -
+2019-10-14 15:06:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:06:14] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-14 15:06:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:06:14] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-14 15:06:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:06:14] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-14 15:06:14 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:06:14] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 15:44:51 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 15:44:51 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 15:47:27 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:27] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-14 15:47:27 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:27] "GET /static/master.css HTTP/1.1" 304 -
+2019-10-14 15:47:27 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:27] "GET /static/ga_theme.css HTTP/1.1" 304 -
+2019-10-14 15:47:27 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:27] "GET /static/extra.css HTTP/1.1" 304 -
+2019-10-14 15:47:27 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:27] "GET /static/ga-logo.jpg HTTP/1.1" 304 -
+2019-10-14 15:47:27 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:27] "GET /static/by.png HTTP/1.1" 304 -
+2019-10-14 15:47:27 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:27] "GET /static/lo.jpg HTTP/1.1" 304 -
+2019-10-14 15:47:27 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:27] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 15:47:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:33] "GET /ausPIX/R774444?_view=alternates&_format=text/csv HTTP/1.1" 500 -
+2019-10-14 15:47:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:33] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-14 15:47:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:33] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-14 15:47:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:33] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-14 15:47:33 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:47:33] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 15:48:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:48:53] "GET /ausPIX/R774444?_view=alternates&_format=text/csv HTTP/1.1" 500 -
+2019-10-14 15:48:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:48:53] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-14 15:48:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:48:53] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-14 15:48:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:48:53] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-14 15:48:54 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:48:54] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 15:49:04 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 15:49:04 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 15:49:15 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:49:15] "GET /ausPIX/R774444?_view=alternates&_format=text/csv HTTP/1.1" 500 -
+2019-10-14 15:49:15 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:49:15] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-14 15:49:15 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:49:15] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-14 15:49:15 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:49:15] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-14 15:49:15 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:49:15] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 15:56:21 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 15:56:22 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 15:56:34 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:56:34] "GET / HTTP/1.1" 200 -
+2019-10-14 15:56:34 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:56:34] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 15:56:38 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:56:38] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-14 15:56:38 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:56:38] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 15:56:51 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:56:51] "GET /ausPIX/?search=R776538 HTTP/1.1" 200 -
+2019-10-14 15:56:51 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:56:51] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 15:56:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:56:53] "GET /ausPIX/R776538 HTTP/1.1" 200 -
+2019-10-14 15:56:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:56:53] "GET /map?name=&location=[(132.46913580246911,%20-40.070619313166503),%20(132.59259259259258,%20-40.070619313166503),%20(132.59259259259258,%20-40.2076220753532),%20(132.46913580246911,%20-40.2076220753532)]%20&x=132.530864198%20&y=-40.1390864341 HTTP/1.1" 200 -
+2019-10-14 15:56:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:56:53] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 15:57:00 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:57:00] "GET /ausPIX/R776538?_view=alternates HTTP/1.1" 200 -
+2019-10-14 15:57:00 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:57:00] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-14 15:57:01 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:57:01] "GET /ausPIX/R776538?_view=alternates&_format=text/csv HTTP/1.1" 500 -
+2019-10-14 15:57:01 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:57:01] "GET /ausPIX/R776538?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-14 15:57:01 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:57:01] "GET /ausPIX/R776538?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-14 15:57:01 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:57:01] "GET /ausPIX/R776538?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-14 15:57:01 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:57:01] "GET /ausPIX/R776538?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 15:57:01 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:57:01] "GET /ausPIX/R776538?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-14 15:57:01 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 15:57:01] "GET /ausPIX/R776538?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-14 16:01:46 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-14 16:01:46 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-14 16:01:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 16:01:53] "GET /ausPIX/R776538?_view=alternates&_format=text/csv HTTP/1.1" 500 -
+2019-10-14 16:01:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 16:01:53] "GET /ausPIX/R776538?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-14 16:01:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 16:01:53] "GET /ausPIX/R776538?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-14 16:01:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 16:01:53] "GET /ausPIX/R776538?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-14 16:01:53 INFO _internal.py:122 127.0.0.1 - - [14/Oct/2019 16:01:53] "GET /ausPIX/R776538?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-15 12:23:16 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-15 12:23:17 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-15 15:44:46 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-15 15:44:47 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-15 15:44:56 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:56] "GET / HTTP/1.1" 200 -
+2019-10-15 15:44:56 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:56] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2019-10-15 15:44:56 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:56] "GET /static/master.css HTTP/1.1" 200 -
+2019-10-15 15:44:56 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:56] "GET /static/extra.css HTTP/1.1" 200 -
+2019-10-15 15:44:56 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:56] "GET /static/lo.jpg HTTP/1.1" 200 -
+2019-10-15 15:44:56 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:56] "GET /static/by.png HTTP/1.1" 200 -
+2019-10-15 15:44:56 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:56] "GET /static/ga-logo.jpg HTTP/1.1" 200 -
+2019-10-15 15:44:56 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:56] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-15 15:44:58 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:58] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-15 15:44:58 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:58] "GET /static/master.css HTTP/1.1" 304 -
+2019-10-15 15:44:58 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:58] "GET /static/extra.css HTTP/1.1" 304 -
+2019-10-15 15:44:58 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:44:58] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-15 15:45:05 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:45:05] "GET /ausPIX/?search=R774444 HTTP/1.1" 200 -
+2019-10-15 15:45:05 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:45:05] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-15 15:45:07 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:45:07] "GET /ausPIX/R774444 HTTP/1.1" 200 -
+2019-10-15 15:45:08 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:45:08] "GET /map?name=&location=[(134.93827160493825,%20-36.3371935604439),%20(135.06172839506172,%20-36.3371935604439),%20(135.06172839506172,%20-36.467376671423786),%20(134.93827160493825,%20-36.467376671423786)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-15 15:45:08 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:45:08] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-15 15:46:05 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:05] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-15 15:46:05 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:05] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-15 15:46:09 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:09] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-15 15:46:09 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:09] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-15 15:46:09 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:09] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-15 15:46:09 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:09] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-15 15:46:09 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:09] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-15 15:46:09 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:09] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-15 15:46:09 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:09] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-15 15:46:15 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:15] "GET /favicon.ico HTTP/1.1" 404 -
+2019-10-15 15:46:18 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:18] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/html HTTP/1.1" 200 -
+2019-10-15 15:46:18 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:18] "GET /map?name=&location=[(134.93827160493825,%20-36.3371935604439),%20(135.06172839506172,%20-36.3371935604439),%20(135.06172839506172,%20-36.467376671423786),%20(134.93827160493825,%20-36.467376671423786)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-15 15:46:18 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:18] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-15 15:46:23 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:23] "GET /ausPIX/R774444?_view=auspix_cell&_format=application/ld+json HTTP/1.1" 500 -
+2019-10-15 15:46:23 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:23] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-15 15:46:23 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:23] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-15 15:46:23 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:23] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-15 15:46:23 INFO _internal.py:122 127.0.0.1 - - [15/Oct/2019 15:46:23] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 13:41:45 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:41:45 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:41:58 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:41:58] "GET / HTTP/1.1" 200 -
+2019-10-17 13:41:58 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:41:58] "GET /static/extra.css HTTP/1.1" 200 -
+2019-10-17 13:41:58 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:41:58] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2019-10-17 13:41:58 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:41:58] "GET /static/master.css HTTP/1.1" 200 -
+2019-10-17 13:41:59 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:41:59] "GET /static/by.png HTTP/1.1" 200 -
+2019-10-17 13:41:59 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:41:59] "GET /static/ga-logo.jpg HTTP/1.1" 200 -
+2019-10-17 13:41:59 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:41:59] "GET /static/lo.jpg HTTP/1.1" 200 -
+2019-10-17 13:41:59 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:41:59] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 13:42:02 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:02] "GET /ausPIX/ HTTP/1.1" 200 -
+2019-10-17 13:42:02 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:02] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 13:42:11 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:11] "GET /ausPIX/?search=R774444 HTTP/1.1" 200 -
+2019-10-17 13:42:11 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:11] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 13:42:12 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:12] "GET /ausPIX/R774444 HTTP/1.1" 200 -
+2019-10-17 13:42:12 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:12] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 13:42:12 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:12] "GET /map?name=&location=[(134.93827160493825,%20-36.3371935604439),%20(135.06172839506172,%20-36.3371935604439),%20(135.06172839506172,%20-36.467376671423786),%20(134.93827160493825,%20-36.467376671423786)]%20&x=135.0%20&y=-36.4022580904 HTTP/1.1" 200 -
+2019-10-17 13:42:20 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:20] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-17 13:42:20 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:20] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 13:42:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:32] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-17 13:42:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:32] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-17 13:42:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:32] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-17 13:42:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:32] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-17 13:42:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:32] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 13:42:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:32] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2019-10-17 13:42:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:42:32] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 13:43:37 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:43:37] "GET /favicon.ico HTTP/1.1" 404 -
+2019-10-17 13:43:39 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:43:39] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-17 13:43:39 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:43:39] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-17 13:43:39 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:43:39] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-17 13:43:39 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:43:39] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-17 13:43:39 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:43:39] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 13:43:48 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:43:48 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:43:52 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:43:52] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 13:46:02 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:46:02 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:46:07 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:46:07] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 13:47:19 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:47:19 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:47:22 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:47:22] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-17 13:47:22 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:47:22] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-17 13:47:22 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:47:22] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-17 13:47:22 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:47:22] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-17 13:47:22 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:47:22] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 13:49:55 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:49:55 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:50:48 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:50:48] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 500 -
+2019-10-17 13:50:48 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:50:48] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2019-10-17 13:50:48 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:50:48] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2019-10-17 13:50:48 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:50:48] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2019-10-17 13:50:48 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:50:48] "GET /ausPIX/R774444?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2019-10-17 13:53:16 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:53:16 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:53:20 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:53:20] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 13:55:14 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:55:14 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:55:18 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:55:18] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 13:55:50 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:55:50 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:55:52 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:55:52] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 13:56:36 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:56:36 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:56:41 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:56:41] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 13:57:30 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:57:30 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:57:32 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:57:32] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 13:58:14 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 13:58:14 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 13:58:17 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 13:58:17] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 14:02:38 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:02:38 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:02:39 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:02:39] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-17 14:02:39 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:02:39] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:02:41 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:02:41] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -
+2019-10-17 14:04:19 DEBUG app.py:23 conf = {'APP_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS',
+ 'LOGFILE': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\u82871\\PycharmProjects\\AusPIX-DGGS-dataset\\auspixDGGS\\view\\templates'}
+2019-10-17 14:04:20 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2019-10-17 14:04:21 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:04:21] "GET /ausPIX/R774444?_view=alternates HTTP/1.1" 200 -
+2019-10-17 14:04:21 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:04:21] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2019-10-17 14:04:23 INFO _internal.py:122 127.0.0.1 - - [17/Oct/2019 14:04:23] "GET /ausPIX/R774444?_view=auspix_cell&_format=text/turtle HTTP/1.1" 200 -

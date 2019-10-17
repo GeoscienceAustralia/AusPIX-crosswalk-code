@@ -38,14 +38,14 @@ class DGGS_data(Renderer):
         print('selfID in DGGS seracher', self.id)  #self ID is the cell id
 
         self.hasName = {
-            'uri': 'http://linked.data.gov.au/def/ausPIX/',
+            'uri': 'http://linked.data.gov.au/def/auspix/',
             'label': 'from AusPIX DGGS engine (beta version 0.9):',
             'comment': 'The Entity has a name (label) which is a text sting.',
             'value': None
         }
 
         self.auspix = None
-        self.area_km2 = None
+        self.area_m2 = None
         self.longitude = None
         self.latitude = None
         self.width = None
@@ -62,9 +62,10 @@ class DGGS_data(Renderer):
         # use DGGS engine to find values
 
         self.auspix = self.id
+        #self.hasName['value'] = self.id
         auspix = self.id
         print('data ausPIX', self.auspix)
-        self.hasName = self.id
+        self.name = self.id
         dggsLoc = list()  # empty list ready to fill
         for item in self.auspix:  # build a dggs location cell as a list like dggsLoc = ['R', 7, 2, 4, 5, 6, 3, 2, 3, 4, 3, 8, 3]
             if item.isalpha():  # the letter 'R' at the beginning
@@ -99,8 +100,8 @@ class DGGS_data(Renderer):
         num = cell.area(plane=False)
         num = int(num)
         num2 = (f"{num:,d}")
-        self.area_km2 = num2
-        print('area', self.area_km2)
+        self.area_m2 = num2
+        print('area', self.area_m2)
         # containsList = list()
         # for x in range(0, 9):  #there is no 9 in Auspix
         #     containsList.append(self.auspix + str(x))
@@ -113,6 +114,15 @@ class DGGS_data(Renderer):
         self.contains = mySubCells
         print('mysubs', mySubCells)
         self.partOfCell = self.auspix[:-1]  #take one number off the end of cell ID, = parent cell
+
+
+    def export_csv(self):
+        # build a csv header
+        header = ['cellID, area, neighbours, parentCell' ]
+        # build a csv row
+        row = [self.id, self.area_km2]
+
+
 
 
 
@@ -132,7 +142,7 @@ class DGGS_data(Renderer):
                 neighbours = self.neighbors,
                 y = self.y,
                 x = self.x,
-                area_km2= self.area_km2,
+                area_m2= self.area_m2,
                 contains = self.contains,
                 partOfCell = self.partOfCell,
 
@@ -151,20 +161,37 @@ class DGGS_data(Renderer):
             return self._render_alternates_view()   # this function is in Renderer
         elif self.format in ['text/turtle', 'application/ld+json']:
             return self.export_rdf()                # this one exists below
+        elif self.format == 'text/csv':
+            return self.export.csv()
         else:  # default is HTML response: self.format == 'text/html':
             return self.export_html()
 
     def export_rdf(self):
         g = Graph()  # make instance of a RDF graph
 
-        PN = Namespace('http://linked.data.gov.au/def/placename/')   #rdf neamespace declaration
-        g.bind('pn', PN)
+        apix = Namespace('http://linked.data.gov.au/def/dggs/auspix/')   #rdf neamespace declaration
+        g.bind('auspix_cell', apix)
 
 
-        #loop through the next 3 lines to get subject, predicate, object for the triple store adding each time??
+        #
         me = URIRef(self.uri)   # URIRef is a RDF class
-        g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/placename/PlaceName')))  # PN.PlaceName))
-        g.add((me, PN.hasName, Literal(self.hasName['value'], datatype=XSD.string)))
+        g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))
+        #g.add((me, apix.hasName, Literal(self.hasName['value'], datatype=XSD.string)))
+        g.add((me, apix.hasID, Literal(self.name, datatype=XSD.string)))
+
+        #
+        g.add((me, apix.longitude, Literal(self.x, datatype=XSD.float )))
+        g.add((me, apix.latitude, Literal(self.y, datatype=XSD.float)))
+        g.add((me, apix.hasArea_m2, Literal(self.area_m2, datatype=XSD.string)))
+
+        g.add((me, apix.hasNeighbours, Literal(self.neighbors, datatype=XSD.string)))
+        # g.add((me, apix.hasRegister, Literal(self.register, datatype=XSD.string)))
+        # g.add((me, apix.hasNameFormality, Literal(self.hasNameFormality, datatype=XSD.string)))
+        # g.add((me, apix.ausPIX_DGGS, Literal(str(self.thisCell), datatype=XSD.string)))
+        # g.add((me, apix.supplyDate, Literal(str(self.supplyDate), datatype=XSD.string)))
+
+
+
 
         if self.format == 'text/turtle':
             return Response(
