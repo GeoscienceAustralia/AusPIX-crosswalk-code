@@ -114,8 +114,6 @@ class DGGS_data(Renderer):
 
 
 
-
-
     def export_html(self):
         return Response(        # Response is a Flask class imported at the top of this script
             render_template(     # render_template is also a Flask module
@@ -157,19 +155,19 @@ class DGGS_data(Renderer):
         g = Graph()  # make instance of a RDF graph
 
         apix = Namespace('http://linked.data.gov.au/def/dggs/auspix/')   #rdf namespace declaration
-        g.bind('auspix_cell', apix)
+        #g.bind('auspix_cell', apix)
+        g.bind(self.auspix, apix)  #made the cell ID the subject of the triples
         # adding the RDF triples using the self. data for this instance
         me = URIRef(self.uri)   # URIRef is a RDF class
         g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))
         g.add((me, apix.hasID, Literal(self.auspix, datatype=XSD.string)))
-        #
-        g.add((me, apix.longitude, Literal(self.x, datatype=XSD.float )))
-        g.add((me, apix.latitude, Literal(self.y, datatype=XSD.float)))
+        g.add((me, apix.centreLongi, Literal(self.x, datatype=XSD.float )))
+        g.add((me, apix.centreLati, Literal(self.y, datatype=XSD.float)))
         g.add((me, apix.hasArea_m2, Literal(self.area_m2, datatype=XSD.string)))
         g.add((me, apix.hasNeighbours, Literal(self.neighs, datatype=XSD.string)))
         g.add((me, apix.contains, Literal(self.contains, datatype=XSD.string)))
         g.add((me, apix.hasParent, Literal(self.partOfCell, datatype=XSD.string)))
-
+        g.add((me, apix.hasGeom, Literal(self.corners, datatype=XSD.string)))
 
         if self.format == 'text/turtle':
             return Response(
