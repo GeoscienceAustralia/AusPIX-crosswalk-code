@@ -170,8 +170,8 @@ class DGGS_data(Renderer):
         g = Graph()  # make instance of an RDF graph
 
         #auspix = Namespace('http://linked.data.gov.au/def/dggs/auspix/')   #rdf namespace declaration
-        auspix = Namespace('http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R78523')  # rdf namespace declaration
-        g.bind(self.auspix, auspix)  #made the cell ID the subject of the triples
+        auspix = Namespace('http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX#')  # rdf namespace declaration
+        g.bind('auspix', auspix)  #made the cell ID the subject of the triples
 
         me = 'auspix:' + URIRef(self.id)
         # g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))  #type  . . . . a . . . . .
@@ -200,35 +200,28 @@ class DGGS_data(Renderer):
         xsd = Namespace('http://www.w3.org/XML/XMLSchema#')
         g.bind('xsd', xsd)
 
-
-
-        #print('version', rdflib __version__)
-
-
         #g.add((me, RDF.type, Literal(self.auspix, datatype=xsd.string)))
-        g.add((auspix, RDF.type, URIRef('auspix:' + self.auspixCell)))
-        #g.add((apo, RDF.type, URIRef('auspix:' + self.apoUp)))
+        # first line
+        g.add((me, RDF.type, URIRef('auspix:' + self.auspixCell)))
 
-        g.add((me, auspix.upNeighbour, Literal(self.auspixUp, datatype=geo.sfTouches)))
-        g.add((me, auspix.downNeighbour, Literal(self.auspixDown, datatype=geo.sfTouches)))
-        g.add((me, auspix.rightNeighbour, Literal(self.auspixRight, datatype=geo.sfTouches)))
-        g.add((me, auspix.leftNeighbour, Literal(self.auspixLeft, datatype=geo.sfTouches)))
-
-
-
+        # neighbours
+        g.add((me, auspix.upNeighbour, URIRef('auspix:' + self.auspixUp)))
+        g.add((me, auspix.downNeighbour, URIRef('auspix:' + self.auspixDown)))
+        g.add((me, auspix.upNeighbour, URIRef('auspix:' + self.auspixLeft)))
+        g.add((me, auspix.downNeighbour, URIRef('auspix:' + self.auspixRight)))
 
         #g.add((me, RDF.type, self.auspix))
         g.add((me, geox.hasAreaM2, Literal(self.area_m2, datatype=xsd.decimal)))
 
-        #
-        g.add((me, dcat.centroid, Literal(self.wktPoint, datatype=geo.wtkLiteral)))
-        g.add((me, geo.hasGeometry, Literal(self.wktPoly, datatype=geo.wktLiteral)))
         g.add((me, dct.identifier, Literal(self.auspix)))
+        #
+        g.add((me, geo.hasGeometry, Literal(self.wktPoly, datatype=geo.wktLiteral)))
 
-
+        g.add((me, geox.centroid, Literal(self.wktPoint, datatype=geo.wtkLiteral)))
 
         g.add((me, geo.sfContains, Literal(self.childCells, datatype=XSD.string)))
-        g.add((me, geo.sfWithin, Literal(('auspix:' + self.partOfCell), datatype=XSD.string)))
+
+        g.add((me, geo.sfWithin, URIRef('auspix:' + self.partOfCell)))
 
         if self.format == 'text/turtle':
             return Response(
