@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect, url_for, Response, render_template, send_file
 import flask
-from auspixDGGS.model.ausPIX_location import Placename
+
 from auspixDGGS.model.dggs_data import DGGS_data
 #from auspixDGGS.model.gazetteer import Gazetteer, GAZETTEERS
 from pyldapi import RegisterRenderer
@@ -36,13 +36,13 @@ def show_map():
     '''
     Function to render a map around the specified coordinates
     '''
-    auspix = request.values.get("auspix")
+
     auspix='Cell nucleus on ellipsoid'
-    print('auspixinRoutes', auspix)
+
     corners = (request.values.get('location')).split('),')
 
-    #corners is straight from database vis auspix_location.py and auspix_location.html
-    print('cornersXXroutes', corners[0], corners[1], corners[2], corners[3])
+    #corners is straight from database via auspix_location.py and auspix_location.html
+    #print('cornersXXroutes', corners[0], corners[1], corners[2], corners[3])
     # convert the corner information  into a list for the leaflet map
     longLatsList = list()
     for thing in corners:
@@ -64,8 +64,8 @@ def show_map():
 
     x = float(request.values.get('x'))
     y = float(request.values.get('y'))
-    print('x', x)
-    print('y', y)
+    # print('x', x)
+    # print('y', y)
     # algorithm designed to make it map properly . . .
     min_long = min(longLatsList[0][1], longLatsList[1][1], longLatsList[2][1], longLatsList[3][1])
     max_long = max(longLatsList[0][1], longLatsList[1][1], longLatsList[2][1], longLatsList[3][1])

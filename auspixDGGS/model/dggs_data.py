@@ -12,7 +12,7 @@ from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal
 
 
 # for DGGS zone attribution
-from AusPIXengine import dggs
+from auspixengine import dggs
 rdggs = dggs.RHEALPixDGGS()
 
 class DGGS_data(Renderer):
@@ -35,7 +35,7 @@ class DGGS_data(Renderer):
         super(DGGS_data, self).__init__(request, uri, views, 'auspix_cell', None)
         print('this uri', uri)
         self.id = uri.split('/')[-1]   #probably not needed for this DGGS
-        print('selfID in DGGS seracher', self.id)  #self ID is the cell id
+        print('self.id = ', self.id)  #self ID is the cell id
 
         self.hasName = {
             'uri': 'http://linked.data.gov.au/def/ausPIX/',
@@ -59,11 +59,11 @@ class DGGS_data(Renderer):
         self.subCells = None
         self.partOfCell = None
 
+
         # use DGGS engine to find values
 
         self.auspix = self.id
-        auspix = self.id
-        print('data ausPIX', self.auspix)
+        print('dggs cell ID =', self.auspix)
         self.hasName = self.id
         dggsLoc = list()  # empty list ready to fill
         for item in self.auspix:  # build a dggs location cell as a list like dggsLoc = ['R', 7, 2, 4, 5, 6, 3, 2, 3, 4, 3, 8, 3]
@@ -73,45 +73,55 @@ class DGGS_data(Renderer):
                 item = int(item)  # for all the numbers in the cell
                 dggsLoc.append(item)
 
-        cell = rdggs.cell(dggsLoc)
-        # self.width = rdggs.cell.cell_width(planar= True)
-        #find centroid
+        cell = rdggs.cell(dggsLoc)  # define a cell object
+        self.corners = cell.vertices(plane=False)
         self.centroid = cell.nucleus(plane=False)  # on the ellipsoid
 
-        self.y = self.centroid[1]
-        self.x = (self.centroid[0])  # temp repair to get rid of engine problem
+        self.y = self.centroid[1]  #for html and routes
+        self.x = self.centroid[0]  #for html and routes
 
-        self.corners = cell.vertices(plane=False)
-        # print('self.corners', self.corners)
+        self.mypoly = cell.vertices(plane=False)
+        self.mypoly.append(self.mypoly[0])  #to close the polygon
+
+        self.wktPoint = 'POINT' + str(cell.nucleus(plane=False))   # centroid as wkt
+        self.wktPoly = 'POLYGON' + str(self.mypoly)  # vertices poly as wkt
+        self.wktPoly = self.wktPoly.replace('[','(')
+        self.wktPoly = self.wktPoly.replace(']',')')
+
 
         #find the neighbors of the cell
-        self.neighbors = cell.neighbors()
-        neighs = list()
-        nie = list()
-        for keys, values in self.neighbors.items():
-            #print(keys, values)
+        self.neighbors = cell.neighbors()  #calls engine for the neighbours - returns dict
+
+        self.neighs = list()
+        for keys, values in self.neighbors.items():  #convert to list
             nei = (keys, str(values))
-            neighs.append(nei)
-        print('neighs', neighs)
-        self.neighs = neighs
+            self.neighs.append(nei)
+        #self.neighs = neighs
+        print('neighs', self.neighs)
+        self.auspixLeft = self.neighs[0][1]
+        self.auspixRight = self.neighs[1][1]
+        self.auspixDown = self.neighs[2][1]
+        self.auspixUp = self.neighs[3][1]
+        self.auspixCell = 'Cell'
 
         #print('verts', self.corners)
         num = cell.area(plane=False)
         num = int(num)
         num2 = str(num) # (f"{num:,d}")
-        self.area_km2 = num2
-        print('area', self.area_km2)
-        # containsList = list()
-        # for x in range(0, 9):  #there is no 9 in Auspix
-        #     containsList.append(self.auspix + str(x))
-        # self.contains = containsList   # there is also a function in the engine called subcells
-        self.subcells = cell.subcells()
-        # get engine to calculate subcells
+        self.area_m2 = num2
+        self.subcells = cell.subcells()  # get engine to calculate subcells
+
         mySubCells = []
         for item in self.subcells:
             mySubCells.append(str(item))
-        self.contains = mySubCells
-        print('mysubs', mySubCells)
+        self.contains = mySubCells   #for html landing page (?)
+
+        self.childCells = list()
+        for item in mySubCells:
+            self.childCells.append(('auspix:' + item))
+
+
+        #print('mysubs', mySubCells)
         self.partOfCell = self.auspix[:-1]  #take one number off the end of cell ID, = parent cell
 
 
@@ -133,7 +143,7 @@ class DGGS_data(Renderer):
                 neighbours = self.neighbors,
                 y = self.y,
                 x = self.x,
-                area_km2= self.area_km2,
+                area_m2= self.area_m2,
                 contains = self.contains,
                 partOfCell = self.partOfCell,
 
@@ -155,17 +165,63 @@ class DGGS_data(Renderer):
         else:  # default is HTML response: self.format == 'text/html':
             return self.export_html()
 
-    def export_rdf(self):
-        g = Graph()  # make instance of a RDF graph
+    def export_rdf(self):  #also for text/turtle
 
-        PN = Namespace('http://linked.data.gov.au/def/placename/')   #rdf neamespace declaration
-        g.bind('pn', PN)
+        g = Graph()  # make instance of an RDF graph
 
+        #auspix = Namespace('http://linked.data.gov.au/def/dggs/auspix/')   #rdf namespace declaration
+        auspix = Namespace('http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX#')  # rdf namespace declaration
+        g.bind('auspix', auspix)  #made the cell ID the subject of the triples
 
-        #loop through the next 3 lines to get subject, predicate, object for the triple store adding each time??
-        me = URIRef(self.uri)   # URIRef is a RDF class
-        g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/placename/PlaceName')))  # PN.PlaceName))
-        g.add((me, PN.hasName, Literal(self.hasName['value'], datatype=XSD.string)))
+        me = 'auspix:' + URIRef(self.id)
+        # g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))  #type  . . . . a . . . . .
+
+        geo = Namespace('http://www.opengis.net/ont/geosparql#')
+        g.bind('geo', geo)
+
+        # apo = Namespace('http://linked.data.gov.au/def/ausPIX#')
+        # g.bind('apo', apo)
+
+        geox = Namespace('http://linked.data.gov.au/def/geox#')
+        g.bind('geox', geox)
+
+        dct = Namespace('http://purl.org/dc/terms/#')
+        g.bind('dct', dct)
+
+        dcat = Namespace('http://www.w3.org/ns/dcat/#')
+        g.bind('dcat', dcat)
+
+        data = Namespace('http://linked.data.gov.au/def/datatype/#')
+        g.bind('data', data)
+
+        rdfs = Namespace('http://www.w3.org/2000/01/rdf-schema#')
+        g.bind('rdfs', rdfs)
+
+        xsd = Namespace('http://www.w3.org/XML/XMLSchema#')
+        g.bind('xsd', xsd)
+
+        #g.add((me, RDF.type, Literal(self.auspix, datatype=xsd.string)))
+        # first line
+        g.add((me, RDF.type, URIRef('auspix:' + self.auspixCell)))
+
+        # neighbours
+        g.add((me, auspix.upNeighbour, URIRef('auspix:' + self.auspixUp)))
+        g.add((me, auspix.downNeighbour, URIRef('auspix:' + self.auspixDown)))
+        g.add((me, auspix.upNeighbour, URIRef('auspix:' + self.auspixLeft)))
+        g.add((me, auspix.downNeighbour, URIRef('auspix:' + self.auspixRight)))
+
+        #g.add((me, RDF.type, self.auspix))
+        g.add((me, geox.hasAreaM2, Literal(self.area_m2, datatype=xsd.decimal)))
+
+        g.add((me, dct.identifier, Literal(self.auspix)))
+        #
+        g.add((me, geo.hasGeometry, Literal(self.wktPoly, datatype=geo.wktLiteral)))
+
+        g.add((me, geox.centroid, Literal(self.wktPoint, datatype=geo.wtkLiteral)))
+
+        g.add((me, geo.sfContains, Literal(self.childCells, datatype=XSD.string)))
+
+        g.add((me, geo.sfWithin, URIRef('auspix:' + self.partOfCell)))
 
         if self.format == 'text/turtle':
             return Response(

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h2>National Composite Gazetteer of Australia </h2>
+    <h2>AusPIX Discrete Global Grid System </h2>
     <h3>API Beta version 0.2</h3>
     {% if class_uri %}
         <h2>Alternates view of a <a href="{{ class_uri }}">{{ class_uri }}</a></h2>
@@ -30,6 +30,7 @@
                 {% endif %}
                 {% if loop.index != vals['formats']|length %}<br />{% endif %}
             {% endfor %}
+
             </td>
             <td>{{ vals['namespace'] }}</td>
             <td>{{ vals['comment'] }}</td>
