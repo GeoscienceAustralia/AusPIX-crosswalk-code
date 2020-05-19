@@ -7,7 +7,7 @@ from flask import render_template, Response
 import folium
 import auspixDGGS._conf as conf
 from pyldapi import Renderer, View
-from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal
+from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal, RDFS
 
 
 
@@ -33,9 +33,9 @@ class DGGS_data(Renderer):
         }
 
         super(DGGS_data, self).__init__(request, uri, views, 'auspix_cell', None)
-        print('this uri', uri)
-        self.id = uri.split('/')[-1]   #probably not needed for this DGGS
-        print('self.id = ', self.id)  #self ID is the cell id
+        #print('this uri', uri)
+        self.id = uri.split('/')[-1]  #needed for routes
+        # print('self.id = ', self.id)  #self ID is the cell id
 
         self.hasName = {
             'uri': 'http://linked.data.gov.au/def/ausPIX/',
@@ -63,7 +63,7 @@ class DGGS_data(Renderer):
         # use DGGS engine to find values
 
         self.auspix = self.id
-        print('dggs cell ID =', self.auspix)
+        #print('dggs cell ID =', self.auspix)
         self.hasName = self.id
         dggsLoc = list()  # empty list ready to fill
         for item in self.auspix:  # build a dggs location cell as a list like dggsLoc = ['R', 7, 2, 4, 5, 6, 3, 2, 3, 4, 3, 8, 3]
@@ -83,11 +83,20 @@ class DGGS_data(Renderer):
         self.mypoly = cell.vertices(plane=False)
         self.mypoly.append(self.mypoly[0])  #to close the polygon
 
-        self.wktPoint = 'POINT' + str(cell.nucleus(plane=False))   # centroid as wkt
-        self.wktPoly = 'POLYGON' + str(self.mypoly)  # vertices poly as wkt
-        self.wktPoly = self.wktPoly.replace('[','(')
-        self.wktPoly = self.wktPoly.replace(']',')')
+        centrd = str(cell.nucleus(plane=False))   # find the centroid using the engine
+        centrd = centrd.replace(',', '') # prepare for wkt
+        self.wktPoint = 'POINT ' + centrd   # centroid as wkt
 
+        self.wktPoly = 'POLYGON ' + str(self.mypoly)  # vertices poly
+        # convert poly data to vertices list to wkt
+        self.wktPoly = self.wktPoly.replace('(', '')  # prepare for wkt
+        self.wktPoly = self.wktPoly.replace(', ', ' ')  # prepare for wkt
+        self.wktPoly = self.wktPoly.replace('),', ',')  # prepare for wkt
+        self.wktPoly = self.wktPoly.replace(') ', ', ')  # prepare for wkt
+
+        self.wktPoly = self.wktPoly.replace('[','((')  # prepare for wkt
+        self.wktPoly = self.wktPoly.replace(']','))')   # prepare for wkt
+        self.wktPoly = self.wktPoly.replace(')))', '))')  # prepare for wkt
 
         #find the neighbors of the cell
         self.neighbors = cell.neighbors()  #calls engine for the neighbours - returns dict
@@ -97,7 +106,7 @@ class DGGS_data(Renderer):
             nei = (keys, str(values))
             self.neighs.append(nei)
         #self.neighs = neighs
-        print('neighs', self.neighs)
+        #print('neighs', self.neighs)
         self.auspixLeft = self.neighs[0][1]
         self.auspixRight = self.neighs[1][1]
         self.auspixDown = self.neighs[2][1]
@@ -109,23 +118,30 @@ class DGGS_data(Renderer):
         num = int(num)
         num2 = str(num) # (f"{num:,d}")
         self.area_m2 = num2
+
         self.subcells = cell.subcells()  # get engine to calculate subcells
 
         mySubCells = []
         for item in self.subcells:
             mySubCells.append(str(item))
-        self.contains = mySubCells   #for html landing page (?)
+        self.contains = mySubCells  # for html landing page (?)
 
         self.childCells = list()
         for item in mySubCells:
-            self.childCells.append(('auspix:' + item))
+            self.childCells.append((item))
 
+        self.child0 = self.childCells[0]
+        self.child1 = self.childCells[1]
+        self.child2 = self.childCells[2]
+        self.child3 = self.childCells[3]
+        self.child4 = self.childCells[4]
+        self.child5 = self.childCells[5]
+        self.child6 = self.childCells[6]
+        self.child7 = self.childCells[7]
+        self.child8 = self.childCells[8]
 
         #print('mysubs', mySubCells)
         self.partOfCell = self.auspix[:-1]  #take one number off the end of cell ID, = parent cell
-
-
-
 
 
     def export_html(self):
@@ -169,24 +185,24 @@ class DGGS_data(Renderer):
 
         g = Graph()  # make instance of an RDF graph
 
-        #auspix = Namespace('http://linked.data.gov.au/def/dggs/auspix/')   #rdf namespace declaration
-        auspix = Namespace('http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX#')  # rdf namespace declaration
+        auspix = URIRef('http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset#')  # rdf namespace declaration
         g.bind('auspix', auspix)  #made the cell ID the subject of the triples
 
-        me = 'auspix:' + URIRef(self.id)
+
+        #the ontolgy   auspix ontolgy  apo
+        apo = Namespace('http://linked.data.gov.au/def/ausPIX#')  # ontolgy  = /def/
+        g.bind('apo', apo)
+
         # g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))  #type  . . . . a . . . . .
 
         geo = Namespace('http://www.opengis.net/ont/geosparql#')
         g.bind('geo', geo)
 
-        # apo = Namespace('http://linked.data.gov.au/def/ausPIX#')
-        # g.bind('apo', apo)
-
         geox = Namespace('http://linked.data.gov.au/def/geox#')
         g.bind('geox', geox)
 
-        dct = Namespace('http://purl.org/dc/terms/#')
-        g.bind('dct', dct)
+        dcterms = Namespace('http://purl.org/dc/terms/#')
+        g.bind('dcterms', dcterms)
 
         dcat = Namespace('http://www.w3.org/ns/dcat/#')
         g.bind('dcat', dcat)
@@ -200,28 +216,41 @@ class DGGS_data(Renderer):
         xsd = Namespace('http://www.w3.org/XML/XMLSchema#')
         g.bind('xsd', xsd)
 
-        #g.add((me, RDF.type, Literal(self.auspix, datatype=xsd.string)))
-        # first line
-        g.add((me, RDF.type, URIRef('auspix:' + self.auspixCell)))
+        # build the graphs
+        # first line - points the dggs cell to the onology
+        g.add((URIRef(auspix + self.id), RDF.type, URIRef(apo + 'Cell'))) ;
 
         # neighbours
-        g.add((me, auspix.upNeighbour, URIRef('auspix:' + self.auspixUp)))
-        g.add((me, auspix.downNeighbour, URIRef('auspix:' + self.auspixDown)))
-        g.add((me, auspix.upNeighbour, URIRef('auspix:' + self.auspixLeft)))
-        g.add((me, auspix.downNeighbour, URIRef('auspix:' + self.auspixRight)))
+        g.add((auspix + self.id, apo.hasNeighbourUp, URIRef(auspix + self.auspixUp))) ;
+        g.add((auspix + self.id, apo.hasNeighbourDown, URIRef(auspix + self.auspixDown))) ;  #works good
+        g.add((auspix + self.id, apo.hasNeighbourLeft, URIRef(auspix + self.auspixLeft))) ;
+        g.add((auspix + self.id, apo.hasNeighbourRight, URIRef(auspix + self.auspixRight)));
 
-        #g.add((me, RDF.type, self.auspix))
-        g.add((me, geox.hasAreaM2, Literal(self.area_m2, datatype=xsd.decimal)))
+        # other data
+        #g.add((auspix + self.id, geox.hasAreaM2, URIRef(data + self.area_m2))) ;
+        #g.add([auspix + self.id, geox.hasAreaM2, URIRef(data + self.area_m2, datatype=xsd.decimal) ]);  # notice square brakets
+        g.add([auspix + self.id, geox.hasAreaM2, URIRef(data + self.area_m2)]);  # notice square brakets
 
-        g.add((me, dct.identifier, Literal(self.auspix)))
-        #
-        g.add((me, geo.hasGeometry, Literal(self.wktPoly, datatype=geo.wktLiteral)))
+        #g.add((auspix + self.id, geox.hasAreaM2, URIRef(data + self.area_m2)))
+        #loooking for geox:hasAreaM2 [ data:value "12971551595"^^xsd:decimal ] ;
 
-        g.add((me, geox.centroid, Literal(self.wktPoint, datatype=geo.wtkLiteral)))
+        #g.add((auspix, geox.hasArea, Literal(self.area_m2, datatype=geox.SpatialMeasure)));
+        g.add((auspix + self.id, dcterms.identifier, Literal(self.auspix))) ;
+        g.add((auspix + self.id, geo.hasGeometry, Literal(self.wktPoly, datatype=geo.wktLiteral))) ;
+        g.add((auspix + self.id, geox.hasCentroid, Literal(self.wktPoint, datatype=geo.wtkLiteral))) ;
+        g.add((auspix + self.id, geo.sfWithin, URIRef(auspix + self.partOfCell))) ;
 
-        g.add((me, geo.sfContains, Literal(self.childCells, datatype=XSD.string)))
+        #child cells
+        g.add((auspix + self.id, geo.sfContains, URIRef(auspix + self.child0)))
+        g.add((auspix + self.id, geo.sfContains, URIRef(auspix + self.child1)))
+        g.add((auspix + self.id, geo.sfContains, URIRef(auspix + self.child2)))
+        g.add((auspix + self.id, geo.sfContains, URIRef(auspix + self.child3)))
+        g.add((auspix + self.id, geo.sfContains, URIRef(auspix + self.child4)))
+        g.add((auspix + self.id, geo.sfContains, URIRef(auspix + self.child5)))
+        g.add((auspix + self.id, geo.sfContains, URIRef(auspix + self.child6)))
+        g.add((auspix + self.id, geo.sfContains, URIRef(auspix + self.child7)))
+        g.add((auspix + self.id, geo.sfContains, URIRef(auspix + self.child8))) ;
 
-        g.add((me, geo.sfWithin, URIRef('auspix:' + self.partOfCell)))
 
         if self.format == 'text/turtle':
             return Response(
