@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 import decimal
 import json
-import os
+#import os
 from flask import render_template, Response
 
-import folium
+#import folium
 import auspixDGGS._conf as conf
 from pyldapi import Renderer, View
-from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal, RDFS
-
+from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal, BNode
+from rdflib.namespace import XSD, DCTERMS   #imported for 'export_rdf' function
 
 
 # for DGGS zone attribution
@@ -185,15 +185,15 @@ class DGGS_data(Renderer):
 
         g = Graph()  # make instance of an RDF graph
 
-        auspix = URIRef('http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset#')  # rdf namespace declaration
+        auspix = URIRef('http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/')  # rdf namespace declaration
         g.bind('auspix', auspix)  #made the cell ID the subject of the triples
 
 
         #the ontolgy   auspix ontolgy  apo
-        apo = Namespace('http://linked.data.gov.au/def/ausPIX#')  # ontolgy  = /def/
+        apo = Namespace('http://linked.data.gov.au/def/auspix#')  # ontolgy  = /def/
         g.bind('apo', apo)
 
-        # g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))  #type  . . . . a . . . . .
+        # g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))  # pattren for type  . . . . a . . . . .
 
         geo = Namespace('http://www.opengis.net/ont/geosparql#')
         g.bind('geo', geo)
@@ -201,41 +201,50 @@ class DGGS_data(Renderer):
         geox = Namespace('http://linked.data.gov.au/def/geox#')
         g.bind('geox', geox)
 
-        dcterms = Namespace('http://purl.org/dc/terms/#')
-        g.bind('dcterms', dcterms)
+        # dcterms = Namespace('http://purl.org/dc/terms/')   # already imported
+        # g.bind('dcterms', dcterms)
 
         dcat = Namespace('http://www.w3.org/ns/dcat/#')
         g.bind('dcat', dcat)
 
-        data = Namespace('http://linked.data.gov.au/def/datatype/#')
+        data = Namespace('http://linked.data.gov.au/def/datatype/')
         g.bind('data', data)
 
-        rdfs = Namespace('http://www.w3.org/2000/01/rdf-schema#')
-        g.bind('rdfs', rdfs)
+        # rdfs = Namespace('http://www.w3.org/2001/XMLSchema#')    # already imported
+        # g.bind('rdfs', rdfs)
 
-        xsd = Namespace('http://www.w3.org/XML/XMLSchema#')
-        g.bind('xsd', xsd)
+        # xsd = Namespace('http://www.w3.org/XML/XMLSchema#')     # already imported
+        # g.bind('xsd', xsd)
 
         # build the graphs
-        # first line - points the dggs cell to the onology
+        # first line - points the dggs cell to the ontology apo
         g.add((URIRef(auspix + self.id), RDF.type, URIRef(apo + 'Cell'))) ;
 
         # neighbours
         g.add((auspix + self.id, apo.hasNeighbourUp, URIRef(auspix + self.auspixUp))) ;
-        g.add((auspix + self.id, apo.hasNeighbourDown, URIRef(auspix + self.auspixDown))) ;  #works good
+        g.add((auspix + self.id, apo.hasNeighbourDown, URIRef(auspix + self.auspixDown))) ;
         g.add((auspix + self.id, apo.hasNeighbourLeft, URIRef(auspix + self.auspixLeft))) ;
-        g.add((auspix + self.id, apo.hasNeighbourRight, URIRef(auspix + self.auspixRight)));
+        g.add((auspix + self.id, apo.hasNeighbourRight, URIRef(auspix + self.auspixRight))) ;
+
+        #area needs special treatment  - a Blank Node   - 2 options
+        #create the blank node
+        curr_bnode = BNode()
+        #add details for the blank node
+        g.add((curr_bnode, data.value, Literal(self.area_m2, datatype=XSD.decimal)))
+        #create the link between the parent node and the blank node
+        g.add((auspix + self.id, geox.hasAreaM2, curr_bnode))
+
+        #create the blank node for Area -1st option from Jonathan
+        # curr_bnode = BNode()
+        # #add details for the blank node
+        # g.add((curr_bnode, RDF.type, geox.SpatialMeasure))
+        # g.add((curr_bnode, data.unit, URIRef("http://qudt.org/vocab/unit/M2")))
+        # g.add((curr_bnode, data.value, Literal(self.area_m2, datatype=XSD.decimal)))
+        # #create the link between the parent node and the blank node
+        # g.add((auspix + self.id, geox.hasArea, curr_bnode))
 
         # other data
-        #g.add((auspix + self.id, geox.hasAreaM2, URIRef(data + self.area_m2))) ;
-        #g.add([auspix + self.id, geox.hasAreaM2, URIRef(data + self.area_m2, datatype=xsd.decimal) ]);  # notice square brakets
-        g.add([auspix + self.id, geox.hasAreaM2, URIRef(data + self.area_m2)]);  # notice square brakets
-
-        #g.add((auspix + self.id, geox.hasAreaM2, URIRef(data + self.area_m2)))
-        #loooking for geox:hasAreaM2 [ data:value "12971551595"^^xsd:decimal ] ;
-
-        #g.add((auspix, geox.hasArea, Literal(self.area_m2, datatype=geox.SpatialMeasure)));
-        g.add((auspix + self.id, dcterms.identifier, Literal(self.auspix))) ;
+        g.add((auspix + self.id, DCTERMS.identifier, Literal(self.auspix))) ;
         g.add((auspix + self.id, geo.hasGeometry, Literal(self.wktPoly, datatype=geo.wktLiteral))) ;
         g.add((auspix + self.id, geox.hasCentroid, Literal(self.wktPoint, datatype=geo.wtkLiteral))) ;
         g.add((auspix + self.id, geo.sfWithin, URIRef(auspix + self.partOfCell))) ;
