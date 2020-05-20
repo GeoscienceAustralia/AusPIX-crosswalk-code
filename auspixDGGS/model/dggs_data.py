@@ -201,8 +201,8 @@ class DGGS_data(Renderer):
         geox = Namespace('http://linked.data.gov.au/def/geox#')
         g.bind('geox', geox)
 
-        # dcterms = Namespace('http://purl.org/dc/terms/')   # already imported
-        # g.bind('dcterms', dcterms)
+        dcterms = Namespace('http://purl.org/dc/terms/')  #posibility of importing but didn't work as expected
+        g.bind('dcterms', dcterms)
 
         dcat = Namespace('http://www.w3.org/ns/dcat/#')
         g.bind('dcat', dcat)
