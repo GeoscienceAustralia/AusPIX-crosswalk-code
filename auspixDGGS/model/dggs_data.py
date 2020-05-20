@@ -8,7 +8,7 @@ from flask import render_template, Response
 import auspixDGGS._conf as conf
 from pyldapi import Renderer, View
 from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal, BNode
-from rdflib.namespace import XSD, DCTERMS   #imported for 'export_rdf' function
+from rdflib.namespace import XSD, DCTERMS, RDFS   #imported for 'export_rdf' function
 
 
 # for DGGS zone attribution
@@ -182,18 +182,16 @@ class DGGS_data(Renderer):
             return self.export_html()
 
     def export_rdf(self):  #also for text/turtle
-
         g = Graph()  # make instance of an RDF graph
 
-        auspix = URIRef('http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/')  # rdf namespace declaration
+        # namespace declarations
+        auspix = URIRef('http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/')
         g.bind('auspix', auspix)  #made the cell ID the subject of the triples
 
-
-        #the ontolgy   auspix ontolgy  apo
-        apo = Namespace('http://linked.data.gov.au/def/auspix#')  # ontolgy  = /def/
+        apo = Namespace('http://linked.data.gov.au/def/auspix#')  # ontolgy  = /def/  #the ontolgy   auspix ontolgy == apo
         g.bind('apo', apo)
 
-        # g.add((me, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))  # pattren for type  . . . . a . . . . .
+        # g.add((auspix, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))  # pattren for type  . . . . a . . . . .
 
         geo = Namespace('http://www.opengis.net/ont/geosparql#')
         g.bind('geo', geo)
@@ -201,23 +199,23 @@ class DGGS_data(Renderer):
         geox = Namespace('http://linked.data.gov.au/def/geox#')
         g.bind('geox', geox)
 
-        dcterms = Namespace('http://purl.org/dc/terms/')  #posibility of importing but didn't work as expected
-        g.bind('dcterms', dcterms)
+        # dcterms = Namespace('http://purl.org/dc/terms/')  # already imported
+        g.bind('dcterms', DCTERMS)
 
         dcat = Namespace('http://www.w3.org/ns/dcat/#')
         g.bind('dcat', dcat)
 
+        #rdfs = Namespace('http://www.w3.org/2001/XMLSchema#')    # already imported at top
+        #g.bind('rdfs', RDFS)    # (not used ??)
+
+        #xsd = Namespace('http://www.w3.org/XML/XMLSchema#')     # already imported
+        g.bind('xsd', XSD)
+
         data = Namespace('http://linked.data.gov.au/def/datatype/')
         g.bind('data', data)
 
-        # rdfs = Namespace('http://www.w3.org/2001/XMLSchema#')    # already imported
-        # g.bind('rdfs', rdfs)
-
-        # xsd = Namespace('http://www.w3.org/XML/XMLSchema#')     # already imported
-        # g.bind('xsd', xsd)
-
         # build the graphs
-        # first line - points the dggs cell to the ontology apo
+        # first line - points the dggs cell to the ontology == apo
         g.add((URIRef(auspix + self.id), RDF.type, URIRef(apo + 'Cell'))) ;
 
         # neighbours
