@@ -4,6 +4,8 @@ Australian rhealPIX DGGS implementation dataset, as a linked data API.
 Includes landing-page with map and data for each AusPIX cell (worldwide including Antarctica).
 Search for any cell.
 
+Date: September 2019
+
 Known Issue: the leaflet module map cannot display the polar regions properly (N4 and S4). This is because folium and leaflet are on a planar projection and do not extend all the way to the polar regions.
 
 Data includes: Map, area, parent cell, child cells, vertices, centroid, cell neighbours. 
@@ -16,6 +18,8 @@ Author: Bell, J.G.
 ecat record: 140149
 
 Funded by the Australian Government Loc-I Project
+
+
 
 
 References:
