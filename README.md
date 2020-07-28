@@ -8,6 +8,16 @@ Known Issue: the leaflet module map cannot display the polar regions properly (N
 
 Data includes: Map, area, parent cell, child cells, vertices, centroid, cell neighbours. 
 
+describing the product, the authors, the eCat record and the project funding it
+
+This is the code for the linked-data API for AusPIX DGGS cells.
+The API provides basic information about AusPIX cells.
+
+Author: Bell, J.G.
+ecat record: 140149
+Funded by the Australian Government Loc-I Project
+
+
 References:
 https://iopscience.iop.org/article/10.1088/1755-1315/34/1/012012/pdf
 
