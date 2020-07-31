@@ -16,6 +16,7 @@ API provides basic information about AusPIX cells.
 Author: Bell, J.G.
 
 ecat record: 140149
+https://ecat.ga.gov.au/geonetwork/srv/eng/catalog.search#/metadata/140149
 
 Funded by the Australian Government Loc-I Project
 
