@@ -4,14 +4,11 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/auspixDGGS" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/auspixDGGS/AusPIXengine" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/pyldapi" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/pyldapi" />
       <excludeFolder url="file://$MODULE_DIR$/pyproj" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.6 (placenames-dataset)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="AusPIX_DGGS" />
-  </component>
-  <component name="TestRunnerService">
-    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
   </component>
 </module>

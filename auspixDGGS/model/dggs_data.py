@@ -12,8 +12,9 @@ from rdflib.namespace import XSD, DCTERMS, RDFS   #imported for 'export_rdf' fun
 
 
 # for DGGS zone attribution
-from auspixengine import dggs
-rdggs = dggs.RHEALPixDGGS()
+from rhealpixdggs.dggs import RHEALPixDGGS  # from imported module
+
+rdggs = RHEALPixDGGS()  # make an instance
 
 class DGGS_data(Renderer):
     """
