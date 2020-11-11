@@ -6,7 +6,8 @@ from flask import render_template, Response
 
 #import folium
 import auspixDGGS._conf as conf
-from pyldapi import Renderer, View
+from pyldapi import Renderer, Profile
+
 from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal, BNode
 from rdflib.namespace import XSD, DCTERMS, RDFS   #imported for 'export_rdf' function
 
@@ -23,17 +24,18 @@ class DGGS_data(Renderer):
     """
 
     def __init__(self, request, uri):
+        format_list = ['text/html', 'text/turtle', 'application/ld+json', 'application/rdf+xml']
         views = {
-            'auspix_cell': View(
+            'auspix_cell': Profile(
                 '/dggs/auspix/',
                 'This view is the standard view delivered by the DGGS dataset in accordance with the '
-                'XXXXX Profile',
-                ['text/html', 'text/turtle', 'application/ld+json'],
-                'text/html'
+                'AusPIX Profile',
+                format_list,
+                'text/turtle', 'text/html',  ##############
             )
         }
 
-        super(DGGS_data, self).__init__(request, uri, views, 'auspix_cell', None)
+        super(DGGS_data, self).__init__(request, uri, views, 'auspix_cell', 'text/turtle')
         #print('this uri', uri)
         self.id = uri.split('/')[-1]  #needed for routes
         # print('self.id = ', self.id)  #self ID is the cell id
@@ -175,11 +177,11 @@ class DGGS_data(Renderer):
 
     # maybe should call this function something else - it seems to clash ie Overrides the method in Renderer
     def render(self):
-        if self.view == 'alternates':
+        if self.profile == 'alternates':
             return self._render_alternates_view()   # this function is in Renderer
-        elif self.format in ['text/turtle', 'application/ld+json']:
+        elif self.mediatype in ['text/turtle', 'application/ld+json']:
             return self.export_rdf()                # this one exists below
-        else:  # default is HTML response: self.format == 'text/html':
+        else:  # default is HTML response: self.format == 'text/html???????????????????':
             return self.export_html()
 
     def export_rdf(self):  #also for text/turtle
@@ -260,7 +262,7 @@ class DGGS_data(Renderer):
         g.add((auspix + self.id, geo.sfContains, URIRef(auspix + self.child8))) ;
 
 
-        if self.format == 'text/turtle':
+        if self.mediatype == 'text/turtle':
             return Response(
                 g.serialize(format='turtle'),
                 mimetype='text/turtle'

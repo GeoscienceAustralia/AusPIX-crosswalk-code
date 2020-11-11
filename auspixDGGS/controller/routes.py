@@ -1,16 +1,22 @@
-from flask import Blueprint, request, redirect, url_for, Response, render_template, send_file
-import flask
 
-from auspixDGGS.model.dggs_data import DGGS_data
-#from auspixDGGS.model.gazetteer import Gazetteer, GAZETTEERS
-from pyldapi import RegisterRenderer
-import auspixDGGS._conf as conf
+
+##from flask import Blueprint, request, redirect, url_for, Response, render_template, send_file
+from flask import Blueprint, request, Response, render_template
+
+##import flask
+
+##from auspixDGGS.model.dggs_data import DGGS_data
+from model.dggs_data import DGGS_data
+
+#from pyldapi import RegisterRenderer
+from pyldapi import ContainerRenderer
+import _conf
 import folium
 import os
 
 routes = Blueprint('controller', __name__)
 
-DEFAULT_ITEMS_PER_PAGE=1000
+DEFAULT_ITEMS_PER_PAGE=150
 
 
 @routes.route('/', strict_slashes=True)
