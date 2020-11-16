@@ -1,19 +1,11 @@
-
-
-##from flask import Blueprint, request, redirect, url_for, Response, render_template, send_file
 from flask import Blueprint, request, Response, render_template
-
-##import flask
-
-##from auspixDGGS.model.dggs_data import DGGS_data
 from model.dggs_data import DGGS_data
 
-#from pyldapi import RegisterRenderer
 from pyldapi import ContainerRenderer
 import _conf
 import folium
-import os
-
+import psycopg2
+print(__name__)
 routes = Blueprint('controller', __name__)
 
 DEFAULT_ITEMS_PER_PAGE=150
@@ -21,7 +13,7 @@ DEFAULT_ITEMS_PER_PAGE=150
 
 @routes.route('/', strict_slashes=True)
 def home():
-    return render_template('home.html')
+    return render_template('/home.html')
 
 @routes.route('/ausPIX/')
 def ausPIX():
@@ -119,6 +111,3 @@ def show_map():
                                       color='#FF6347')
 
     return folium_map.get_root().render()
-
-
-

@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
+
 import decimal
 import json
 #import os
 from flask import render_template, Response
 
 #import folium
-import auspixDGGS._conf as conf
+import _conf as conf
 from pyldapi import Renderer, Profile
 
 from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal, BNode
 from rdflib.namespace import XSD, DCTERMS, RDFS   #imported for 'export_rdf' function
 
 
-# for DGGS zone attribution
-from rhealpixdggs.dggs import RHEALPixDGGS  # from imported module
-
-rdggs = RHEALPixDGGS()  # make an instance
+# for DGGSC:C zone attribution
+from rhealpixdggs import dggs
+rdggs = dggs.RHEALPixDGGS()
 
 class DGGS_data(Renderer):
     """
@@ -26,19 +26,20 @@ class DGGS_data(Renderer):
     def __init__(self, request, uri):
         format_list = ['text/html', 'text/turtle', 'application/ld+json', 'application/rdf+xml']
         views = {
-            'auspix_cell': Profile(
-                '/dggs/auspix/',
-                'This view is the standard view delivered by the DGGS dataset in accordance with the '
-                'AusPIX Profile',
+            'auspix': Profile(
+                'http://linked.data.gov.au/def/AusPix/',
+                'AusPIX DGGS cell view',
+                'This is the combined view of an AusPIX DGGS Cell delivered by the AusPIX dataset in '
+                'accordance with the Profile',
                 format_list,
-                'text/turtle', 'text/html',  ##############
+                'text/html'
             )
         }
-
-        super(DGGS_data, self).__init__(request, uri, views, 'auspix_cell', 'text/turtle')
-        #print('this uri', uri)
+        #
+        super(DGGS_data, self).__init__(request, uri, views, 'auspix')
+        print('this uri', uri)
         self.id = uri.split('/')[-1]  #needed for routes
-        # print('self.id = ', self.id)  #self ID is the cell id
+        print('self.id = ', self.id)  #self ID is the cell id
 
         self.hasName = {
             'uri': 'http://linked.data.gov.au/def/ausPIX/',
@@ -146,6 +147,9 @@ class DGGS_data(Renderer):
         #print('mysubs', mySubCells)
         self.partOfCell = self.auspix[:-1]  #take one number off the end of cell ID, = parent cell
 
+        #query National Crosswalk Table
+
+
 
     def export_html(self):
         return Response(        # Response is a Flask class imported at the top of this script
@@ -175,14 +179,26 @@ class DGGS_data(Renderer):
         # if we had multiple views, here we would handle a request for an illegal view
         # return NotImplementedError("HTML representation of View '{}' is not implemented.".format(view))
 
-    # maybe should call this function something else - it seems to clash ie Overrides the method in Renderer
     def render(self):
-        if self.profile == 'alternates':
-            return self._render_alternates_view()   # this function is in Renderer
-        elif self.mediatype in ['text/turtle', 'application/ld+json']:
-            return self.export_rdf()                # this one exists below
-        else:  # default is HTML response: self.format == 'text/html???????????????????':
+        if self.profile == 'alt':
+            print('alt profile active')
+            return self._render_alt_profile()  # this function is in Renderer
+        elif self.mediatype in ['text/turtle', 'application/ld+json', 'application/rdf+xml']:
+            return self.export_rdf()
+        else:  # default is HTML response: self.format == 'text/html':
             return self.export_html()
+
+
+
+   #OLD
+    # # maybe should call this function something else - it seems to clash ie Overrides the method in Renderer
+    # def render(self):
+    #     if self.profile == 'alt':  #was alternates
+    #         return self._render_alt_profile()   # this function is in Renderer
+    #     elif self.mediatype in ['text/turtle', 'application/ld+json']:
+    #         return self.export_rdf()                # this one exists below
+    #     else:  # default is HTML response:
+    #         return self.export_html()
 
     def export_rdf(self):  #also for text/turtle
         g = Graph()  # make instance of an RDF graph
@@ -193,24 +209,17 @@ class DGGS_data(Renderer):
 
         apo = Namespace('http://linked.data.gov.au/def/auspix#')  # ontolgy  = /def/  #the ontolgy   auspix ontolgy == apo
         g.bind('apo', apo)
-
         # g.add((auspix, RDF.type, URIRef('http://linked.data.gov.au/def/dggs/auspix')))  # pattren for type  . . . . a . . . . .
-
         geo = Namespace('http://www.opengis.net/ont/geosparql#')
         g.bind('geo', geo)
-
         geox = Namespace('http://linked.data.gov.au/def/geox#')
         g.bind('geox', geox)
-
         # dcterms = Namespace('http://purl.org/dc/terms/')  # already imported
         g.bind('dcterms', DCTERMS)
-
         dcat = Namespace('http://www.w3.org/ns/dcat/#')
         g.bind('dcat', dcat)
-
         #rdfs = Namespace('http://www.w3.org/2001/XMLSchema#')    # already imported at top
         #g.bind('rdfs', RDFS)    # (not used ??)
-
         #xsd = Namespace('http://www.w3.org/XML/XMLSchema#')     # already imported
         g.bind('xsd', XSD)
 
@@ -302,5 +311,3 @@ if __name__ == '__main__':
     # print(a.export_rdf().decode('utf-8'))
 
     print('main process has not been built yet - when build it will test ask for a placename like the code Gnaf above')
-
-
