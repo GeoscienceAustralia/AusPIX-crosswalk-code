@@ -22,7 +22,7 @@ DGGS_PID_PREFIX = 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX
 directory = os.path.dirname(os.path.realpath(__file__))
 file = os.path.join(directory, "secrets.yml")
 DB_CON_DICT = yaml.safe_load(open(file))
-#print('dbcon', DB_CON_DICT)
+print('dbcon', DB_CON_DICT)
 
 
 if DB_CON_DICT is None:

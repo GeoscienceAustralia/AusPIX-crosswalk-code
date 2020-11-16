@@ -11,6 +11,8 @@ from pyldapi import Renderer, Profile
 
 from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal, BNode
 from rdflib.namespace import XSD, DCTERMS, RDFS   #imported for 'export_rdf' function
+#from _conf import DB_CON_DICT
+import psycopg2
 
 
 # for DGGSC:C zone attribution
@@ -21,6 +23,7 @@ class DGGS_data(Renderer):
     """
     This class takes any DGGS cell fed into it and it uses the DGGS ENGINE
     to find the attributes of the cell for pushing out to the landing page
+    Also connects to crosswalk to get integrated data for that cell.
     """
 
     def __init__(self, request, uri):
@@ -147,34 +150,60 @@ class DGGS_data(Renderer):
         #print('mysubs', mySubCells)
         self.partOfCell = self.auspix[:-1]  #take one number off the end of cell ID, = parent cell
 
-        #query National Crosswalk Table
+        # connect to crosswalk table and get crosswalk information for this cell
+        mycells = (self.auspix, "", "")
 
+        print('query AWS database . . . . ')
+        connection = psycopg2.connect(XXXX
+        cursor = connection.cursor()
+
+        # postgreSQL_select_Query = " SELECT * FROM crosswalk WHERE auspix_dggs IN %s;"   # works but return not json
+        # return data as json
+        postgreSQL_select_Query = " SELECT json_agg(crosswalk) FROM crosswalk WHERE auspix_dggs IN %s;"  # seems to only get the first item as json
+
+        # postgreSQL_select_Query = " SELECT json_agg(crosswalk) FROM crosswalk WHERE auspix_dggs IN  ('R7852348515', 'R7852348516', 'R7852348517');"
+        cursor.execute(postgreSQL_select_Query, (mycells,))
+
+        print("Selecting rows from national crosswalk table using cursor.fetchall")
+
+        theseRecords = cursor.fetchall()
+        print('num Recs', len(theseRecords))
+
+        result = theseRecords[0][0][0]
+
+        for key, value in result.items():
+            print(key, ' : ', value)
+
+        print("AusPIX cell URI", result['auspix_uri'])
+
+        print("SA1 code 2016", result['sa1_main16'])
+        print("SA1 SQkm 2016 ", result['sa1sqkm16'])
 
 
     def export_html(self):
-        return Response(        # Response is a Flask class imported at the top of this script
-            render_template(     # render_template is also a Flask module
-                'auspix_cell.html',   # uses the html template send all this data to it.
-                id=self.auspix,
-                uri=conf.DGGS_PID_PREFIX + self.auspix,
-                auspix=self.auspix,
-                hasName=self.hasName,
-                dggs = self.auspix,
-                #crns=self.corners,
-                corners=self.corners,
-                centroid = self.centroid,
-                neighbours = self.neighbors,
-                y = self.y,
-                x = self.x,
-                area_m2= self.area_m2,
-                contains = self.contains,
-                partOfCell = self.partOfCell,
+            return Response(        # Response is a Flask class imported at the top of this script
+                render_template(     # render_template is also a Flask module
+                    'auspix_cell.html',   # uses the html template send all this data to it.
+                    id=self.auspix,
+                    uri=conf.DGGS_PID_PREFIX + self.auspix,
+                    auspix=self.auspix,
+                    hasName=self.hasName,
+                    dggs = self.auspix,
+                    #crns=self.corners,
+                    corners=self.corners,
+                    centroid = self.centroid,
+                    neighbours = self.neighbors,
+                    y = self.y,
+                    x = self.x,
+                    area_m2= self.area_m2,
+                    contains = self.contains,
+                    partOfCell = self.partOfCell,
 
-                neighs = self.neighs
-                # schemaorg=self.export_schemaorg()
-            ),
-            status=200,
-            mimetype='text/html'
+                    neighs = self.neighs
+                    # schemaorg=self.export_schemaorg()
+                ),
+                status=200,
+                mimetype='text/html'
         )
         # if we had multiple views, here we would handle a request for an illegal view
         # return NotImplementedError("HTML representation of View '{}' is not implemented.".format(view))
@@ -189,16 +218,42 @@ class DGGS_data(Renderer):
             return self.export_html()
 
 
+    def crosswalk_fetch(cell):
+        mycells = ("R7852372438", "")
 
-   #OLD
-    # # maybe should call this function something else - it seems to clash ie Overrides the method in Renderer
-    # def render(self):
-    #     if self.profile == 'alt':  #was alternates
-    #         return self._render_alt_profile()   # this function is in Renderer
-    #     elif self.mediatype in ['text/turtle', 'application/ld+json']:
-    #         return self.export_rdf()                # this one exists below
-    #     else:  # default is HTML response:
-    #         return self.export_html()
+        print('query AWS database . . . . ')
+        connection = DB_CON_DICT
+        cursor = connection.cursor()
+
+        # postgreSQL_select_Query = " SELECT * FROM crosswalk WHERE auspix_dggs IN %s;"   # works but return not json
+        # return data as json
+        postgreSQL_select_Query = " SELECT json_agg(crosswalk) FROM crosswalk WHERE auspix_dggs IN %s;"  # seems to only get the first item as json
+
+        # postgreSQL_select_Query = " SELECT json_agg(crosswalk) FROM crosswalk WHERE auspix_dggs IN  ('R7852348515', 'R7852348516', 'R7852348517');"
+        cursor.execute(postgreSQL_select_Query, (mycells,))
+
+        print("Selecting rows from national crosswalk table using cursor.fetchall")
+
+        theseRecords = cursor.fetchall()
+        print('num Recs', len(theseRecords))
+
+        result = theseRecords[0][0][0]
+
+        for key, value in result.items():
+            print(key, ' : ', value)
+
+        print("AusPIX cell URI", result['auspix_uri'])
+
+        print("SA1 code 2016", result['sa1_main16'])
+        print("SA1 SQkm 2016 ", result['sa1sqkm16'])
+        return print('done')
+
+
+
+
+
+
+
 
     def export_rdf(self):  #also for text/turtle
         g = Graph()  # make instance of an RDF graph
