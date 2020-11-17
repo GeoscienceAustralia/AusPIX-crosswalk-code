@@ -4,7 +4,7 @@ This repo maintains code for the API over AusPIX Crosswalk Integration tables.
 The aim is to allow access to integrated data for Australian Goverment and business.
 At the moment, it is pointed to the National Crosswalk table Level 10 dataset which contains half a billion cells at 2.488 ha size for all mainland Australia.
 
-Date:Novemeber 2020
+Date: Novemeber 2020
  
 This data cross-references a wide range of polygon and raster data, here is the out-put for one cell:
 Information available for each cell:
