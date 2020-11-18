@@ -13,6 +13,7 @@ from rdflib import Graph, URIRef, RDF, XSD, Namespace, Literal, BNode
 from rdflib.namespace import XSD, DCTERMS, RDFS   #imported for 'export_rdf' function
 #from _conf import DB_CON_DICT
 import psycopg2
+from _conf import DB_CON_DICT
 
 
 # for DGGSC:C zone attribution
@@ -154,7 +155,8 @@ class DGGS_data(Renderer):
         mycells = (self.auspix, "", "")
 
         print('query AWS database . . . . ')
-        connection = psycopg2.connect(XXXX
+        connection = psycopg2.connect(**DB_CON_DICT)
+
         cursor = connection.cursor()
 
         # postgreSQL_select_Query = " SELECT * FROM crosswalk WHERE auspix_dggs IN %s;"   # works but return not json
@@ -167,18 +169,19 @@ class DGGS_data(Renderer):
         print("Selecting rows from national crosswalk table using cursor.fetchall")
 
         theseRecords = cursor.fetchall()
-        print('num Recs', len(theseRecords))
+        print('num Recs', theseRecords)
 
         result = theseRecords[0][0][0]
 
         for key, value in result.items():
             print(key, ' : ', value)
 
-        print("AusPIX cell URI", result['auspix_uri'])
+        print("SA1 code 2016 = ", result['sa1_main16'])
+        self.sa1code = result['sa1_main16']
 
-        print("SA1 code 2016", result['sa1_main16'])
-        print("SA1 SQkm 2016 ", result['sa1sqkm16'])
-
+        print('sa2 name', result['sa2_name16'])
+        self.sa2name = result['sa2_name16']
+        self.sedname = result['sedname19']
 
     def export_html(self):
             return Response(        # Response is a Flask class imported at the top of this script

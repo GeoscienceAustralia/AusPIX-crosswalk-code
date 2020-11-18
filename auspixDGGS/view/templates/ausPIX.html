@@ -1,16 +1,16 @@
 {% extends "layout.html" -%}
 
 {% block content -%}
-        <h1>AusPIX Discrete Global Grid System</h1>
+        <h1>AusPIX crosswalk data (integrated)</h1>
         <h2>Search for any AusPIX cell </h2>
-        <p>AusPIX cells are hierarchical and are calculated when needed.</p>
+        <p>AusPIX crosswalk relationships are pre-calculated for speed.</p>
 
 
 
         <p></p>
         {% if search_enabled -%}
             <form action="?search=">
-                Enter a cell ID (e.g. R78523) <em>{{ register_item_type_string }}:</em><br>
+                Enter a cell ID (e.g. R7852345672) <em>{{ register_item_type_string }}:</em><br>
                 <input type="text" name="search">
                 <input type="submit" value="Submit">
             </form>
