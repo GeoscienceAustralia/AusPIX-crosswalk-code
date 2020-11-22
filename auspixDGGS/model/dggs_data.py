@@ -66,6 +66,12 @@ class DGGS_data(Renderer):
         self.contains = None
         self.subCells = None
         self.partOfCell = None
+        self.sa1code = None
+        self.sa2name = None
+        self.sedname = None
+        self.ssc_code16 = None
+        self.ssc_name16 = None
+        self. sscsqkm16 = None
 
 
         # use DGGS engine to find values
@@ -182,6 +188,12 @@ class DGGS_data(Renderer):
         print('sa2 name', result['sa2_name16'])
         self.sa2name = result['sa2_name16']
         self.sedname = result['sedname19']
+        self.ssc_code16 = result['ssc_code16']
+        self.ssc_name16 = result['sedname19']
+        self.sscsqkm16 = result['sscsqkm16']
+
+
+
 
     def export_html(self):
             return Response(        # Response is a Flask class imported at the top of this script
@@ -201,9 +213,15 @@ class DGGS_data(Renderer):
                     area_m2= self.area_m2,
                     contains = self.contains,
                     partOfCell = self.partOfCell,
-
-                    neighs = self.neighs
+                    neighs = self.neighs,
                     # schemaorg=self.export_schemaorg()
+                    sa1code = self.sa1code,
+                    sa2name = self.sa2name,
+                    sedname = self.sedname,
+                    ssc_code16 = self.ssc_code16,
+                    ssc_name16 = self.ssc_name16,
+                    sscsqkm16 = self.sscsqkm16,
+
                 ),
                 status=200,
                 mimetype='text/html'

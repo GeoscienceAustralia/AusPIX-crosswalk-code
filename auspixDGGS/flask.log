@@ -13456,3 +13456,129 @@
 2020-11-18 21:27:06 INFO _internal.py:122 127.0.0.1 - - [18/Nov/2020 21:27:06] "GET /ausPIX/?search=R7852345672 HTTP/1.1" 200 -
 2020-11-18 21:27:08 INFO _internal.py:122 127.0.0.1 - - [18/Nov/2020 21:27:08] "GET /ausPIX/R7852345672 HTTP/1.1" 200 -
 2020-11-18 21:27:08 INFO _internal.py:122 127.0.0.1 - - [18/Nov/2020 21:27:08] "GET /map?name=&location=[(149.10227099527512,%20-35.25579305314164),%20(149.10379515317788,%20-35.25579305314164),%20(149.10379515317788,%20-35.257377414704074),%20(149.10227099527512,%20-35.257377414704074)]%20&x=149.1030330742265%20&y=-35.25658523008612 HTTP/1.1" 200 -
+2020-11-22 17:23:29 DEBUG app.py:21 conf = {'APP_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/',
+ 'LOGFILE': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\templates'}
+2020-11-22 17:23:30 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2020-11-22 17:23:35 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:23:35] "GET / HTTP/1.1" 200 -
+2020-11-22 17:23:35 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:23:35] "GET /static/master.css HTTP/1.1" 200 -
+2020-11-22 17:23:35 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:23:35] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2020-11-22 17:23:35 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:23:35] "GET /static/extra.css HTTP/1.1" 200 -
+2020-11-22 17:23:36 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:23:36] "GET /static/ga-logo.jpg HTTP/1.1" 200 -
+2020-11-22 17:23:36 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:23:36] "GET /static/by.png HTTP/1.1" 200 -
+2020-11-22 17:23:36 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:23:36] "GET /static/lo.jpg HTTP/1.1" 200 -
+2020-11-22 17:23:36 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:23:36] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2020-11-22 17:23:48 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:23:48] "GET /ausPIX/ HTTP/1.1" 200 -
+2020-11-22 17:24:00 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:24:00] "GET /ausPIX/?search=R7852367458 HTTP/1.1" 200 -
+2020-11-22 17:24:02 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:24:02] "GET /ausPIX/R7852367458 HTTP/1.1" 200 -
+2020-11-22 17:24:02 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:24:02] "GET /map?name=&location=[(148.95595183661027,%20-35.41120683969614),%20(148.95747599451303,%20-35.41120683969614),%20(148.95747599451303,%20-35.412794223738146),%20(148.95595183661027,%20-35.412794223738146)]%20&x=148.95671391556164%20&y=-35.41200052784341 HTTP/1.1" 200 -
+2020-11-22 17:32:46 DEBUG app.py:21 conf = {'APP_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/',
+ 'LOGFILE': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\templates'}
+2020-11-22 17:32:46 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2020-11-22 17:33:03 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:03] "GET / HTTP/1.1" 200 -
+2020-11-22 17:33:03 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:03] "GET /static/extra.css HTTP/1.1" 200 -
+2020-11-22 17:33:03 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:03] "GET /static/master.css HTTP/1.1" 200 -
+2020-11-22 17:33:03 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:03] "GET /static/ga_theme.css HTTP/1.1" 200 -
+2020-11-22 17:33:03 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:03] "GET /static/ga-logo.jpg HTTP/1.1" 200 -
+2020-11-22 17:33:04 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:04] "GET /static/lo.jpg HTTP/1.1" 200 -
+2020-11-22 17:33:04 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:04] "GET /static/by.png HTTP/1.1" 200 -
+2020-11-22 17:33:04 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:04] "GET /samples/static/img/ga/right-arrow.png HTTP/1.1" 404 -
+2020-11-22 17:33:06 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:06] "GET /ausPIX/ HTTP/1.1" 200 -
+2020-11-22 17:33:16 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:16] "GET /ausPIX/?search=R7852345672 HTTP/1.1" 200 -
+2020-11-22 17:33:17 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:17] "GET /ausPIX/R7852345672 HTTP/1.1" 200 -
+2020-11-22 17:33:17 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:33:17] "GET /map?name=&location=[(149.10227099527512,%20-35.25579305314164),%20(149.10379515317788,%20-35.25579305314164),%20(149.10379515317788,%20-35.257377414704074),%20(149.10227099527512,%20-35.257377414704074)]%20&x=149.1030330742265%20&y=-35.25658523008612 HTTP/1.1" 200 -
+2020-11-22 17:37:25 DEBUG app.py:21 conf = {'APP_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/',
+ 'LOGFILE': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\templates'}
+2020-11-22 17:37:25 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2020-11-22 17:37:28 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:37:28] "GET /favicon.ico HTTP/1.1" 404 -
+2020-11-22 17:37:30 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:37:30] "GET /ausPIX/R7852345672 HTTP/1.1" 200 -
+2020-11-22 17:37:30 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:37:30] "GET /map?name=&location=[(149.10227099527512,%20-35.25579305314164),%20(149.10379515317788,%20-35.25579305314164),%20(149.10379515317788,%20-35.257377414704074),%20(149.10227099527512,%20-35.257377414704074)]%20&x=149.1030330742265%20&y=-35.25658523008612 HTTP/1.1" 200 -
+2020-11-22 17:38:25 DEBUG app.py:21 conf = {'APP_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/',
+ 'LOGFILE': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\templates'}
+2020-11-22 17:38:25 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2020-11-22 17:38:26 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:38:26] "GET /ausPIX/R7852345672 HTTP/1.1" 200 -
+2020-11-22 17:38:26 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:38:26] "GET /static/ga-logo.jpg HTTP/1.1" 304 -
+2020-11-22 17:38:26 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:38:26] "GET /static/by.png HTTP/1.1" 304 -
+2020-11-22 17:38:26 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:38:26] "GET /static/lo.jpg HTTP/1.1" 304 -
+2020-11-22 17:38:26 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:38:26] "GET /map?name=&location=[(149.10227099527512,%20-35.25579305314164),%20(149.10379515317788,%20-35.25579305314164),%20(149.10379515317788,%20-35.257377414704074),%20(149.10227099527512,%20-35.257377414704074)]%20&x=149.1030330742265%20&y=-35.25658523008612 HTTP/1.1" 200 -
+2020-11-22 17:39:12 DEBUG app.py:21 conf = {'APP_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/',
+ 'LOGFILE': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\templates'}
+2020-11-22 17:39:13 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2020-11-22 17:39:13 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:39:13] "GET /ausPIX/R7852345672 HTTP/1.1" 200 -
+2020-11-22 17:39:13 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:39:13] "GET /static/ga-logo.jpg HTTP/1.1" 304 -
+2020-11-22 17:39:13 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:39:13] "GET /static/by.png HTTP/1.1" 304 -
+2020-11-22 17:39:13 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:39:13] "GET /static/lo.jpg HTTP/1.1" 304 -
+2020-11-22 17:39:13 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:39:13] "GET /map?name=&location=[(149.10227099527512,%20-35.25579305314164),%20(149.10379515317788,%20-35.25579305314164),%20(149.10379515317788,%20-35.257377414704074),%20(149.10227099527512,%20-35.257377414704074)]%20&x=149.1030330742265%20&y=-35.25658523008612 HTTP/1.1" 200 -
+2020-11-22 17:49:26 DEBUG app.py:21 conf = {'APP_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/',
+ 'LOGFILE': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\templates'}
+2020-11-22 17:49:27 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2020-11-22 17:49:28 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:28] "GET /ausPIX/R7852345672 HTTP/1.1" 500 -
+2020-11-22 17:49:28 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:28] "GET /ausPIX/R7852345672?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2020-11-22 17:49:28 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:28] "GET /ausPIX/R7852345672?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2020-11-22 17:49:28 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:28] "GET /ausPIX/R7852345672?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2020-11-22 17:49:28 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:28] "GET /ausPIX/R7852345672?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2020-11-22 17:49:28 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:28] "GET /ausPIX/R7852345672?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2020-11-22 17:49:28 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:28] "GET /ausPIX/R7852345672?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2020-11-22 17:49:44 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:44] "GET /ausPIX/R7852345672 HTTP/1.1" 500 -
+2020-11-22 17:49:44 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:44] "GET /ausPIX/R7852345672?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2020-11-22 17:49:44 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:44] "GET /ausPIX/R7852345672?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2020-11-22 17:49:44 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:44] "GET /ausPIX/R7852345672?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+2020-11-22 17:49:44 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:49:44] "GET /ausPIX/R7852345672?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2020-11-22 17:52:40 DEBUG app.py:21 conf = {'APP_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/',
+ 'LOGFILE': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\templates'}
+2020-11-22 17:52:40 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2020-11-22 17:52:42 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:52:42] "GET /ausPIX/R7852345672 HTTP/1.1" 200 -
+2020-11-22 17:52:42 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:52:42] "GET /static/ga-logo.jpg HTTP/1.1" 304 -
+2020-11-22 17:52:42 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:52:42] "GET /static/lo.jpg HTTP/1.1" 304 -
+2020-11-22 17:52:42 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:52:42] "GET /static/by.png HTTP/1.1" 304 -
+2020-11-22 17:52:42 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:52:42] "GET /map?name=&location=[(149.10227099527512,%20-35.25579305314164),%20(149.10379515317788,%20-35.25579305314164),%20(149.10379515317788,%20-35.257377414704074),%20(149.10227099527512,%20-35.257377414704074)]%20&x=149.1030330742265%20&y=-35.25658523008612 HTTP/1.1" 200 -
+2020-11-22 17:53:56 DEBUG app.py:21 conf = {'APP_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/',
+ 'LOGFILE': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\templates'}
+2020-11-22 17:53:56 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2020-11-22 17:53:56 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:53:56] "GET /ausPIX/R7852345672 HTTP/1.1" 200 -
+2020-11-22 17:53:56 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:53:56] "GET /static/ga-logo.jpg HTTP/1.1" 304 -
+2020-11-22 17:53:56 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:53:56] "GET /static/lo.jpg HTTP/1.1" 304 -
+2020-11-22 17:53:56 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:53:56] "GET /static/by.png HTTP/1.1" 304 -
+2020-11-22 17:53:56 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:53:56] "GET /map?name=&location=[(149.10227099527512,%20-35.25579305314164),%20(149.10379515317788,%20-35.25579305314164),%20(149.10379515317788,%20-35.257377414704074),%20(149.10227099527512,%20-35.257377414704074)]%20&x=149.1030330742265%20&y=-35.25658523008612 HTTP/1.1" 200 -
+2020-11-22 17:54:39 DEBUG app.py:21 conf = {'APP_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/',
+ 'LOGFILE': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\templates'}
+2020-11-22 17:54:39 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2020-11-22 17:54:40 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:54:40] "GET /ausPIX/R7852345672 HTTP/1.1" 200 -
+2020-11-22 17:54:40 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:54:40] "GET /map?name=&location=[(149.10227099527512,%20-35.25579305314164),%20(149.10379515317788,%20-35.25579305314164),%20(149.10379515317788,%20-35.257377414704074),%20(149.10227099527512,%20-35.257377414704074)]%20&x=149.1030330742265%20&y=-35.25658523008612 HTTP/1.1" 200 -
+2020-11-22 17:55:12 DEBUG app.py:21 conf = {'APP_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS',
+ 'DGGS_PID_PREFIX': 'ec2-13-238-161-97-ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/',
+ 'LOGFILE': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS/flask.log',
+ 'STATIC_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\static',
+ 'TEMPLATES_DIR': 'C:\\Users\\Joseph\\PycharmProjects\\AusPIX-crosswalk-table-API\\auspixDGGS\\view\\templates'}
+2020-11-22 17:55:13 INFO _internal.py:122  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2020-11-22 17:55:13 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:55:13] "GET /ausPIX/R7852345672 HTTP/1.1" 200 -
+2020-11-22 17:55:13 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:55:13] "GET /static/ga-logo.jpg HTTP/1.1" 304 -
+2020-11-22 17:55:13 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:55:13] "GET /static/lo.jpg HTTP/1.1" 304 -
+2020-11-22 17:55:13 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:55:13] "GET /static/by.png HTTP/1.1" 304 -
+2020-11-22 17:55:13 INFO _internal.py:122 127.0.0.1 - - [22/Nov/2020 17:55:13] "GET /map?name=&location=[(149.10227099527512,%20-35.25579305314164),%20(149.10379515317788,%20-35.25579305314164),%20(149.10379515317788,%20-35.257377414704074),%20(149.10227099527512,%20-35.257377414704074)]%20&x=149.1030330742265%20&y=-35.25658523008612 HTTP/1.1" 200 -

@@ -61,10 +61,29 @@
         <dt>Part of parent cell:</dt>
         <dd><em><a href="{{ url_for('controller.auspix_cell', auspix_cell_id=partOfCell) }}">{{ partOfCell }}</a></em></dd>
 
+         <dt>National Crosswalk SA1 code for this AusPIX cell:</dt>
+        <dd><em><a href="{{ url_for('controller.auspix_cell', auspix_cell_id = sa1code) }}">{{ sa1code }}</a></em></dd>
+
+        <dt>National Crosswalk SA2 name:</dt>
+        <dd><em><a href="{{ url_for('controller.auspix_cell', auspix_cell_id = sa2name) }}">{{ sa2name }}</a></em></dd>
+
+        <dt>National Crosswalk State Electoral District 2019 name:</dt>
+        <dd><em><a href="{{ url_for('controller.auspix_cell', auspix_cell_id = sedname) }}">{{ sedname }}</a></em></dd>
+
+        <dt>National Crosswalk suburb/locality code:</dt>
+        <dd><em><a href="{{ url_for('controller.auspix_cell', auspix_cell_id = ssc_code16) }}">{{ ssc_code16 }}</a></em></dd>
+
+        <dt>National Crosswalk suburb/locality name:</dt>
+        <dd><em><a href="{{ url_for('controller.auspix_cell', auspix_cell_id = ssc_name16) }}">{{ ssc_name16 }}</a></em></dd>
+
+        <dt>National Crosswalk suburb/locality area sq km:</dt>
+        <dd><em><a href="{{ url_for('controller.auspix_cell', auspix_cell_id = sscsqkm16) }}">{{ sscsqkm16 }}</a></em></dd>
+
 
     </dl>
+    <p> </p>
     <p>
-        Alternative views and formats for this resource:
+                Alternative views and formats for this resource:
     </p>
     <ul>
         <li><a href="?_profile=alt">Alternate Profiles</a></li>
