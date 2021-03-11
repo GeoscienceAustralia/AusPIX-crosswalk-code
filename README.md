@@ -43,9 +43,11 @@ Information available for each cell:
 
 'geom': '0101000020E61000002EC95CF696A36240A837931E91A941C0'
 
-
 As development occurs more URI's and more datasets (some from other tables) will be added.
-Descriptions of each field are available from the dtata base and may be ported in future development sprints
+Descriptions of each field are available from the dtata base and may be ported in future development sprints.
+
+#Supporting Code
+Supporting code is included, to allow others to build crosswalk tables and manage processes.
 
 References:
 https://iopscience.iop.org/article/10.1088/1755-1315/34/1/012012/pdf
