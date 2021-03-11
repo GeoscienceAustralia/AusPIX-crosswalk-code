@@ -49,10 +49,15 @@ Descriptions of each field are available from the dtata base and may be ported i
 
 # Supporting Code
 Supporting code is included, to allow others to build crosswalk tables and manage processes.
+See the Supporting code folder
 
-References:
+# References:
+https://pypi.org/project/rHEALPixDGGS/
+
 https://iopscience.iop.org/article/10.1088/1755-1315/34/1/012012/pdf
 
 https://github.com/GeoscienceAustralia/AusPIX_DGGS
 
 https://raichev.net/files/rhealpix_dggs_preprint.pdf
+
+
