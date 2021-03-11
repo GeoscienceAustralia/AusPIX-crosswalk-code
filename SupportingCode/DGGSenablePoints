@@ -35,7 +35,7 @@ def dggs_cells_for_points(infile, resolution):
     resArea = (rdggs.cell_area(resolution, plane=False)) # ask the engine for the area of a cell at this resolution
     dggsuribase = 'http://linked.data.gov.au/dataset/auspix/'  # linked data format
 
-    # work through the features (polygons) one by one and ask for DGGS cells
+    # work through the features one by one and ask for DGGS cell they are in
     for feature in infile:
         #print('feature attributes ', feature.properties)  # the feature attributes - want to keep for output
 
