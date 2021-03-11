@@ -1,0 +1,71 @@
+'''
+This is a stand-alone script to AusPIX DGGS enable a geojson point file.
+The user needs to point the script to a geojason file for input (at the bottom of script)
+Note QGIS can easily export your other formats to geojson.
+
+The output file will have all the same data plus the AusPIX DGGS cell info will be prefixed to each row.
+
+'''
+
+import pygeoj
+
+from rhealpixdggs.dggs import RHEALPixDGGS
+rdggs = RHEALPixDGGS()  # make an instance
+
+'''
+developed at Geoscience Australia by Joseph Bell June 2020
+modified by Joseph Bell March 2021
+'''
+
+def dggs_cells_for_points(infile, resolution):
+    '''
+    finds all the DGGS cells for points in a file and adds the to the properties
+    one DGGS per point.
+    Lines and polygons have multiple DGGS cells  per feature
+    :param infile: the source file as geojson
+    :param resolution: the rhealpix dggs resolution desired (often 10)
+    :return: saves completed file to your location
+    see also for similar examples:
+    https://github.com/GeoscienceAustralia/AusPIX_DGGS/tree/master/enablement_tagging
+    https://github.com/GeoscienceAustralia/AusPIX_DGGS/tree/master/auspixdggs/callablemodules
+    Best to clean-up your input file first, if you don't need all the fields.
+    '''
+    # make an output file of DGGS centroid points with the at atttibute properties
+    newfile = pygeoj.new()  # default projection is WGS84 which is what is needed for rhealpix
+    resArea = (rdggs.cell_area(resolution, plane=False)) # ask the engine for the area of a cell at this resolution
+    dggsuribase = 'http://linked.data.gov.au/dataset/auspix/'  # linked data format
+
+    # work through the features (polygons) one by one and ask for DGGS cells
+    for feature in infile:
+        #print('feature attributes ', feature.properties)  # the feature attributes - want to keep for output
+
+        coords = feature.geometry.coordinates  # xy of point in your input file
+        print('geom', coords)
+        # ask the rhealpix engine for what cell the point is in
+        this_dggs_cell = str(rdggs.cell_from_point(resolution, coords, plane=False))  # false = on the elipsoidal curve
+
+        #print('found cell = ', this_dggs_cell)
+
+        my_prop = feature.properties  # returns the attributes = properties for this feature in the infile, as dictionary
+
+       # build the AusPIX information (as Dict)
+        my_Cell = {"AusPIX_DGGS": this_dggs_cell, "uri_auspix": (dggsuribase + str(this_dggs_cell)), "cellsarea_m2": resArea }
+
+        # combine into one Dict for this row in the output file
+        these_attributes = dict(list(my_Cell.items()) + list(my_prop.items()))
+        # print('these attributes = ', these_attributes)
+        # build the output for a feature(row) by adding the geometry to the geojson
+        newfile.add_feature(properties=these_attributes, geometry={"type": "Point", "coordinates": coords})
+
+    # when finished - save the ouput geojson file
+    newfile.save(r'D:\CarSA_data\Facilities\Facilities_all84_DGGSedtest.geojson')  # saves into the folder where you have the script - edit to change
+
+
+if __name__ == '__main__':
+    infile = pygeoj.load(filepath=r'D:\CarSA_data\Facilities\Facilities_all84.geojson')
+    resolution = 10 # set the resolution for output
+
+    print('len', len(infile))  # the number of features
+    print('bbox of entire file', infile.bbox)  # the bounding box region of the entire file
+    # call the function
+    dggs_cells_for_points(infile, resolution)
