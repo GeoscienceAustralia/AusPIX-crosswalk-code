@@ -1,0 +1,61 @@
+import yaml
+import os
+import psycopg2
+import csv
+import pandas as pd
+
+import time
+start = time.perf_counter()
+
+'''
+finds the Capad features inside a selected SA1 feature
+and makes a nice little table incuding apportionment.
+simlar script could also map the cells in each CAPAD feature ie spatial location
+bit slow, might need extra index on DB
+'''
+
+pd.set_option("display.max_columns", 200)  # to show more of table in printouts
+pd.set_option('display.max_colwidth', -1)
+#import openpyxl  # to convert to excel if needed
+
+
+directory = os.path.dirname(os.path.realpath(__file__))
+file = os.path.join(directory, "secrets.yml")
+DB_CON_DICT = yaml.safe_load(open(file))
+
+# set up db connection
+connection = psycopg2.connect(**DB_CON_DICT)
+
+cursor = connection.cursor()
+# from drop downs
+geography = 'sa1_main16'
+feature = "10102100708"
+
+q = "SELECT * from public.crosswalk where sa1_main16 = '10102100708';"
+#q = '''SELECT * from public.crosswalk where sa1_main16 = '10102100708' AND ssc_name16 = 'Bombay';'''
+
+#q = "select * FROM public.crosswalk WHERE  %s =  %s ;" %[geography, feature]
+print('')
+print('Reading database for your selected feature . . . ')
+
+print('Chosen Geography is', geography, 'for selected feature = ', feature)
+
+df = pd.read_sql_query(q, connection)
+df['auspix_ha_a'] = df['auspix_ha_a'].astype(float)   # convert to float for pandas to add up
+
+print('National Parks and Reserves in this geography as ha')
+
+answer = df.groupby(['pa_id', 'capad', 'gis_area' ])['auspix_ha_a'].sum().reset_index()
+answer['gis_area'] = answer['gis_area'].astype(float)  # convert to float
+answer['appormt_pc'] = answer['auspix_ha_a'] / answer['gis_area'] * 100
+
+
+#save the query results as csv
+#df.to_csv(r'D:\temp\results04.csv', index = False)
+
+print(answer)
+
+print()
+finish = time.perf_counter()
+# print(f'Finished in {round(finish - start)} second(s)')
+print(f'Total Finished at {(finish - start)} secs ###########################')
