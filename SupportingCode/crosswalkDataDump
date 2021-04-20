@@ -33,6 +33,133 @@ q = "SELECT * from public.crosswalk where sa1_main16 = '10102100708';"
 
 #q = "select * FROM public.crosswalk WHERE  %s =  %s ;" %[geography, feature]
 print('')
+
+'''example output
+
+C:\Users\Joseph\miniconda3\python.exe C:/Users/Joseph/PycharmProjects/data-drill/crosswalkdatadump.py
+
+Reading database for your selected feature . . . 
+Chosen Geography is sa1_main16 for chosen feature =  10102100708
+
+SUBJECT OF THIS SUMMARY is asgs2016 sa1 CODE  = http://linked.data.gov.au/dataset/asgs2016/statisticalarealevel1/10601xxxx
+
+for this feature . . .
+This geography (SA2) as ha . . . (compare geography area and calculted from AusPIX area)
+sa1_main16   sa1_uri                                                                       sa1sqkm16
+10102100708  http://linked.data.gov.au/dataset/asgs2016/statisticalarealevel1/10102100708  1137.7239    113881.631746
+Name: auspix_ha_a, dtype: float64
+
+SA2 features as ha in this geography
+sa2_name16
+Braidwood    113881.631746
+Name: auspix_ha_a, dtype: float64
+
+SA3 features as ha in this geography
+sa3_name16
+Queanbeyan    113881.631746
+Name: auspix_ha_a, dtype: float64
+
+Australian States included in this geography
+['New South Wales']
+
+Suburbs and localities - ha in each suburb
+          ssc_name16 ssc_code16  sscsqkm16   auspix_ha_a  appormt_pc
+0   Ballalaba         10158      43.7739    4371.519867   99.865899 
+1   Bendoura          10292      46.8663    4688.827284   100.046884
+2   Berlang           10306      92.5237    7756.945918   83.837394 
+3   Bombay            10456      159.6530   15994.734613  100.184366
+4   Farringdon        11494      67.4805    6780.615406   100.482590
+5   Harolds Cross     11855      74.4661    7446.960980   100.004713
+6   Hereford Hall     11893      77.6468    7778.913354   100.183309
+7   Jembaicumbene     12007      42.6563    4273.886816   100.193566
+8   Jerrabattgulla    12015      38.0881    3815.011476   100.162819
+9   Jinden            12031      126.0902   12626.394346  100.137793
+10  Kindervale        12144      65.8811    6590.230956   100.032194
+11  Krawarree         12203      106.2226   10612.712665  99.910120 
+12  Majors Creek NSW  12452      69.9361    661.463922    9.458119  
+13  Neringla          12928      192.8974   1161.833309   6.023064  
+14  Snowball          13566      132.5982   13248.805048  99.916930 
+15  Wyanbene          14433      60.6717    6072.775785   100.092395
+
+State Electorates in the Geography as ha each
+sed_code19  sedname19  sedsqkm19 
+10009       Bega       9614.2214     4.881653     
+10053       Monaro     20033.4836    113874.309267
+Name: auspix_ha_a, dtype: float64
+
+Commonwealth Electorates in this geography as ha
+ced_name     ced19sqkm      
+Eden-monaro  41617.111439561    113881.631746
+Name: auspix_ha_a, dtype: float64
+
+National Parks and Reserves in this geography as ha
+           pa_id                capad       gis_area   auspix_ha_a  appormt_pc
+0  BHA_22         Burrin Burrin        410.959503     412.499641    100.374766
+1  NSW_FMZ2_21    Forestry Management  5.106042       7.322479      143.408109
+2  NSW_FR182      Jerrabattgulla       29.196535      31.730742     108.679819
+3  NSW_MiscF1404  South Coast Subregi  13703.891602   2467.675369   18.007114 
+4  NSW_N0047      Deua                 121603.984375  18538.075597  15.244628 
+5  NSW_N0164      Gourock              7848.569824    4078.620714   51.966419 
+6  NSW_N0170      Tallaganda           16596.404297   934.836465    5.632765  
+7  NSW_N0257      Berlang              2313.276123    2252.882656   97.389267 
+8  NSW_N0262      Tallaganda           5187.973633    2506.728590   48.318067 
+
+LGA presence in this geography as has each
+lga_code19  lga_name19           lgasqkm19 
+12750       Eurobodalla A        3428.1695     7.322479     
+16490       Queanbeyan-Palerang  5318.8822     113852.341831
+17040       Snowy Monaro Region  15163.5461    21.967437    
+Name: auspix_ha_a, dtype: float64
+
+Built from these AusPIX Cells for this geography . . . 
+       auspix_dggs  \
+0      R7852485731   
+1      R7852485732   
+2      R7852485734   
+3      R7852485735   
+4      R7852485738   
+...            ...   
+46652  R7855231640   
+46653  R7855231643   
+46654  R7855231660   
+46655  R7855231661   
+46656  R7855231664   
+
+                                                                                                auspix_uri  \
+0      http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R7852485731   
+1      http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R7852485732   
+2      http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R7852485734   
+3      http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R7852485735   
+4      http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R7852485738   
+...                                                                                                    ...   
+46652  http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R7855231640   
+46653  http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R7855231643   
+46654  http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R7855231660   
+46655  http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R7855231661   
+46656  http://ec2-52-63-73-113.ap-southeast-2.compute.amazonaws.com/AusPIX-DGGS-dataset/ausPIX/R7855231664   
+
+       auspix_ha_a          auspixlat84         auspixlong8  
+0      2.440826     -35.38025904093827   149.6044810242341   
+1      2.440826     -35.38025904093827   149.60600518213687  
+2      2.440826     -35.381845821254366  149.6044810242341   
+3      2.440826     -35.381845821254366  149.60600518213687  
+4      2.440826     -35.38343263250265   149.60600518213687  
+...         ...                    ...                  ...  
+46652  2.440826     -35.98229342291925   149.67611644566375  
+46653  2.440826     -35.983892115208945  149.67611644566375  
+46654  2.440826     -35.987089596112156  149.6715439719555   
+46655  2.440826     -35.987089596112156  149.67306812985822  
+46656  2.440826     -35.98868838473203   149.67306812985822  
+
+[46657 rows x 5 columns]
+
+Total Finished at 75.64981630000001 secs ###########################
+
+Process finished with exit code 0
+
+
+
+'''
 print('Reading database for your selected feature . . . ')
 
 print('Chosen Geography is', geography, 'for chosen feature = ', feature)
