@@ -7,8 +7,8 @@ import pandas as pd
 import time
 start = time.perf_counter()
 '''
-This script looks up the main crosswalk table for all the cells in a particular geography fearture.
-It then looks at the placenames DGGS'ed data to link any placenames within the geography feature.
+This script looks up the main National Crosswalk table for all the cells in a particular geography fearture.
+It then looks at the placenames DGGS'ed data to link any placenames within that geography feature.
 Both placenames and the source feature are Level 10 dggs
 '''
 
