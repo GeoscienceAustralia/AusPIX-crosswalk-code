@@ -7,8 +7,8 @@ import pandas as pd
 import time
 start = time.perf_counter()
 '''
-This script looks up the main National Crosswalk table for all the cells in a particular geography fearture.
-It then looks at the placenames DGGS'ed data to link any placenames within that geography feature.
+This script looks up the main crosswalk table for all the cells in a particular geography fearture.
+It then looks at the placenames DGGS'ed data to link any placenames within the geography feature.
 Both placenames and the source feature are Level 10 dggs
 '''
 
@@ -18,7 +18,7 @@ pd.set_option('display.max_colwidth', -1)
 
 
 directory = os.path.dirname(os.path.realpath(__file__))
-file = os.path.join(directory, "secrets.yml")
+file = os.path.join(directory, "secretsNatcrosswalk.yml")
 DB_CON_DICT = yaml.safe_load(open(file))
 
 # set up db connection
@@ -33,6 +33,118 @@ q = "SELECT * from public.crosswalk where sa1_main16 = '10102100708';"
 
 #q = "select * FROM public.crosswalk WHERE  %s =  %s ;" %[geography, feature]
 print('')
+print('Reading database for your selected feature . . . ')
+
+print('Chosen Geography is', geography, 'for chosen feature = ', feature)
+
+df = pd.read_sql_query(q, connection)
+#print('df', df)
+
+
+
+#save the query results as csv
+df.to_csv(r'D:\temp\results04.csv', index = False)
+
+#save as Exell
+#df.to_excel(r'C:\temp\results05.xlsx', index = False)
+
+#heading for printout
+print('')
+print("SUBJECT OF THIS SUMMARY is asgs2016 sa1 CODE  = http://linked.data.gov.au/dataset/asgs2016/statisticalarealevel1/10601xxxx")
+print('')
+print('for this feature . . .')
+
+#df = pd.read_csv(r'C:\Temp\results.csv')
+
+#data frame information
+# print(df.info())
+
+#convert strings to floats
+df['auspix_ha_a'] = df['auspix_ha_a'].astype(float)
+#
+print('This geography (SA2) as ha . . . (compare geography area and calculted from AusPIX area)')
+answer = df.groupby(['sa1_main16', 'sa1_uri', 'sa1sqkm16']).auspix_ha_a.sum()
+print(answer)
+
+print('')
+print('SA2 features as ha in this geography')
+answer = df.groupby('sa2_name16').auspix_ha_a.sum()
+print(answer)
+print('')
+
+
+print('SA3 features as ha in this geography')
+answer = df.groupby('sa3_name16').auspix_ha_a.sum()
+print(answer)
+print('')
+
+#
+print('Australian States included in this geography')
+answer = df.ste_name16.unique()
+print(answer)
+print('')
+
+
+print('Suburbs and localities - ha in each suburb')
+
+answer = df.groupby(['ssc_name16', 'ssc_code16', 'sscsqkm16'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+answer['sscsqkm16'] = answer['sscsqkm16'].astype(float)  # convert to float
+answer['appormt_pc'] = answer['auspix_ha_a'] / answer['sscsqkm16']  # includes conversion from sqkm to ha
+
+
+print(answer)
+print('')
+
+
+print('State Electorates in the Geography as ha each')
+answer = df.groupby(['sed_code19', 'sedname19', 'sedsqkm19']).auspix_ha_a.sum()
+print(answer)
+print('')
+
+print('Commonwealth Electorates in this geography as ha')
+answer = df.groupby(['ced_name', 'ced19sqkm']).auspix_ha_a.sum()
+print(answer)
+print('')
+
+
+print('National Parks and Reserves in this geography as ha')
+answer = df.groupby(['pa_id', 'capad', 'gis_area' ])['auspix_ha_a'].sum().reset_index()
+answer['gis_area'] = answer['gis_area'].astype(float)  # convert to float
+answer['appormt_pc'] = answer['auspix_ha_a'] / answer['gis_area'] * 100
+
+print(answer)
+
+print('')
+
+
+print('LGA presence in this geography as has each')
+answer = df.groupby(['lga_code19', 'lga_name19', 'lgasqkm19']).auspix_ha_a.sum()
+print(answer)
+print('')
+#
+#
+# print('BoM grid presence in this geography as ha' )
+# answer = df.groupby(['ga_bomid', 'bom_sqkm']).auspix_ha_a.sum()
+# print(answer)
+# print('')
+#
+# print('DOWE Spark grid presence in this geography' )
+# answer = df.groupby(['sparkbgid', 'spark_area']).auspix_ha_a.sum()
+# print(answer)
+
+
+print('Built from these AusPIX Cells for this geography . . . ')
+cellsData = df[['auspix_dggs', 'auspix_uri',]]
+print( df[['auspix_dggs', 'auspix_uri', 'auspix_ha_a', 'auspixlat84', 'auspixlong8']])
+
+cellsData.to_csv(r'D:\temp\cellsInSA1.csv', index = False)
+#print(df.loc[df['ssc_name16']=='Bombay'])
+
+
+
+print()
+finish = time.perf_counter()
+print(f'Total Finished at {(finish - start)} secs ###########################')
 
 '''example output
 
