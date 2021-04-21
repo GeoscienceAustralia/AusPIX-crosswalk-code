@@ -1,0 +1,110 @@
+
+import yaml
+import os
+import psycopg2
+import csv
+import pandas as pd
+pd.set_option("display.max_columns", 200)  # to show more of table in printouts
+pd.set_option('display.max_colwidth', -1)
+
+'''
+The script access the raster crosswalk tables for the Hawkesbury flood 2021
+and calculates the list of landuses that were affected by the flood, 
+including adding up the area and apportioning it to the total flooded.
+
+The output is a csv file sorted in descending order of area of landuse affected.
+can be used for Dashboard
+can be modified to include GNAF counts for each cell and so on.
+will update as development occurs
+probably dosn't need to be mapped - the information in the csv table describes the assets affected by the flood nicely
+takes about 20 second to run
+
+'''
+
+import time
+start = time.perf_counter()
+
+directory = os.path.dirname(os.path.realpath(__file__))
+file = os.path.join(directory, "secrets.yml")
+
+DB_CON_DICT = yaml.safe_load(open(file))
+
+
+# set up db connection
+connection = psycopg2.connect(**DB_CON_DICT)
+
+cursor = connection.cursor()
+q = "SELECT * from hawkesbury_flood_polgons04_dggs02;" # Hawkesbury only
+#q = "SELECT * from copernicusobserveredfloodextents21_24thmarch_dggs WHERE region = 'Kempsey' ;" #  works
+#q = "SELECT * from copernicus_observed_floodextents20210321_dggs WHERE region = 'Kempsey' ;"
+
+#q = "select * FROM public.crosswalk WHERE  %s =  %s ;" %[geography, feature]
+print('')
+
+df = pd.read_sql_query(q, connection)
+#print('df', df)
+# list of cells in the flood zone
+cellList = df['AusPIX_DGGS'].to_list()
+floodcells = tuple(cellList)
+print ('number of cells', len(cellList) )
+
+print('Hawkesbury number floodcells', len(floodcells))
+
+
+# grab all the data for the cells in the flooded area fron the raster crosswalk table
+#cursor.execute("SELECT * FROM kempsey_raster_crosswalk_example_r8368 WHERE auspix_dggs = ANY(%s);", (cellList,))  # works great
+cursor.execute("SELECT * FROM hawkesbury_raster_crosswalk03 WHERE auspix_dggs = ANY(%s);", (cellList,))
+raster_floodzone = cursor.fetchall()
+
+
+#print(newDict)
+# convert to pandas data frame
+df = pd.DataFrame(raster_floodzone)
+
+
+#rename some columns instead of numbers
+df.rename(columns={df.columns[6]: "area_m2"}, inplace = True)
+df.rename(columns={df.columns[14]: "landuse_code" }, inplace = True)
+df.rename(columns={df.columns[15]: "landuse" }, inplace = True)
+
+print('dfhead', df.head())
+
+
+
+#data frame information
+#print(df.info())
+
+
+print('Landuse output')
+
+print('Landuse types as ha in this Hawkesbury floodzone')
+#answer = df.groupby(['pa_id', 'capad', 'gis_area' ])['auspix_ha_a'].sum().reset_index()
+
+total_area = df.area_m2.sum()
+answer = df.groupby([ 'landuse'])['area_m2'].sum().reset_index()
+
+answer['area_m2'] = answer['area_m2'].astype(float)  # convert to float
+
+
+answer['percent_of_flooded'] = answer['area_m2'] / total_area * 100
+
+answer.sort_values(by = ['percent_of_flooded'], inplace= True, ascending=False)
+print(answer)
+
+#save the query results as csv
+answer.to_csv(r'D:\temp\HawkesburyLanduse.csv', index = False)
+print('saved to D:/temp/HawkesburyLanduse.csv')
+
+print('NB: some landuse classifications have no description (only a code) - might be fixable to give more general description - I will look into it')
+
+print('for ACLUMP classification document see  http://data.daff.gov.au/data/warehouse/9aal/2016/alumc9aal20161017/AustLandUseMgtClassfnVersion8_v1.0.0.pdf', )
+
+print('')
+
+
+
+print()
+finish = time.perf_counter()
+print(f'Total Finished at {(finish - start)} secs ###########################')
+
+
