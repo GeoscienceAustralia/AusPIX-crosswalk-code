@@ -9,7 +9,9 @@ import time
 start = time.perf_counter()
 '''
 This script looks up the main crosswalk table for all the cells in a particular geography fearture.
-It then looks at the resultant csv as a Pandas data frame and data processes crosswalks.
+It then looks at the resultant csv as a Pandas data frame and then data processes several crosswalks.
+
+the csv table that results from the database query is saved to C:/temp/
 '''
 #pandas options
 pd.set_option("display.max_columns", 200)  # to show more of table in printouts
