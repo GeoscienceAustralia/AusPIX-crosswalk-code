@@ -3,22 +3,24 @@ import os
 import psycopg2
 import csv
 import pandas as pd
+import webbrowser
 
 import time
 start = time.perf_counter()
 '''
 This script looks up the main crosswalk table for all the cells in a particular geography fearture.
-It then looks at the placenames DGGS'ed data to link any placenames within the geography feature.
-Both placenames and the source feature are Level 10 dggs
+It then looks at the resultant csv as a Pandas data frame and data processes crosswalks.
 '''
-
+#pandas options
 pd.set_option("display.max_columns", 200)  # to show more of table in printouts
 pd.set_option('display.max_colwidth', -1)
 #import openpyxl  # to convert to excel if needed
 
-
+#set up connection to AWs database
 directory = os.path.dirname(os.path.realpath(__file__))
-file = os.path.join(directory, "secretsNatcrosswalk.yml")
+#file = os.path.join(directory, "secretsNatcrosswalk.yml")
+file = r'C:\Users\Bellie\PycharmProjects\datadrill\secretNatcrosswalk.yml'
+print('file', file)
 DB_CON_DICT = yaml.safe_load(open(file))
 
 # set up db connection
@@ -29,46 +31,58 @@ cursor = connection.cursor()
 geography = 'sa1_main16'
 feature = "10102100708"
 
+# display selected SA1
+# print('displaying chosen SA1 in web browser')
+web = 'http://linked.data.gov.au/dataset/asgs2016/statisticalarealevel1/10102100708'
+webbrowser.open(web, new=1)
+
 q = "SELECT * from public.crosswalk where sa1_main16 = '10102100708';"
 
 #q = "select * FROM public.crosswalk WHERE  %s =  %s ;" %[geography, feature]
 print('')
 print('Reading database for your selected feature . . . ')
 
-print('Chosen Geography is', geography, 'for chosen feature = ', feature)
+print('Chosen Geography is', geography, 'for chosen feature = ', feature, '##################################')
 
+# pandas is querying the database directly and absorbing it into a data frame
 df = pd.read_sql_query(q, connection)
 #print('df', df)
 
 
 
-#save the query results as csv
-df.to_csv(r'D:\temp\results04.csv', index = False)
+#save the query results as csv - if needed - can read it as csv
+df.to_csv(r'C:\temp\results04.csv', index = False)
+
+#print(df.head())
 
 #save as Exell
 #df.to_excel(r'C:\temp\results05.xlsx', index = False)
 
 #heading for printout
 print('')
-print("SUBJECT OF THIS SUMMARY is asgs2016 sa1 CODE  = http://linked.data.gov.au/dataset/asgs2016/statisticalarealevel1/10601xxxx")
+print("SUBJECT OF THIS SUMMARY is asgs2016 sa1 "+ web)
+
+
 print('')
 print('for this feature . . .')
 
-#df = pd.read_csv(r'C:\Temp\results.csv')
-
-#data frame information
-# print(df.info())
 
 #convert strings to floats
 df['auspix_ha_a'] = df['auspix_ha_a'].astype(float)
 #
-print('This geography (SA2) as ha . . . (compare geography area and calculted from AusPIX area)')
+print('This geography (SA1) as ha . . . (compare geography area with calculated from AusPIX area)')
 answer = df.groupby(['sa1_main16', 'sa1_uri', 'sa1sqkm16']).auspix_ha_a.sum()
 print(answer)
 
 print('')
+print('SA1 features as ha in this geography')
+answer = df.groupby('sa1_main16').auspix_ha_a.sum()
+print(answer)
+print('')
+
+
 print('SA2 features as ha in this geography')
-answer = df.groupby('sa2_name16').auspix_ha_a.sum()
+answer = df.groupby(['sa2_name16']).auspix_ha_a.sum()
 print(answer)
 print('')
 
@@ -84,25 +98,28 @@ answer = df.ste_name16.unique()
 print(answer)
 print('')
 
-
 print('Suburbs and localities - ha in each suburb')
 
 answer = df.groupby(['ssc_name16', 'ssc_code16', 'sscsqkm16'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
 answer['sscsqkm16'] = answer['sscsqkm16'].astype(float)  # convert to float
-answer['appormt_pc'] = answer['auspix_ha_a'] / answer['sscsqkm16']  # includes conversion from sqkm to ha
+answer['Suburb% in this SA1'] = answer['auspix_ha_a'] / answer['sscsqkm16']  # includes conversion from sqkm to ha
 
 
 print(answer)
 print('')
 
 
-print('State Electorates in the Geography as ha each')
-answer = df.groupby(['sed_code19', 'sedname19', 'sedsqkm19']).auspix_ha_a.sum()
+print('State Electorates in the this SA1 feature as ha each')
+answer = df.groupby(['sed_code19', 'sedname19', 'sedsqkm19'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+answer['sedsqkm19'] = answer['sedsqkm19'].astype(float)  # convert to float
+answer['SED% in this SA1'] = answer['auspix_ha_a'] / answer['sedsqkm19']  # includes conversion from sqkm to ha
 print(answer)
 print('')
 
 print('Commonwealth Electorates in this geography as ha')
-answer = df.groupby(['ced_name', 'ced19sqkm']).auspix_ha_a.sum()
+answer = df.groupby(['ced_name', 'ced19sqkm'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+answer['ced19sqkm'] = answer['ced19sqkm'].astype(float)  # convert to float
+answer['CED%inthisSA1'] = answer['auspix_ha_a'] / answer['ced19sqkm']  # includes conversion from sqkm to ha
 print(answer)
 print('')
 
@@ -110,7 +127,7 @@ print('')
 print('National Parks and Reserves in this geography as ha')
 answer = df.groupby(['pa_id', 'capad', 'gis_area' ])['auspix_ha_a'].sum().reset_index()
 answer['gis_area'] = answer['gis_area'].astype(float)  # convert to float
-answer['appormt_pc'] = answer['auspix_ha_a'] / answer['gis_area'] * 100
+answer['Parks % in this SA1'] = answer['auspix_ha_a'] / answer['gis_area'] * 100
 
 print(answer)
 
@@ -118,26 +135,44 @@ print('')
 
 
 print('LGA presence in this geography as has each')
-answer = df.groupby(['lga_code19', 'lga_name19', 'lgasqkm19']).auspix_ha_a.sum()
-print(answer)
-print('')
+# answer = df.groupby(['lga_code19', 'lga_name19', 'lgasqkm19']).auspix_ha_a.sum()
+# print(answer)
+# print('')
 #
+answer = df.groupby(['lga_code19', 'lga_name19', 'lgasqkm19'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+answer['lgasqkm19'] = answer['lgasqkm19'].astype(float)  # convert to float
+answer['LGA % in this SA1'] = answer['auspix_ha_a'] / answer['lgasqkm19']  # includes conversion from sqkm to ha
+print(answer)
+
+print('')
+
+
 #
 # print('BoM grid presence in this geography as ha' )
 # answer = df.groupby(['ga_bomid', 'bom_sqkm']).auspix_ha_a.sum()
 # print(answer)
 # print('')
-#
-# print('DOWE Spark grid presence in this geography' )
-# answer = df.groupby(['sparkbgid', 'spark_area']).auspix_ha_a.sum()
-# print(answer)
 
+answer = df.groupby(['ga_bomid', 'bom_sqkm'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+#answer['apportionment%'] = answer['auspix_ha_a'] / answer['lgasqkm19']  # includes conversion from sqkm to ha
+print(answer)
+
+answer = df.groupby(['lga_code19', 'lga_name19', 'lgasqkm19'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+answer['lgasqkm19'] = answer['lgasqkm19'].astype(float)  # convert to float
+answer['apportionment%'] = answer['auspix_ha_a'] / answer['lgasqkm19']  # includes conversion from sqkm to ha
+
+
+#
+print('DAWE Spark grid presence in this geography' )
+answer = df.groupby(['sparkbgid', 'spark_area']).auspix_ha_a.sum()
+print(answer)
+print('')
 
 print('Built from these AusPIX Cells for this geography . . . ')
 cellsData = df[['auspix_dggs', 'auspix_uri',]]
 print( df[['auspix_dggs', 'auspix_uri', 'auspix_ha_a', 'auspixlat84', 'auspixlong8']])
 
-cellsData.to_csv(r'D:\temp\cellsInSA1.csv', index = False)
+cellsData.to_csv(r'C:\temp\cellsInSA1.csv', index = False)
 #print(df.loc[df['ssc_name16']=='Bombay'])
 
 
@@ -146,19 +181,23 @@ print()
 finish = time.perf_counter()
 print(f'Total Finished at {(finish - start)} secs ###########################')
 
-'''example output
-
-C:\Users\Joseph\miniconda3\python.exe C:/Users/Joseph/PycharmProjects/data-drill/crosswalkdatadump.py
+'''
+####################  Example output   ################################################
 
 Reading database for your selected feature . . . 
-Chosen Geography is sa1_main16 for chosen feature =  10102100708
+Chosen Geography is sa1_main16 for chosen feature =  10102100708 ##################################
 
-SUBJECT OF THIS SUMMARY is asgs2016 sa1 CODE  = http://linked.data.gov.au/dataset/asgs2016/statisticalarealevel1/10601xxxx
+SUBJECT OF THIS SUMMARY is asgs2016 sa1 http://linked.data.gov.au/dataset/asgs2016/statisticalarealevel1/10102100708
 
 for this feature . . .
-This geography (SA2) as ha . . . (compare geography area and calculted from AusPIX area)
+This geography (SA1) as ha . . . (compare geography area with calculated from AusPIX area)
 sa1_main16   sa1_uri                                                                       sa1sqkm16
 10102100708  http://linked.data.gov.au/dataset/asgs2016/statisticalarealevel1/10102100708  1137.7239    113881.631746
+Name: auspix_ha_a, dtype: float64
+
+SA1 features as ha in this geography
+sa1_main16
+10102100708    113881.631746
 Name: auspix_ha_a, dtype: float64
 
 SA2 features as ha in this geography
@@ -175,53 +214,95 @@ Australian States included in this geography
 ['New South Wales']
 
 Suburbs and localities - ha in each suburb
-          ssc_name16 ssc_code16  sscsqkm16   auspix_ha_a  appormt_pc
-0   Ballalaba         10158      43.7739    4371.519867   99.865899 
-1   Bendoura          10292      46.8663    4688.827284   100.046884
-2   Berlang           10306      92.5237    7756.945918   83.837394 
-3   Bombay            10456      159.6530   15994.734613  100.184366
-4   Farringdon        11494      67.4805    6780.615406   100.482590
-5   Harolds Cross     11855      74.4661    7446.960980   100.004713
-6   Hereford Hall     11893      77.6468    7778.913354   100.183309
-7   Jembaicumbene     12007      42.6563    4273.886816   100.193566
-8   Jerrabattgulla    12015      38.0881    3815.011476   100.162819
-9   Jinden            12031      126.0902   12626.394346  100.137793
-10  Kindervale        12144      65.8811    6590.230956   100.032194
-11  Krawarree         12203      106.2226   10612.712665  99.910120 
-12  Majors Creek NSW  12452      69.9361    661.463922    9.458119  
-13  Neringla          12928      192.8974   1161.833309   6.023064  
-14  Snowball          13566      132.5982   13248.805048  99.916930 
-15  Wyanbene          14433      60.6717    6072.775785   100.092395
+          ssc_name16 ssc_code16  sscsqkm16   auspix_ha_a  Suburb% in this SA1
+0   Ballalaba         10158      43.7739    4371.519867   99.865899          
+1   Bendoura          10292      46.8663    4688.827284   100.046884         
+2   Berlang           10306      92.5237    7756.945918   83.837394          
+3   Bombay            10456      159.6530   15994.734613  100.184366         
+4   Farringdon        11494      67.4805    6780.615406   100.482590         
+5   Harolds Cross     11855      74.4661    7446.960980   100.004713         
+6   Hereford Hall     11893      77.6468    7778.913354   100.183309         
+7   Jembaicumbene     12007      42.6563    4273.886816   100.193566         
+8   Jerrabattgulla    12015      38.0881    3815.011476   100.162819         
+9   Jinden            12031      126.0902   12626.394346  100.137793         
+10  Kindervale        12144      65.8811    6590.230956   100.032194         
+11  Krawarree         12203      106.2226   10612.712665  99.910120          
+12  Majors Creek NSW  12452      69.9361    661.463922    9.458119           
+13  Neringla          12928      192.8974   1161.833309   6.023064           
+14  Snowball          13566      132.5982   13248.805048  99.916930          
+15  Wyanbene          14433      60.6717    6072.775785   100.092395         
 
-State Electorates in the Geography as ha each
-sed_code19  sedname19  sedsqkm19 
-10009       Bega       9614.2214     4.881653     
-10053       Monaro     20033.4836    113874.309267
-Name: auspix_ha_a, dtype: float64
+State Electorates in the this SA1 feature as ha each
+  sed_code19 sedname19   sedsqkm19    auspix_ha_a  SED% in this SA1
+0  10009      Bega      9614.2214   4.881653       0.000508        
+1  10053      Monaro    20033.4836  113874.309267  5.684199        
 
 Commonwealth Electorates in this geography as ha
-ced_name     ced19sqkm      
-Eden-monaro  41617.111439561    113881.631746
-Name: auspix_ha_a, dtype: float64
+      ced_name    ced19sqkm    auspix_ha_a  CED%inthisSA1
+0  Eden-monaro  41617.11144  113881.631746  2.736414     
 
 National Parks and Reserves in this geography as ha
-           pa_id                capad       gis_area   auspix_ha_a  appormt_pc
-0  BHA_22         Burrin Burrin        410.959503     412.499641    100.374766
-1  NSW_FMZ2_21    Forestry Management  5.106042       7.322479      143.408109
-2  NSW_FR182      Jerrabattgulla       29.196535      31.730742     108.679819
-3  NSW_MiscF1404  South Coast Subregi  13703.891602   2467.675369   18.007114 
-4  NSW_N0047      Deua                 121603.984375  18538.075597  15.244628 
-5  NSW_N0164      Gourock              7848.569824    4078.620714   51.966419 
-6  NSW_N0170      Tallaganda           16596.404297   934.836465    5.632765  
-7  NSW_N0257      Berlang              2313.276123    2252.882656   97.389267 
-8  NSW_N0262      Tallaganda           5187.973633    2506.728590   48.318067 
+           pa_id                capad       gis_area   auspix_ha_a  \
+0  BHA_22         Burrin Burrin        410.959503     412.499641     
+1  NSW_FMZ2_21    Forestry Management  5.106042       7.322479       
+2  NSW_FR182      Jerrabattgulla       29.196535      31.730742      
+3  NSW_MiscF1404  South Coast Subregi  13703.891602   2467.675369    
+4  NSW_N0047      Deua                 121603.984375  18538.075597   
+5  NSW_N0164      Gourock              7848.569824    4078.620714    
+6  NSW_N0170      Tallaganda           16596.404297   934.836465     
+7  NSW_N0257      Berlang              2313.276123    2252.882656    
+8  NSW_N0262      Tallaganda           5187.973633    2506.728590    
+
+   Parks % in this SA1  
+0  100.374766           
+1  143.408109           
+2  108.679819           
+3  18.007114            
+4  15.244628            
+5  51.966419            
+6  5.632765             
+7  97.389267            
+8  48.318067            
 
 LGA presence in this geography as has each
-lga_code19  lga_name19           lgasqkm19 
-12750       Eurobodalla A        3428.1695     7.322479     
-16490       Queanbeyan-Palerang  5318.8822     113852.341831
-17040       Snowy Monaro Region  15163.5461    21.967437    
-Name: auspix_ha_a, dtype: float64
+  lga_code19           lga_name19   lgasqkm19    auspix_ha_a  \
+0  12750      Eurobodalla A        3428.1695   7.322479        
+1  16490      Queanbeyan-Palerang  5318.8822   113852.341831   
+2  17040      Snowy Monaro Region  15163.5461  21.967437       
+
+   LGA % in this SA1  
+0  0.002136           
+1  21.405314          
+2  0.001449           
+
+   ga_bomid bom_sqkm  auspix_ha_a
+0   449955   25.212   190.384450 
+1   449956   25.212   827.440109 
+2   450840   25.197   1056.877779
+3   450841   25.197   2562.867594
+4   450842   25.197   2038.089944
+..     ...      ...           ...
+67  461470   25.011   26.849089  
+68  461471   25.011   822.558456 
+69  461472   25.011   659.023096 
+70  461473   25.011   256.286759 
+71  461474   25.011   36.612394  
+
+[72 rows x 3 columns]
+DAWE Spark grid presence in this geography
+sparkbgid  spark_area
+epib11222  0.0001        24.408263 
+epib11223  0.0001        24.408263 
+epib11232  0.0001        36.612394 
+epib11233  0.0001        100.073877
+epib11234  0.0001        31.730742 
+                           ...     
+esnd44434  0.0001        87.869746 
+esnd44441  0.0001        87.869746 
+esnd44442  0.0001        102.514704
+esnd44443  0.0001        102.514704
+esnd44444  0.0001        87.869746 
+Name: auspix_ha_a, Length: 1260, dtype: float64
 
 Built from these AusPIX Cells for this geography . . . 
        auspix_dggs  \
@@ -265,123 +346,8 @@ Built from these AusPIX Cells for this geography . . .
 
 [46657 rows x 5 columns]
 
-Total Finished at 75.64981630000001 secs ###########################
+Total Finished at 79.70298770000001 secs ###########################
 
 Process finished with exit code 0
-
-
-
 '''
-print('Reading database for your selected feature . . . ')
-
-print('Chosen Geography is', geography, 'for chosen feature = ', feature)
-
-df = pd.read_sql_query(q, connection)
-#print('df', df)
-
-
-
-#save the query results as csv
-df.to_csv(r'D:\temp\results04.csv', index = False)
-
-#save as Exell
-#df.to_excel(r'C:\temp\results05.xlsx', index = False)
-
-#heading for printout
-print('')
-print("SUBJECT OF THIS SUMMARY is asgs2016 sa1 CODE  = http://linked.data.gov.au/dataset/asgs2016/statisticalarealevel1/10601xxxx")
-print('')
-print('for this feature . . .')
-
-#df = pd.read_csv(r'C:\Temp\results.csv')
-
-#data frame information
-# print(df.info())
-
-#convert strings to floats
-df['auspix_ha_a'] = df['auspix_ha_a'].astype(float)
-#
-print('This geography (SA2) as ha . . . (compare geography area and calculted from AusPIX area)')
-answer = df.groupby(['sa1_main16', 'sa1_uri', 'sa1sqkm16']).auspix_ha_a.sum()
-print(answer)
-
-print('')
-print('SA2 features as ha in this geography')
-answer = df.groupby('sa2_name16').auspix_ha_a.sum()
-print(answer)
-print('')
-
-
-print('SA3 features as ha in this geography')
-answer = df.groupby('sa3_name16').auspix_ha_a.sum()
-print(answer)
-print('')
-
-#
-print('Australian States included in this geography')
-answer = df.ste_name16.unique()
-print(answer)
-print('')
-
-
-print('Suburbs and localities - ha in each suburb')
-
-answer = df.groupby(['ssc_name16', 'ssc_code16', 'sscsqkm16'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
-answer['sscsqkm16'] = answer['sscsqkm16'].astype(float)  # convert to float
-answer['appormt_pc'] = answer['auspix_ha_a'] / answer['sscsqkm16']  # includes conversion from sqkm to ha
-
-
-print(answer)
-print('')
-
-
-print('State Electorates in the Geography as ha each')
-answer = df.groupby(['sed_code19', 'sedname19', 'sedsqkm19']).auspix_ha_a.sum()
-print(answer)
-print('')
-
-print('Commonwealth Electorates in this geography as ha')
-answer = df.groupby(['ced_name', 'ced19sqkm']).auspix_ha_a.sum()
-print(answer)
-print('')
-
-
-print('National Parks and Reserves in this geography as ha')
-answer = df.groupby(['pa_id', 'capad', 'gis_area' ])['auspix_ha_a'].sum().reset_index()
-answer['gis_area'] = answer['gis_area'].astype(float)  # convert to float
-answer['appormt_pc'] = answer['auspix_ha_a'] / answer['gis_area'] * 100
-
-print(answer)
-
-print('')
-
-
-# print('LGA presence in this geography as has each')
-# answer = df.groupby(['lga_code19', 'lga_name19', 'lgasqkm19']).auspix_ha_a.sum()
-# print(answer)
-# print('')
-#
-#
-# print('BoM grid presence in this geography as ha' )
-# answer = df.groupby(['ga_bomid', 'bom_sqkm']).auspix_ha_a.sum()
-# print(answer)
-# print('')
-#
-# print('DOWE Spark grid presence in this geography' )
-# answer = df.groupby(['sparkbgid', 'spark_area']).auspix_ha_a.sum()
-# print(answer)
-
-
-print('Built from these AusPIX Cells for this geography . . . ')
-cellsData = df[['auspix_dggs', 'auspix_uri',]]
-print( df[['auspix_dggs', 'auspix_uri', 'auspix_ha_a', 'auspixlat84', 'auspixlong8']])
-
-cellsData.to_csv(r'D:\temp\cellsInSA1.csv', index = False)
-#print(df.loc[df['ssc_name16']=='Bombay'])
-
-
-
-print()
-finish = time.perf_counter()
-print(f'Total Finished at {(finish - start)} secs ###########################')
 
