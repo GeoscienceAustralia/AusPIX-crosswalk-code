@@ -1,0 +1,81 @@
+
+'''
+This script takes geographic coordinates and  returns features from the AusPIX crosswalk table that exist at that point
+'''
+
+import psycopg2
+from psycopg2 import sql, connect
+from rhealpixdggs.dggs import RHEALPixDGGS  # from imported module
+
+rdggs = RHEALPixDGGS()  # make an instance
+import json
+
+import time
+start = time.perf_counter()
+
+myCell = []  # declare a list fir the cell ID
+# set up users location query eg Geoscience Australia
+query_lat = -35.3437614
+query_long = 149.1585133
+resolution = 10
+
+coords = (query_long, query_lat)
+
+#ask the DGGS engine which cell this point is in
+drill_cell = rdggs.cell_from_point(resolution, coords, plane=False)  # false = on the elipsoidal curve
+print('drilling cell ID based on Lat and Long = ', drill_cell)
+myCell.append(str(drill_cell))
+
+
+#drill_cell = ['R7852380775']  # for query based only on DGGS cell
+
+
+# locatio of output
+#myOutput_location_and_name = r"D:\datadrill\drill_output"
+
+mycell = tuple(myCell)
+#params = {'cells': cells}
+
+connection = psycopg2.connect(host='xxxxxx.rds.amazonaws.com',
+                        port='xxxx',
+                        dbname='xxxxx',
+                        user='xxxxx',
+                        password='xxxxxx')
+
+cursor = connection.cursor()
+
+
+# postgreSQL_select_Query = " SELECT * FROM crosswalk WHERE auspix_dggs IN %s;"  #works
+
+postgreSQL_select_Query = " SELECT json_agg(crosswalk) FROM crosswalk WHERE auspix_dggs IN %s;" # works too
+
+cursor.execute(postgreSQL_select_Query, (mycell,))
+
+theseRecords = cursor.fetchall()
+
+print('Python Data drill V.1 for Lat and Long, sourced forom the National Crosswalk Intergration Table')
+
+print ('Includes active hyper-links where relevant/available.')
+print('to query one source for one cells takes 0.21 seconds ')
+print(json.dumps(theseRecords, indent=1))
+
+#print(theseRecords)
+# time it
+finish = time.perf_counter()
+print(f'Total Finished at {(finish - start)} secs ###########################')
+
+# closing database connection.
+if (connection):
+    cursor.close()
+    connection.close()
+    print("PostgreSQL connection is closed")
+
+
+
+
+#
+
+
+
+
+
