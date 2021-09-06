@@ -1,0 +1,488 @@
+
+import shapefile
+import concurrent.futures
+import os
+import numba
+from numba import jit
+import pygeoj
+import time
+start = time.perf_counter()
+#from dggs import RHEALPixDGGS
+import numpy
+#import cython
+import easycython
+
+
+@jit(nopython=True)
+def is_poly_in_tilebb(polybb, tilebbox):
+    # returns True if bounding boxes overlap partly or fully
+
+    tileWest = tilebbox[0]
+    tileEast = tilebbox[2]
+    polyWest = polybb[0]
+    polyEast = polybb[2]
+
+    tileNorth = tilebbox[1]
+    tileSouth = tilebbox[3]
+    polySouth = polybb[1]
+    polyNorth = polybb[3]
+
+    horizontal = False
+    vertical = False
+    # see if bounding boxes overlap
+    if polyWest >= tileWest and polyWest <= tileEast:
+        horizontal = True
+    if polyEast >= tileWest and polyWest <= tileEast:
+        horizontal = True
+
+    if polySouth >= tileSouth and polyNorth <= tileNorth:
+        vertical = True
+    if polyNorth >= tileNorth and polySouth <= tileSouth:
+        vertical = True
+
+    return (horizontal and vertical)  # True if overlap
+
+from rhealpixdggs.dggs import RHEALPixDGGS #imported as module
+rdggs = RHEALPixDGGS()  # make an instance
+
+
+def write_list_to_file(myList, filename):
+    ''' function to write a CSV from a python list
+    requires the list and the filename to save it to the as inputs'''
+    with open(filename, "w") as outfile:  # Write the list to csv file
+        for entries in myList:
+            #cleanup for csv output
+            thisRow = str(entries)  #convert to string
+            thisRow = thisRow.replace('(', '')
+            thisRow = thisRow.replace(')', '')
+            thisRow = thisRow.replace('[', '')
+            thisRow = thisRow.replace(']', '')
+            thisRow = thisRow.replace("'", "")
+            outfile.write(thisRow) # write
+            outfile.write("\n") # add a new line
+
+def cells_in_poly(myPoly, bbox, thisFile, a_tile, return_cell_obj=False):  # from ben's
+    #cells_in_poly(pol, tileCnrs, thisFile, a_tile)
+    # returns the cells in the poly and lat long of each dggs centroid
+    '''
+    a function to calculate DGGS cells within a bounding box then check which ones are in the Polygon
+    resolution is the DGGS resolution required  - normally 10
+    myPoly expects a sequence of coordinates
+    '''
+    cellsinPolystart = time.perf_counter()
+    resolution = 10
+
+    # convert the geojson bbox to an AusPIX bounding box
+    nw = (bbox[0], bbox[1])
+    se = (bbox[2], bbox[3])
+    print('nw', nw, 'se', se)
+
+    polybb = myPoly.shape.bbox
+    # reconfigure step
+    polybb = polybb[0], polybb[3], polybb[2], polybb[1]
+    print('119 polybb', polybb)
+
+    # for S region - alternate method work around - needs a list grid of points in the area of interest - then ask for the cell each is in
+    # bbox_myPoints = point_set_from_bounds(resolution, nw, se)
+    # cell_list = []
+    # for pt in bbox_myPoints:
+    #     thiscell = rdggs.cell_from_point(resolution, pt, plane=False)
+    #     if thiscell not in cell_list:
+    #         cell_list.append(thiscell)
+
+    # call function to calculate all the cells within the bounding box  - this function is not working properly in the S area (southern Tas and Antartica
+    # - use point_set_from_bounds function (above) instead
+
+    # find the min bbox to find the cells in the poly that are also in the tile
+    # finds the tightest bb to do the job
+    nw = (max(bbox[0], polybb[0]), min(bbox[1], polybb[1]))  # nw corner
+    se = (min(bbox[2], polybb[2]), max(bbox[3], polybb[3]))  # se corner
+
+
+    # print('p_bounding', p_bbox, 'dataset=', datasetName, 'tile is', a_Tile)
+    # print('t_bounding', t_bbox)
+    print('nw', nw, 'se', se, thisFile)
+
+
+    cells = rdggs.cells_from_region(resolution, nw, se, plane=False)  # upper left and down right
+
+    cell_List = list()
+    for row in cells:  # gives it to you as a list of lists, so double loop to get them out
+        for item in row:
+            cell_List.append(item)
+    print()
+    # maybe need to have min bbox between poly and tile
+    print('num cells intersecting tile and poly ', len(cell_List))
+
+    # now find the centroids of those cells by asking the dggs engine
+    bboxCentroids = []  # declare a container to hold bbox centriods list for all the cells
+    for cell in cell_List:  # for each cell in the bounding box
+        location = cell.nucleus(plane=False)  # centroid on the ellipsoid
+        if return_cell_obj:
+            thisCentroid = [cell, location[0], location[1]]  # adds the xy too
+        else:
+            thisCentroid = [str(cell), location[0], location[1]]  # adds the xy too
+        bboxCentroids.append(thisCentroid)
+
+
+    # now check if these centroid points are in poly Bens stuff....
+    # make a set of numpy arrays that describe the list of points in each poly and part
+    # need to convert the shapefile info to use the format below
+    # convert to geojson
+    polgeoj = myPoly.__geo_interface__
+    #print('typegj', polgeoj["type"])
+    #print(polgeoj['geometry']['coordinates'])
+    myPolyCoords = polgeoj['geometry']['coordinates']
+    print('len myPolycoords', len(myPolyCoords)) #one feature in this here? normally
+
+
+
+    # print('num npholes', len(npholes))  # npholes is empty if no holes
+    # print('num npthings', len(npthings))
+    # for item in npholes:
+    #     print(item)
+    inpolyee = proc_centroids(bboxCentroids, myPolyCoords) # process
+
+    cellsinpolyfinish = time.perf_counter()
+    print(f'Finished cells in poly at {(cellsinpolyfinish - cellsinPolystart) / 60} mins yyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
+    print('numxx in poly', len(inpolyee))
+
+
+
+    return inpolyee
+#
+@jit(nopython=True)
+def proc_centroids(bboxCentroids, myPolyCoords):
+    npthings = []
+    npholes = []
+
+    # for thisFeature in myPolyCoords:
+    #make the numpy arrays with polygon data
+    n = 0
+    for thing in myPolyCoords:  # for each part outer ring
+        npthing = numpy.array(thing)  # numpy array of that whole outer ring
+        # print('npthong', npthing)
+        if n == 0:
+            # print('new poly', thing)
+            n += 1
+            npthings.append(npthing)
+        else:  # after the first one all elsw are hole
+            # print('hole in poly', thing)
+            npholes.append(npthing)
+
+
+    # go through the DGGS centroids one by one
+    insidePoly = list() # declare a new list
+    # print('num bbcents', len(bboxCentroids))
+    for myPoint in bboxCentroids:  #check each point to see if in poly
+        # this code modified by Ben to use ray_tracing
+        x = myPoint[1]
+        y = myPoint[2]
+        #print('this centroid', myPoint)
+        inPoly = False
+        really = True
+        # FOR OUTER RING
+        for npthing in npthings:
+            # from https://stackoverflow.com/a/48760556
+            n = len(npthing)  # number of edges in poly
+            #print('num edges in this poly', n)
+            inside = False
+            p2x = 0.0
+            p2y = 0.0
+            xints = 0.0
+            p1x, p1y = npthing[0]
+            for i in range(n + 1):
+                p2x, p2y = npthing[i % n]
+                print('p1x and p1y', p1x, p1y, y)
+                if y > min(p1y, p2y):
+                    if y <= max(p1y, p2y):
+                        if x <= max(p1x, p2x):
+                            if p1y != p2y:
+                                xints = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
+                            if p1x == p2x or x <= xints:
+                                #print('not inside')
+                                inside = not inside
+                # print('inside', inside)
+                p1x, p1y = p2x, p2y
+            #
+            # if inPoly:
+            #     print('in Poly yes')
+            #     break
+        # HOLES
+        for npthing in npholes:
+            #really = not ray_tracing(x, y, npthing)
+            n = len(npthing)  # number of edges in poly
+            # print('n=', n)
+            #inside = False
+            p2x = 0.0
+            p2y = 0.0
+            xints = 0.0
+            p1x, p1y = npthing[0]
+            for i in range(n + 1):
+                p2x, p2y = npthing[i % n]
+                if y > min(p1y, p2y):
+                    if y <= max(p1y, p2y):
+                        if x <= max(p1x, p2x):
+                            if p1y != p2y:
+                                xints = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
+                            if p1x == p2x or x <= xints:
+                                really = not really
+                # print('really', really)
+                p1x, p1y = p2x, p2y
+
+
+
+            # if not really:
+            #     break
+
+        if inside and really:
+            #print('ínPoly and really')
+            insidePoly.append(myPoint)  # add to the cells in the poly
+
+    return insidePoly
+
+
+
+def point_set_from_bounds(resolution, ul, dr):
+    # designed to replace rdggs.cells_from_region - which didn't work in the S (Antartic) zone yet
+    # a function to fill a bounding box with xy values (pointset) as seed points to build the set of cells from
+    # works across the R to S divide even in the same polygon
+    step = 0.001  # was 0.001  -adjust step to suit DGGS resolution  in degrees Lat long - need improvement to help speed it up too
+    if resolution == 10:
+        step = 0.001  # OK setting for resolution 10
+    pointset = []
+    for i in numpy.arange(ul[0], dr[0], step):
+        for n in numpy.arange(dr[1], ul[1], step):
+            #print('i and n = ', i, n)
+            newpt = [i, n]
+            pointset.append(newpt)
+    return pointset
+
+
+
+def process_tile(a_tile):
+     '''
+     this function takes a prebuilt tile as DGGS cells as centroids (points) and adds crosswalk information to it
+     :param a_tile: a tile of prebuilt cells as centroids as a starter for adding data from geographies, represents
+     about 850th of Australia
+     :return: saves as csv. csv is later converted to shapfile based on cetroid of DGGS cell
+     These shapefiles tiles are later uploaded to DB to form an Australia wide DB
+     '''
+
+     # files to crosswalk- some have been simplified to reduce processing but this may not be needed any more c.f. Ben's mod
+     mySA1 = r'D:\Build_data\SA1\SA1_2021_AUST_WGS84singleFxd.shp'   #
+     # mySA1 = r'D:\Build_data\testlayer\testpoly3.shp'
+
+
+     table = []
+     # csv output header - make header for output
+     tileFields = 'AusPIX_dggsID, AusPIX_URI, AusPixLong84, AusPIXLat84, AusPIX_ha_area, '
+     SA1fields = 'SA1_MAIN21, SA1SQKM16, SA1_URI, SA2_MAIN21, SA2_NAME21, SA3_CODE21, SA3_NAME21, STE_NAME21, '  # column headings
+     SSCfields = 'SSC_CODE16, SSC_NAME16, SSCSQKM16, '
+     CEDfields = 'CED_name, CED_State, CED19SqKm, '
+     SEDfields = 'SED_Code19, SEDname19, SEDSqKm19, '
+     LGAfields = 'LGA_CODE19, LGA_NAME19, LGASQKM19, '
+     CAPfields = 'PA_ID, CAPAD, TYPE, GIS_HA?, '
+     BoMfields = 'GA_BoMID, BoM_SQKM, '
+     ENVfields = 'SpARKBGID, SpARK_AREA, '
+
+     # concatinate the header for csv
+     header = tileFields + SA1fields + SSCfields + CEDfields + SEDfields + LGAfields + CAPfields + BoMfields + ENVfields
+     table.append(header)  # put the header inplace
+
+     print('')
+     print('now doing my tile ', a_tile)
+     # build tile name for output
+     tname = a_tile.split('\\')
+     tname = tname[-1]
+     tname = tname.replace('.shp', '')
+     tname = tname.replace('Area', '')
+
+     # print('tname', tname)
+
+     myTile = shapefile.Reader(a_tile)
+     tileRecs = myTile.shapeRecords()  # shape and records of that file
+     print('number of attribute rows in tileRecs is ', len(tileRecs))
+     myTilebb = myTile.bbox
+
+     # tile corners plus a little buffer required - for the shape file
+     tileCnrs = [(myTilebb[0] - 0.0003, myTilebb[3] + 0.0003), (myTilebb[2] + 0.0003, myTilebb[3] + 0.0003),
+                 (myTilebb[2] + 0.0003, myTilebb[1] - 0.0003), (myTilebb[0] - 0.0003, myTilebb[1] - 0.0003)]
+
+     print('tile points = ', tileCnrs)
+
+     buffed_tileCnrs = [myTilebb[0] - 0.0003, myTilebb[3] + 0.0003, myTilebb[2] + 0.0003,  myTilebb[1] - 0.0003]
+     print('tilebounds ', myTilebb)
+     print('buffed crns', buffed_tileCnrs)
+
+
+     # produce a shapefile of the tile bounding box
+     # shapeFile = r'D:\DGGSgrid\tilePoly/' + tname + 'polybb' # don't add .shp
+     shapeFile = r'D:\Build_data\testlayer\testlayer.shp' + tname + 'polybb'  # don't add .shp
+
+     w = shapefile.Writer(shapeFile)
+     w.field('DGGSrHEALPix', 'C', '40')
+     w.poly([tileCnrs])  # needs the []
+     w.record(DGGSrHEALPix=tname)
+     w.autoBalance = 1
+     # project the shapefile into 84 # a simple method of writing a single projection
+     prj = open("%s.prj" % shapeFile, "w")
+     epsg = 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]'
+     prj.write(epsg)
+     prj.close()
+
+     thisFile = 'SA1'
+     print('')
+     print('providing for SA1 tile intersect')
+     # finding the SA1 source polygons that are in the tile bounding box
+     SA1 = shapefile.Reader(mySA1)  # so we can read in only in the polys that intersect the tile
+     # SA1 = pygeoj.load(filepath=mySA1)
+
+     print('total num sa1 num shapes', len(SA1))
+
+
+     print('')
+     print('providing for SA1 tile intersect')
+     # finding the SA1 source polygons that are in the tile bounding box
+     SA1 = shapefile.Reader(mySA1)  # we only need the polys that intersect the tile
+     SA1Recs = SA1.shapeRecords()
+     SA1List = []
+     thisFile = 'Sa1'
+     for aPoly in SA1Recs:
+         myPoly = aPoly.shape
+         polybb = [myPoly.bbox][0]  # poly bounding box
+         if is_poly_in_tilebb(polybb, myTile.bbox):  # print('found overlap')
+             SA1List.append(aPoly)
+     print('SA1 polies found overlapping', len(SA1List))
+
+     del([mySA1])
+
+
+     # dggs the Sa1s in the tile
+     sa1DICT = {}
+     for pol in SA1List:
+         print('doing pol', pol.record[0])
+         # dggsCells = poly_to_DGGS(pol, tileCnrs, thisFile, a_tile)
+
+         # cells_in_poly(myPoly,  return_cell_obj=False):
+
+         dggsCells = cells_in_poly(pol, buffed_tileCnrs, thisFile, a_tile)
+
+         myValues = list(pol.record)
+         for item in dggsCells:  # making a dictionary of all the cells in the poly
+             # print ('myvalsBBBB', myValues)
+             for item in dggsCells:
+                 # joinFields = [0, 15, 16, 2, 4, 5, 6, 12]
+                 sa1DICT[item[0]] = myValues[0], myValues[15], myValues[16], myValues[3], myValues[4], myValues[5], myValues[6], myValues[12]
+
+
+     #
+     # next major section
+     # go through the tile cell by cell
+     print('biulding the csv file cell by cell')
+     tileRecsbuildCSVstart = time.perf_counter()
+     for cell in tileRecs:  # centroid by centroid
+
+         # print('')
+         # print('this tilecell = ', str(cell))
+
+         # set up the dggs details for the output table
+         dggsData = cell.record[0] + ',' + cell.record[1] + ',' + str(cell.record[2]) + ',' + str(
+             cell.record[3]) + ',' + str(cell.record[4])
+         rowOut = []  # empty row out
+         rowOut.append(dggsData)  # start data row build with dggs data
+
+        # print('header', header)
+
+         if cell.record[0] in sa1DICT:
+             # print("successful dictionary of sa1", sa1DICT[cell.record[0]])
+             rowOut.append(sa1DICT[cell.record[0]])
+         else:
+             # joinFields = [0, 13, 2, 4, 5, 6, 12]
+             rowOut.append('SA1_NA,,,,,,, ')  # this is when no match  - eg in the ocean there are no SA1's etc
+         # print('rowout', rowOut)
+
+
+         table.append(rowOut)
+
+     print('sending to CSV', tname)
+     # send output to file by calling function 'write_list_to_file'
+     write_list_to_file(table, r'D:\DGGSgrid\Crosswalk_as_CSV/' + tname + '.csv')  # this one
+     # write_list_to_file(table, r'C:\DGGScrosswalk\corona\outputs/' + tname + '.csv')
+
+
+
+     tileRecsbuildCSVfinish = time.perf_counter()
+
+     print(f'Finished TileRecs at {(tileRecsbuildCSVfinish - tileRecsbuildCSVstart) / 60} mins #@@@@@@@@@@@@@@@@@#')
+
+     finish = time.perf_counter()
+     # print(f'Finished in {round(finish - start)} second(s)')
+     print(f'Finished at {(finish - start) / 60} mins xxxxxxxxxxxxxxxxxxxxxxx')
+
+
+
+
+
+
+if __name__ == '__main__':
+    # bring in the tiles
+    print('starting')
+
+    #directory = r'D:\DGGSgrid\ParentAreas'
+    directory = r'D:\DGGSgrid\DGGScells_raw_shapes'   # folder with all the base dggs tiles ready to fill with crosswalk (as shapefiles)
+    doneOnes = r'D:\DGGSgrid\Crosswalk_as_CSV'  #folder with the finished filled with crosswalk csv's
+
+    #directory = r'D:\DGGSgrid\testArea'
+    #directory = r'C:\DGGScrosswalk\corona'
+
+    completed = []
+    # for done ones
+    for root, dirs, files in os.walk(doneOnes):
+        for file in files:
+            if file.endswith('.csv'):
+                #thisFile = (os.path.join(doneOnes, file))
+                thisFile = (file.replace('.csv', ''))
+                print(thisFile)
+                completed.append(thisFile)
+    print('num already done', len(completed))
+
+    # put the list of desired cells to process
+    #myList = ['R7832', 'R7833', 'R7843', 'R7835', 'R7836']
+    myList = ['R7835']
+    tiles = []  # make a list of all the shape files in the folder
+    # list the tiles t odo
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file.endswith('.shp'):
+                if file.replace('.shp', '') not in completed:  #filter out done ones
+                    #filter to keep the ones we are focusing on
+                    for aCell in myList:
+                        if aCell in file:   # to do all the cells in the R775 tile - so long as there is a dggs shapefile built for it
+                            thisFile = (os.path.join(directory, file))
+                            print(thisFile)
+                            tiles.append(thisFile)
+    print('num tiles', len(tiles))
+    if len(tiles) == 0:
+        print('no files here')
+
+    #tiles = reversed(tiles)
+    '''
+    Make sure there are no zero area records in the source shapefiles eg SA1 usually has some zero area records
+    remove them - or this will fail
+    '''
+    # # multiprocess
+    # with concurrent.futures.ThreadPoolExecutor() as executor:  #use this line to use threads
+    # # multi processor chooses all the processors it can get hold of to run the job quick
+    # with concurrent.futures.ProcessPoolExecutor(max_workers=8) as executor:    # use this one for multi processors
+    #     results = [executor.submit(process_tile, s) for s in tiles]
+
+
+    #code for processing one at a time
+    for s in tiles:
+        print('doing now', s)
+        process_tile(s)
+
+    finish = time.perf_counter()
+    #print(f'Finished in {round(finish - start)} second(s)')
+    print(f'Total Finished at {(finish - start)/60} mins endendendnd&&&&&&&&&&&&&&&&&&&&&')
