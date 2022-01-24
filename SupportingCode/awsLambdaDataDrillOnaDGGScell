@@ -1,0 +1,115 @@
+import json
+import psycopg2
+'''
+example HTTP request:
+https://rj4l8e4wt6.execute-api.ap-southeast-2.amazonaws.com/getData?auspix10=R7844444444
+'''
+
+def lambda_handler(event, context):
+    '''
+    This script takes an AusPIX DGGS cell at level 10 and  returns features from the AusPIX crosswalk table that exist at that point
+
+    :param cellID: optional cell ID - will use this instead of lat and long if cellID is not 'none'
+    :return: json or geojson list of all geographic features exiting at that cell
+    information comes only from AusPIX DGGS enabled collections and individual DGGS datasets
+    '''
+    myCell = []
+
+    try:
+        drill_cell =  event['auspix10']
+    except:
+        drill_cell =  event['queryStringParameters']['auspix10']
+    
+    
+    print('auspix', drill_cell)
+    
+
+    print('drilling cell ID based on Lat and Long = ', drill_cell)
+    myCell.append(str(drill_cell))
+
+
+    mycell = tuple(myCell)
+    print('myCell', myCell)
+    
+
+    connection = psycopg2.connect(host='auspix-national-crosswalk.crmqnvdaomot.ap-southeast-2.rds.amazonaws.com',
+                                  port='5432',
+                                  dbname='postgres',
+                                  user='govreadonly',
+                                  password='lociauspixdggs10')
+
+    cursor = connection.cursor()
+    cursorRaster = connection.cursor()
+
+    postgreSQL_select_Query = "SELECT json_agg(crosswalk) FROM crosswalk WHERE auspix_dggs IN %s;"
+    
+    rasterCW_Query = "SELECT json_agg(national_raster) FROM national_raster WHERE auspix_dggs IN %s;"
+
+    cursor.execute(postgreSQL_select_Query, (mycell,))
+    cursorRaster.execute(rasterCW_Query, (mycell,))
+
+    theseRecords = cursor.fetchall()
+    #return theseRecords
+    
+    theseRecords = theseRecords[0][0][0]  # convert to simpler format
+
+    # fix uri link to auspix linked data
+    theseRecords['auspix_uri'] = "https://fsdf.org.au/dataset/auspix/collections/auspix/items/" + \
+                                          theseRecords['auspix_dggs']
+                                          
+                                          
+
+    # delete id and geom fields to tidy up
+    del theseRecords['id']
+    del theseRecords['geom']
+    
+    #return theseRecords
+
+    rasterRecords = cursorRaster.fetchall()
+    rasterRecords = rasterRecords[0][0][0]  # convert to simpler format
+    
+    try:
+    
+        rasterRecords['auspix_uri'] = "https://linked.data.gov.au/dataset/auspix/" + rasterRecords[
+            'auspix_dggs']
+    
+        # delete id and geom fields to tidy up
+        del rasterRecords['id']
+        del rasterRecords['geom']
+        
+        
+        # fix output string
+        if "no water" in rasterRecords['wofs']:
+            rasterRecords['wofs'] = "no water detected 1986 to 2018"
+        if rasterRecords['wofs'] == "":
+            rasterRecords['wofs'] = "no flood water detected"
+        
+        # add a URI
+        rasterRecords['ACLUMP URI'] = "https://www.awe.gov.au/abares/aclump/land-use/mapping-technical-specifications"
+        thisRaster = rasterRecords
+    except:
+        
+        thisRaster = {'data': 'no raster data here yet'}
+        #return rasterRecords
+
+
+
+    # closing database connection.
+    if (connection):
+        cursor.close()
+        connection.close()
+        print("PostgreSQL connection is closed")
+        
+    # name the Tables that data came from into json format
+    originalCW = {'ASGS Crosswalk Table 2019 DGGS cell query': theseRecords}
+    rasterCW = {'Emergency info Table 2021 DGGS cell query': rasterRecords}
+    
+    
+    drilldata_output = {**originalCW, **rasterCW}  # combine into one json str
+    
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps(drilldata_output, indent=3)
+    }
+    
