@@ -5,6 +5,11 @@ from rhealpixdggs.dggs import RHEALPixDGGS
 #import rhealpixdggs.dggs
 rdggs = RHEALPixDGGS() # make an instance
 
+'''
+example http request:
+https://olpk7700l6.execute-api.ap-southeast-2.amazonaws.com/dataDrill?lat84=-35.34385&long84=149.15772
+'''
+
 def lambda_handler(event, context):
     # TODO implement
     '''
