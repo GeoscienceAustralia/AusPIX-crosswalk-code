@@ -1,0 +1,265 @@
+import json
+import psycopg2
+# import csv
+import pandas as pd
+
+'''
+NOTE: this function only works with small features, other wise the 6MB data transfer limit is broken.
+example http request:
+https://anedacj44a.execute-api.ap-southeast-2.amazonaws.com/apportion?geography=sa1_main16feature=31802148108&compareWith=wofs
+'''
+
+
+def lambda_handler(event, context):
+
+    try:
+        geography =  event['geography']
+        feature =  event['feature']
+        compareWith =  event['compareWith']
+
+    except:
+        geography =  event['queryStringParameters']['geography']
+        feature =  event['queryStringParameters']['feature']
+        comparitive_geog =  event['queryStringParameters']['comparitive_geog']
+
+    # geography =  'sa1_main16'
+    # feature =  '31802148108'
+    # compareWith =  'wofs'
+    
+      
+
+    # this is a read only connection behind our AWS gateway - will be moved into AWS secrets for best practice
+    connection = psycopg2.connect(host='auspix-national-crosswalk.*******.ap-southeast-2.rds.amazonaws.com',
+                                  port='******',
+                                  dbname='*******',
+                                  user='*******',
+                                  password='*********')
+
+    
+
+    query_oldCW = 'SELECT * from public.crosswalk WHERE ' + geography + ' = ' + "'" + feature + "'" + ';'
+    
+
+    print('query', query_oldCW)
+
+    print('')
+    print('Reading database for your selected feature . . . ')
+
+    df_cw = pd.read_sql_query(query_oldCW, connection) # now have pd dataframe
+    #df_raster = pd.read_sql_query(query_raster, connection)  # no - need to match on auspix
+
+
+    
+    # redirect uri
+    #df_cw['sa1_uri']= 'http://asgs.surroundaustralia.com/collections/statisticalarealevel1/items/' + df_cw['sa1_main16']
+    #make a list of the cells
+    cells = df_cw['auspix_dggs'].tolist()
+    print('number of cells in feature', len(cells))
+    t = tuple(cells)
+    
+    raster_q = "SELECT * from public.national_raster where auspix_dggs IN {}".format(t)
+    df_raster = pd.read_sql_query(raster_q, connection)  # now have pd dataframe
+    print('')
+    print('raster head')
+
+
+    print('merging data frames')
+    df = pd.merge(df_cw, df_raster, left_on='auspix_dggs', right_on='auspix_dggs')
+
+
+
+    # tidy up
+    df.drop(['geom_x', 'geom_y','auspix_uri_x'], axis=1, inplace=True)
+    df['quake_haz_model'].replace("", 'very low hazard', inplace=True)
+    df['wofs'].replace('no water detected 1986\u20132018', 'no water detected 1986 to 2018', inplace=True)
+    df['wofs'].replace('', 'no water detected 1986 to 2018', inplace=True)
+
+    #convert string to floats
+    df['auspix_ha_a'] = df['auspix_ha_a'].astype(float)
+    print('')
+    rowCount = len(df.index)
+    print('num rows/cells drilled = ', rowCount)
+
+    totalArea = (df['auspix_ha_a']).sum()
+    print('DGGS feature area for ', geography, feature, '=', totalArea, 'ha')
+
+
+    #save the query results as csv
+    #df.to_csv(r'D:\temp\results04.csv', index = False)
+
+    #save as Exell
+    #df.to_excel(r'C:\temp\results05.xlsx', index = False)
+
+    print('Chosen Geography is', geography, 'for feature ID = ', feature, ' and compared with = ', compareWith )
+    if compareWith in ['sa1_main16']:
+            answer = df.groupby(['sa1_main16', 'sa1_uri', 'sa1sqkm16'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+            answer['sa1sqkm16'] = answer['sa1sqkm16'].astype(float)  # convert to float
+            answer['appormt_pc'] = answer['auspix_ha_a'] / answer['sa1sqkm16']  # includes conversion from sqkm to ha
+            answer['appormt_pc'] = answer.appormt_pc.round(decimals=1)
+            answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=1)
+            answer['proportion_pcnt'] = answer['auspix_ha_a']/totalArea * 100
+            answer['for WHERE'] = geography
+            answer['is equal to'] = feature
+            answer2 = answer.sort_values(by='proportion_pcnt', ascending=False)
+            #answer['num_gnafadds'] = df.groupby(['sa1_main16']).sum().reset_index()
+            return json.dumps(answer2.to_dict('records'), indent= 3)
+
+
+    elif compareWith in ['sa2_name16', 'sa2_main16']:
+            #answer = df.groupby('sa2_name16').auspix_ha_a.sum()
+            answer = df.groupby(['sa2_main16'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+            answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=1)
+            answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+            answer['for WHERE'] = geography
+            answer['is equal to '] = feature
+            return json.dumps(answer.to_dict('records'), indent=3)
+
+    elif compareWith in ['sa3_name16', 'sa3_code16']:
+            answer = df.groupby(['sa3_name16'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+            answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=1)
+            answer['auspix_ha_a'] = answer.auspix_ha_a.astype(int)
+            answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+            answer['for WHERE'] = geography
+            answer['is equal to '] = feature
+            return json.dumps(answer.to_dict('records'), indent=3)
+
+    elif compareWith in ['ste_name16']:    #
+            print('Australian States included in this geography')
+            answer = df.groupby(['ste_name16'])['auspix_ha_a'].sum().reset_index()
+            answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+            answer['for WHERE'] = geography
+            answer['is equal to '] = feature
+            return json.dumps(answer.to_dict('records'), indent=3)
+
+    elif compareWith in ['ssc_code16', 'ssc_name16']:
+            print('Suburbs/Localities v2016 in ' + geography + ' '  + feature + 'as ha each' )
+            answer = df.groupby(['ssc_name16', 'ssc_code16', 'sscsqkm16'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+            answer['sscsqkm16'] = answer['sscsqkm16'].astype(float)  # convert to float
+            answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+            answer['appormt_pc'] = answer['auspix_ha_a'] / answer['sscsqkm16']  # includes conversion from sqkm to ha
+            #answer['appormt_pc'] = answer.appormt_pc.round(decimals=0)
+            answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=2)
+            answer['appormt_pc'] = answer.appormt_pc.astype(int)
+            answer['for WHERE'] = geography
+            answer['is equal to '] = feature
+            return json.dumps(answer.to_dict('records'), indent=3)
+            
+
+    elif compareWith in ['sed_code19', 'sedname19'] :
+            print('State Electorates v2019 in ' + geography + ' ' + feature + ' as ha each' )
+            answer = df.groupby(['sed_code19', 'sedname19', 'sedsqkm19'])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+            answer['sedsqkm19'] = answer['sedsqkm19'].astype(float)  # convert to float
+            #apportionment
+            answer['appormt_pc'] = answer['auspix_ha_a'] / answer['sedsqkm19']   # includes conversion from sqkm to ha
+            answer['appormt_pc'] = answer.appormt_pc.round(decimals=1)
+            answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+            answer['for WHERE'] = geography
+            answer['is equal to '] = feature
+            return json.dumps(answer.to_dict('records'), indent=3)
+            
+    elif compareWith == 'ced_name':
+            print('Commonwealth Electorates v2019 in the ' + geography + ' ' + feature + ' as ha each')
+            answer = df.groupby(['ced_name', 'ced19sqkm' ])['auspix_ha_a'].sum().reset_index()
+            answer['ced19sqkm'] = answer['ced19sqkm'].astype(float)  # convert to float
+            answer['appormt_pc'] = (answer['auspix_ha_a'] / answer['ced19sqkm'])   # *to convert ha to sq km??
+            answer['for WHERE'] = geography
+            answer['is equal to '] = feature
+            return json.dumps(answer.to_dict('records'), indent=3)
+
+            
+    elif compareWith in ['capad', 'pa_id']:
+            print('National Parks and Reserves in this geographic feature as ha')
+            answer = df.groupby(['pa_id', 'capad', 'gis_area' ])['auspix_ha_a'].sum().reset_index()
+            answer['gis_area'] = answer['gis_area'].astype(float)  # convert to float
+            answer['appormt_pc'] = (answer['auspix_ha_a'] / answer['gis_area']) * 100
+            answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+            answer['for WHERE'] = geography
+            answer['is equal to '] = feature
+            return json.dumps(answer.to_dict('records'), indent=3)
+            
+
+    elif compareWith in ['lga_code19', 'lga_name19']:
+            print('LGA presence/s in this geographic feature ')
+            #answer = df.groupby(['lga_code19', 'lga_name19', 'lgasqkm19']).auspix_ha_a.sum()
+            answer = df.groupby(['lga_code19', 'lga_name19', 'lgasqkm19' ])['auspix_ha_a'].sum().reset_index()
+            answer['lgasqkm19'] = answer['lgasqkm19'].astype(float)  # convert to float
+            answer['appormt_pc'] = answer['auspix_ha_a'] / answer['lgasqkm19']   # *100 to convert ha to sq km
+            return json.dumps(answer.to_dict('records'), indent=3)
+
+
+    elif compareWith == 'sparkbgid':
+            print('DOWE Spark grid presence in this geographic feature' )
+            answer = df.groupby(['sparkbgid', 'spark_area']).auspix_ha_a.sum()
+            return json.dumps(answer.to_dict('records'), indent=3)
+
+    elif compareWith == 'aclumpdesc':
+        answer = df.groupby(['aclumpdesc' ])['auspix_ha_a'].sum().reset_index()  # calc area in each feature
+        answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=1)
+        answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+        answer['for WHERE'] = geography
+        answer['equals'] = feature
+        answer2 = answer.sort_values(by='proportion_pcnt', ascending=False)
+        return json.dumps(answer2.to_dict('records'), indent=3)
+
+    elif compareWith == 'res_v11density1km2':
+        answer = df.groupby(['res_v11density1km2' ])['auspix_ha_a'].sum().reset_index()  #calc area in each featur
+        answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=1)
+        answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+        answer['for WHERE'] = geography
+        answer['equals'] = feature
+        answer2 = answer.sort_values(by='proportion_pcnt', ascending=False)
+        return json.dumps(answer2.to_dict('records'), indent=3)
+
+    elif compareWith == 'gnafaddsfeb21':
+        answer = df.groupby(['gnafaddsfeb21' ])['auspix_ha_a'].sum().reset_index()  #calc area in each featur
+        answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=1)
+        answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+        answer['for WHERE'] = geography
+        answer['equals'] = feature
+        answer2 = answer.sort_values(by='proportion_pcnt', ascending=False)
+        return json.dumps(answer2.to_dict('records'), indent=3)
+
+
+    elif compareWith == 'cyclone_value':
+        answer = df.groupby(['cyclone_value' ])['auspix_ha_a'].sum().reset_index()  #calc area in each featur
+        answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=1)
+        answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+        answer['for WHERE'] = geography
+        answer['equals'] = feature
+        answer2 = answer.sort_values(by='proportion_pcnt', ascending=False)
+        return json.dumps(answer2.to_dict('records'), indent=3)
+
+    elif compareWith == 'cyclone_intensity':
+        answer = df.groupby(['cyclone_intensity'])['auspix_ha_a'].sum().reset_index()  #calc area in each featur
+        answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=1)
+        answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+        answer['for WHERE'] = geography
+        answer['equals'] = feature
+        answer2 = answer.sort_values(by='proportion_pcnt', ascending=False)
+        return json.dumps(answer2.to_dict('records'), indent=3)
+
+
+    elif compareWith == 'wofs':
+        answer = df.groupby(['wofs'])['auspix_ha_a'].sum().reset_index()  #calc area in each featur
+        #answer = df.groupby(['aclumpdesc' ])['auspix_ha_a'].mean()
+        answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=1)
+        answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+        answer['for WHERE'] = geography
+        answer['equals'] = feature
+        answer2 = answer.sort_values(by='proportion_pcnt', ascending=False)
+        return json.dumps(answer2.to_dict('records'), indent=3)
+
+    elif compareWith == 'quake_haz_model':
+
+        answer = df.groupby(['quake_haz_model'])['auspix_ha_a'].sum().reset_index()  #calc area in each featur
+        answer['auspix_ha_a'] = answer.auspix_ha_a.round(decimals=1)
+        answer['proportion_pcnt'] = answer['auspix_ha_a'] / totalArea * 100
+        answer['for WHERE'] = geography
+        answer['equals'] = feature
+        answer2 = answer.sort_values(by='proportion_pcnt', ascending=False)
+        return json.dumps(answer2.to_dict('records'), indent=3)
+        
+    return "no data found for some reason"
+    
+    
+    
