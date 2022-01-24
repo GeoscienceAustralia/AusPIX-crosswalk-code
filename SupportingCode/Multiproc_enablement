@@ -7,7 +7,8 @@ from numba import jit
 import pygeoj
 import time
 start = time.perf_counter()
-#from dggs import RHEALPixDGGS
+from rhealpixdggs.dggs import RHEALPixDGGS #imported as module
+rdggs = RHEALPixDGGS()  # make an instance
 import numpy
 
 
@@ -40,10 +41,6 @@ def is_poly_in_tilebb(polybb, tilebbox):
         vertical = True
 
     return (horizontal and vertical)  # True if overlap
-
-from rhealpixdggs.dggs import RHEALPixDGGS #imported as module
-
-rdggs = RHEALPixDGGS()  # make an instance
 
 
 def write_list_to_file(myList, filename):
