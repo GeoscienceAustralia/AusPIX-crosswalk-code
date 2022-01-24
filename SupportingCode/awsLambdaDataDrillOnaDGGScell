@@ -32,11 +32,11 @@ def lambda_handler(event, context):
     print('myCell', myCell)
     
 
-    connection = psycopg2.connect(host='auspix-national-crosswalk.crmqnvdaomot.ap-southeast-2.rds.amazonaws.com',
-                                  port='5432',
-                                  dbname='postgres',
-                                  user='govreadonly',
-                                  password='lociauspixdggs10')
+    connection = psycopg2.connect(host='auspix-national-crosswalk.*******.ap-southeast-2.rds.amazonaws.com',
+                                  port='******',
+                                  dbname='*******',
+                                  user='*******',
+                                  password='**********')
 
     cursor = connection.cursor()
     cursorRaster = connection.cursor()
