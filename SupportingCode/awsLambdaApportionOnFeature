@@ -6,7 +6,7 @@ import pandas as pd
 '''
 NOTE: this function only works with small features, other wise the 6MB data transfer limit is broken.
 example http request:
-https://anedacj44a.execute-api.ap-southeast-2.amazonaws.com/apportion?geography=sa1_main16feature=31802148108&compareWith=wofs
+https://anexxxxxxx.execute-api.ap-southeast-2.amazonaws.com/apportion?geography=sa1_main16feature=31802148108&compareWith=wofs
 '''
 
 
