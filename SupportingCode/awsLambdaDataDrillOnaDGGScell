@@ -2,7 +2,7 @@ import json
 import psycopg2
 '''
 example HTTP request:
-https://rj4l8e4wt6.execute-api.ap-southeast-2.amazonaws.com/getData?auspix10=R7844444444
+https://rj4xxxxxxx.execute-api.ap-southeast-2.amazonaws.com/getData?auspix10=R7844444444
 '''
 
 def lambda_handler(event, context):
