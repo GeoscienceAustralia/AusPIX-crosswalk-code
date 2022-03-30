@@ -1,0 +1,116 @@
+'''
+python script designed to find all the level 10 AusPIX cells in tiles
+exports to shape files
+requires a list of required DGGS4 tiles to fed in in __main___
+'''
+
+import shapefile  #to read and write shapefiles - needs pyshp *
+#import dggs_in_poly  # this is script written by GA - see GitHub AusPix DGGS enablement folder
+
+import csv
+
+from rhealpixdggs.dggs import RHEALPixDGGS
+rdggs = RHEALPixDGGS()  # make an instance 
+
+import concurrent.futures
+from rhealpixdggs.dggs import Cell
+import time
+
+
+def do_a_tile(tile):
+    start = time.perf_counter()
+
+    # function to calculate cells inside a larger cell
+    resolution = 10  # resolution of final output - usually level 10
+    #define the large level 4 grandparent cell
+    c = rdggs.cell(tile)
+    thisParent = str(c)  # a name for the output file
+
+    thisShapeFile = '/g/data/im04/DGGSgrid/DGGScells_raw_Tiles' + '/' + thisParent  # dont add .shp
+    print('doing Tile', thisShapeFile)
+
+    #set up the output schema
+    w = shapefile.Writer(thisShapeFile)
+
+    w.field('DGGSAusPIX', 'C', '20')
+    w.field('AusPIX_URI', 'C', '150')
+    w.field('LongiWGS84', 'C', '20')  # using 'C' = character = ensures the correct number
+    w.field('LatiWGS84', 'C', '20')
+    w.field('AreaM2', 'C', '20')
+
+    # generate a list of all the cells inside the grandparent cell at resolution required
+    myCells = Cell.subcells(c, resolution)
+
+
+    listCells = []
+    for item in myCells:
+        listCells.append([str(item), item.nucleus(plane=False)])  # add the centroid to the data
+
+    #print('len tile list', len(listCells))
+
+    area = (rdggs.cell_area(resolution, plane=False))
+    print("building points and attributes for ", thisShapeFile)
+    for dggs_cell in listCells:
+        #print(dggs_cell)
+        uri = 'https://fsdf.org.au/dataset/auspix/collections/auspix/items/' + dggs_cell[0]
+        longitude = dggs_cell[1][0]
+        latitude = dggs_cell[1][1]
+        w.point(longitude, latitude)  # insert the spatial x y into the shapefile
+        w.record(DGGSAusPIX=dggs_cell[0], AusPIX_URI=uri, LongiWGS84=longitude, LatiWGS84=(latitude), AreaM2= area)
+
+    print('saving to file . . . ', thisShapeFile)
+
+    w.close()
+
+    # a simple method of writing a single projection so it can be opened in spatial software
+    prj = open("%s.prj" % thisShapeFile, "w")
+    epsg = 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]'
+    prj.write(epsg)
+    prj.close()
+
+    finish = time.perf_counter()
+    print(f'Finished in {round(finish - start)} second(s)')
+    #print(f'Finished in {(finish - float(start))/3600} hours')
+
+
+    #return thisShapeFile
+
+
+
+if __name__ == '__main__':
+
+    # read in the list of all level4 tiles for Australia - prebuilt to shape of AU - about 815 tiles
+    tiles=[]
+    with open(r'/g/data/im04/build_data/Tile_list_AU.csv', newline='') as csvfile:
+        data = list(csv.reader(csvfile))
+
+    for cl in data:
+       tiles.append(cl[0])
+    tiles.pop(0)  # remove the header
+
+    tileList = []  # empty list ready to fill
+    for dggsCell in tiles:   #
+        dggsLoc = list()
+        for item in dggsCell:  # build a dggs location cell as a list like dggsLoc = ['R', 7, 2, 4, 5, 6, 3, 2, 3, 4, 3, 8, 3]
+            if item.isalpha():  # the letter 'R' at the beginning
+                dggsLoc.append(item)
+            else:
+                item = int(item)  # the numbers in the cell
+                dggsLoc.append(item)
+
+        tileList.append(dggsLoc)
+
+    #     #c = rdggs.cell(dggsLoc)
+
+    print('len tile list', len(tileList))
+    print(tileList[5])
+
+    # multiprocess
+
+    # with concurrent.futures.ThreadPoolExecutor() as executor:  #use this line to use threads
+    # multi processor chooses all the processors it can get hold of to run the job quick
+    with concurrent.futures.ProcessPoolExecutor(max_workers=45) as executor:
+        results = [executor.submit(do_a_tile, t) for t in tileList]
+
+    #for t in tileList:
+       #do_a_tile(t)
