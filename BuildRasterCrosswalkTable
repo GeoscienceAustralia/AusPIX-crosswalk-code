@@ -1,0 +1,330 @@
+import shapefile
+import rasterstats
+import concurrent.futures
+import os
+from numba import jit
+import pygeoj
+import time
+
+# import ogr
+# from osgeo import gdal
+# from osgeo import ogr
+# import ogr2ogr
+
+
+start = time.perf_counter()
+# from dggs import RHEALPixDGGS
+#import numpy
+from rhealpixdggs.dggs import RHEALPixDGGS  # imported as module
+# make an instance
+rdggs = RHEALPixDGGS()
+
+
+def process_tile(a_tile, resolution):
+    myTile = shapefile.Reader(r'D:\DGGSgrid\DGGScells_raw_shapes/' + a_tile) # reading the tile
+    #print('myTile', myTile)
+    tileRecs = myTile.shapeRecords()  # shape and records of that file
+    print('number of attribute rows in tileRecs is ', len(tileRecs))
+    myTilebb = myTile.bbox
+    AusPIX_URI = 'linked.data.gov.au/dataset/auspix/'
+    # calc cell area
+    resArea = (rdggs.cell_area(resolution, plane=False))
+    # make an output file of DGGS centroid points with the all attibute properties
+    newfile = pygeoj.new()  # default projection is WGS84
+    # build tile name for output
+    tname = a_tile.split('\\')
+    tname = tname[-1]
+    tname = tname.replace('.shp', '')
+
+    print('tname = ', tname)
+    # add description to clum
+    # csv into dict
+    import csv
+    with open(r'D:\CarSA_data\CLUM50m2020_84\ACLIMP lookup table.csv') as infile:
+        reader = csv.reader(infile)
+        #with open('coors_new.csv', mode='w') as outfile:
+            # writer = csv.writer(outfile)
+        myclumdict = {rows[0]: rows[1] for rows in reader}
+        myclumdict['110'] = 'Nature conservation'  # because first entry has extra symbols for some reason
+    print('mydict', myclumdict)
+
+
+    # make a dict of GNAF addresses per cell
+    with open(r'D:\CarSA_data\addresses\counted\au_gnaf_countFeb2021_csv.csv') as infile:
+        reader = csv.reader(infile)
+        myGNAFdict = {rows[0]: rows[1] for rows in reader}
+
+
+    print('built gnaf - working on loop')
+    for eachCell in tileRecs:  # centroid by centroid from shapefile
+        #if n <1000:
+        coords = [float(eachCell.record[2]), float(eachCell.record[3])]  # the long and lat
+
+        thisPointWKT = 'POINT(' + str(float(eachCell.record[2])) + ' ' + str(
+            float(eachCell.record[3])) + ')'  # only for rasterstats
+
+        # set up the dggs details for the output table
+        #dggsData = cell.record[0] + ', ' + cell.record[1]  + ',' + str(cell.record[2]) + ',' + str(  cell.record[3]) + ',' + str(cell.record[4])
+        dggsData = {"AusPIX_DGGS": eachCell.record[0], "AusPIX_URI": (AusPIX_URI + eachCell.record[0]), "cell_centroidtWKT": thisPointWKT, "CellArea_m2": resArea}
+        #print('dggsdata', dggsData)
+
+
+        #print('WKT', thisPointWKT)
+        #residential_density = '' # initialise
+
+        residential_density = rasterstats.point_query(thisPointWKT, r'D:\CarSA_data\resdem1km84.tif')
+        cyclone_risk = str(rasterstats.point_query(thisPointWKT, r'D:\CarSA_data\cyclonehaz\CycloneHazards_shp.tif'))
+        cyclone_risk = cyclone_risk.replace('[', '')
+        cyclone_risk = cyclone_risk.replace(']', '')
+
+        if cyclone_risk == 'no data':
+            cyclone_risk = '0'
+        if cyclone_risk == 'None':
+            cyclone_risk = '0'
+
+
+        cyclone_risk = abs(float(cyclone_risk))
+
+
+        if cyclone_risk >= 0:
+            myClass = 'low'
+        if cyclone_risk >= 0.04:
+            myClass = 'medium'
+        if cyclone_risk >= 0.1:
+            myClass = 'high'
+        if cyclone_risk > 0.2:
+            myClass = 'very high'
+
+        myClass = myClass
+
+        wofs_value = str(rasterstats.point_query(thisPointWKT, r'D:\CarSA_data\WofS\WofS_R8\R8_Wofs_84.'))
+        wofs_value = wofs_value.replace('[', '')
+        wofs_value = wofs_value.replace(']', '')
+        #print('wofs = ', wofs_value)
+        if wofs_value == 'None':
+            wofs_value = 0
+        wosfs_value = float(wofs_value)
+        myWofs = ''
+
+
+        if wosfs_value <= 0:  #some negative values inc
+            myWofs = 'no water detected 1986 to 2018'
+
+        if wosfs_value > 0:
+            myWofs = 'possible flood zone'
+
+        if wosfs_value >= 0.04:
+            myWofs = 'intermittent water body'
+        if wosfs_value >= 0.1:
+            myWofs = 'seasonal water'
+
+        if wosfs_value > 0.4:
+            myWofs = 'water 50% of time'
+        if wosfs_value > 0.8:
+            myWofs = 'permanent water'
+
+        myWofs = myWofs
+
+
+
+        dem = rasterstats.point_query(thisPointWKT, r'D:/CarSA_data/SRTM/GA_3sec_SRTM_DEMs_v01/DEMS_ESRI_GRID_32bit_Float/dems3sv1_0')
+        dem = dem[0]
+
+        if dem == None:
+            dem = 0.00
+        else:
+            dem = float(dem)
+            dem = round(dem,2)
+        #print('dem', dem),
+        #clum50_20 = str(rasterstats.point_query(thisPointWKT, r'D:\CarSA_data\ACLUMP\myCLUM50m_2020_84.gpkg'))
+        clum50_20 = rasterstats.point_query(thisPointWKT, r'D:\CarSA_data\ACLUMP\myCLUM50m_2020_84')
+        #print('thisclump', clum50_20)
+        if clum50_20 == None:  # some are already None
+            clum50_20 = 0
+        try:
+            if clum50_20[0] <= 0:
+                clum50_20 = None
+                # clum50_20 = clum50_20.replace('[','')
+                # clum50_20 = clum50_20.replace(']', '')
+            else:
+                clum50_20 = int(clum50_20[0])
+                #print('clum', int(clum50_20))
+        except:
+            clum50_20 = 0
+
+        try:
+            aclumDescription = myclumdict[str(clum50_20)]
+        except:
+            aclumDescription = clum50_20
+            #print('couldnt find', clum50_20)
+
+
+
+
+        #residential_density = (residential_density)
+        residential_density = residential_density[0]
+        if residential_density == None:
+            residential_density = 0
+        else:
+            residential_density = round(residential_density, 4)
+
+        #gnaf
+
+        numGNAFaddr = 0  # no addresses in cell default
+        try:
+            numGNAFaddr = int(myGNAFdict[eachCell.record[0]])  #
+        except: # if not in dict
+            pass
+
+
+        # print('res density = ', residential_density)
+        # print('quakePt', thisPointWKT)
+        quakeModel= rasterstats.point_query(thisPointWKT, r'D:\CarSA_data\Earthquake\ModelledEarthQuake.tif')
+        quakeModel = quakeModel[0]
+        myQuake = ''
+        if quakeModel >= 0:   # had wofs oops on R78 and all R8
+            myQuake = 'low hazard'
+
+        if quakeModel > 0.02:
+            myQuake = 'low-medium hazard'
+
+        if quakeModel >= 0.04:
+            myQuake = 'medium hazard'
+        if quakeModel >= 0.5:
+            myQuake = 'high hazard'
+
+        if quakeModel > 0.6:
+            myQuake = 'very high hazard'
+        if quakeModel > 0.7:
+            myQuake = 'extreme hazard'
+
+        myQuake = myQuake
+
+        # build a dict with the data
+        resden = {"res_v11density1km2": residential_density, "GNAFaddsFeb21": numGNAFaddr, "cyclone_intensity": myClass, "cyclone_value": round(cyclone_risk,4), "Wofs": myWofs, "wofs_value": wosfs_value, "dem3sec":dem, 'clum50_2020': clum50_20, 'aclumpDesc': aclumDescription, 'quake_Haz_Model': myQuake, "quake_value": round(quakeModel, 5)}
+        # if numGNAFaddr > 2:
+        #     print('data line', resden)
+
+        these_attributes = {**dggsData, **resden}  # join three python dictionaries into one
+
+        newfile.add_feature(properties=these_attributes, geometry={"type": "Point", "coordinates": coords})
+        #n += 1
+
+    print('sending to geojson', tname)
+    newfile.save(r"D:\CarSA_data\Crosswalk_as_geo/" + tname + ".geojson")  # will save where the script is run from unless the path is specified
+
+    finish = time.perf_counter()
+    # print(f'Finished in {round(finish - start)} second(s)')
+    print(f'Finished at {(finish - start) / 60} mins ###########################')
+
+
+if __name__ == '__main__':
+    # bring in the tiles
+    resolution = 10
+    print('resolution', resolution)
+
+    # directory = r'D:\DGGSgrid\ParentAreas'
+    directory = r'D:\DGGSgrid/'  # folder with all the base dggs tiles ready to fill with crosswalk (as shapefiles)
+    doneOnes = r'D:\CarSA_data\Crosswalk_as_geo/'  # folder with the finished filled with crosswalk csv's
+    gpkgFolder = r'D:\CarSA_data\asGPKG/'  # folder with ones processed to gpkg
+
+    # directory = r'D:\DGGSgrid\testArea'
+    # directory = r'C:\DGGScrosswalk\corona'
+
+    completed = []
+    # completed_Rlev4 = []
+    # for done ones
+    for root, dirs, files in os.walk(doneOnes):
+        for file in files:
+            if file.endswith('.geojson'):
+                # thisFile = (os.path.join(doneOnes, file))
+                thisFile = file.replace(".geojson", '.shp')
+                #thisFile = thisFile.replace('Area', '')
+                print(thisFile)
+                # Rlev4 = thisFile.replace('Ares')
+                if thisFile not in completed:
+                    completed.append(thisFile)
+
+    # same search as above in gpkg fileto catch the ones that have bben converted
+    for root, dirs, files in os.walk(gpkgFolder):
+        for file in files:
+            if file.endswith('.gpkg'):
+                # thisFile = (os.path.join(doneOnes, file))
+                thisFile = (file.replace('.gpkg', '.shp'))
+                # print(thisFile)
+                # Rlev4 = thisFile.replace('Ares')
+                if thisFile not in completed:
+                    completed.append(thisFile)
+
+    print('num already done', len(completed))  # either in geojson or gpkg formats
+    print('completed', len(completed))
+
+    # put the list of desired cells to process- only used for single processing
+    #myList = []
+    sourceTiles = ['R6588.shp']
+    # tiles = []  # make a list of all the shape files in the folder
+
+    # search the source ddgs tile for available ones
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file.endswith('.shp'):
+                # if 'R6' in file:
+                sourceTiles.append(file)
+
+    # print('num source files in R6', len(sourceTiles))
+
+    not_completed = ['R6588']
+    # filter for tiles already done
+    for file in sourceTiles:
+        lookfor = file.replace('Area', '')
+        lookfor = lookfor.replace('.shp', '')
+        print('looking for', file)
+        if file not in completed:
+            not_completed.append(file)
+
+
+    print('non_completed', len(not_completed), not_completed)
+    print('number not completed in R3', len(not_completed))
+    print('done in R6', len(sourceTiles) - len(not_completed))
+
+    not_completed = ['R7135']
+    # for item in not_completed:
+    #     print('doing', item)
+
+    '''
+    Make sure there are no zero area records in the source shapefiles eg SA1 usually has some zero area records
+    remove them - or this will fail
+    '''
+    # multiprocess
+    # with concurrent.futures.ThreadPoolExecutor() as executor:  #use this line to use threads
+    # multi processor chooses all the processors it can get hold of to run the job quick
+    print('starting')
+    # with concurrent.futures.ProcessPoolExecutor(max_workers=5) as executor:  # use this one for multi processors
+    #     results = [executor.submit(process_tile, s, resolution) for s in not_completed]
+
+    # code for processing one at a time
+    for s in not_completed:
+        print('doing now', s)
+        process_tile(s, resolution)
+
+    finish = time.perf_counter()
+    # print(f'Finished in {round(finish - start)} second(s)')
+    print(f'Total Finished at {(finish - start) / 60} mins ###########################')
+    print('time finished', finish)
+    # # list the tiles todo
+    # for root, dirs, files in os.walk(directory):
+    #     for file in files:
+    #         if file.endswith('.shp'):
+    #             if file.replace('.shp', '') not in completed:  # filter out done ones
+    #                 # filter to keep the ones we are focusing on
+    #                 for aCell in myList:
+    #                     if aCell in file:  # to do all the cells in the R775 tile - so long as there is a dggs shapefile built for it
+    #                         thisFile = (os.path.join(directory, file))
+    #                         print(thisFile)
+    #                         tiles.append(thisFile)
+    # print('doing number of tiles', len(tiles))
+    # if len(tiles) == 0:
+    #     print('no files here')
+
+    # tiles = reversed(tiles)
+
