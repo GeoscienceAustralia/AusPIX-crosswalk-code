@@ -1,1 +1,97 @@
-coming soon
+'''
+designed to read a folder with tiles as shapefiles and convert to
+a single shapefile showing which tiles have been done
+
+reads the output folder with shapefiles in it to make a list of completed files
+Outputs as a shape file for visualisation in Arcmap or QGIS etc
+Joseph Bell, Geoscience Australia
+'''
+
+import shapefile  #to read and write shapefiles
+from rhealpixdggs.dggs import RHEALPixDGGS
+rdggs = RHEALPixDGGS() # make an instance
+
+import time
+start = time.perf_counter()
+import os
+
+# bring in the tiles
+print('starting')
+
+rawDGGSFolder = r'D:\DGGSgrid\DGGScells_raw_shapes/'  # folder with the ones that have been converted to shape - DGGS info only
+
+completed = []
+# for done ones
+for root, dirs, files in os.walk(rawDGGSFolder):
+    for file in files:
+        if file.endswith('.shp'):
+            # thisFile = (os.path.join(doneOnes, file))
+            thisFile = (file.replace('dggs.shp', ''))
+            thisFile2 = thisFile.replace('Area', '')
+            # print(thisFile)
+            completed.append(thisFile2)
+print('num done cause already shp completed', len(completed))
+
+for shp in completed:
+    print(shp)
+
+print('num' , len(completed))
+#
+
+
+# make a shapefile of done files
+tileList = []
+for dggsCell in completed:   #convert to list format
+    dggsLoc = list()  # empty list ready to fill
+    for item in dggsCell:  # build a dggs location cell as a list like dggsLoc = ['R', 7, 2, 4, 5, 6, 3, 2, 3, 4, 3, 8, 3]
+        if item.isalpha():  # the letter 'R' at the beginning
+            dggsLoc.append(item)
+        else:
+            item = int(item)  # the numbers in the cell
+            dggsLoc.append(item)
+
+    tileList.append(dggsLoc)
+
+print('len tile list', len(tileList))
+
+# resolution = 4  # resolution of final output - usually level 4 for this
+
+
+thisShapeFile = 'D:\DGGSgrid/tilesDone/DoneRAWdggsTiles88'  # dont add .shp
+print('doing', thisShapeFile)
+
+# set up the output schema
+w = shapefile.Writer(thisShapeFile)
+w.field('DGGSrHEALPix', 'C', '40')
+
+for t in tileList:
+    cellID = ''
+    print(t)
+    for char in t:
+        cellID = cellID + str(char)
+
+    print('cellID', cellID)
+    c = rdggs.cell(t)
+
+    thisCell = (c.vertices(plane=False))  # list of vertices (corners)
+    firstCorner = thisCell[0]
+    thisCell.append(firstCorner)  # to close the tile, ie first and last should be the same location.
+
+    w.poly([thisCell])  # needs the []
+    w.record(DGGSrHEALPix=cellID)
+    w.autoBalance = 1
+
+
+print('saving to file . . . ', thisShapeFile)
+# a simple method of writing a single projection so it can be opened in spatial software
+prj = open("%s.prj" % thisShapeFile, "w")
+epsg = 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]'
+prj.write(epsg)
+prj.close()
+
+
+
+finish = time.perf_counter()
+#print(f'Finished in {round(finish - start)} second(s)')
+print(f'Finished in {(finish - start)} secs')
+
