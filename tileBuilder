@@ -2,6 +2,8 @@
 python script designed to find all the level 10 AusPIX cells in tiles
 exports to shape files
 requires a list of required DGGS4 tiles to fed in in __main___
+each cell in each tile is represented as a centroid point - best for dealing with polygons.
+See the other routine that builds the cells as little polygons - best for points and lines
 '''
 
 import shapefile  #to read and write shapefiles - needs pyshp *
