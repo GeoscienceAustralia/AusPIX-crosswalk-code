@@ -1,0 +1,152 @@
+'''
+python script designed to find all the level 10 AusPIX cells in tiles
+exports as a shape file - this is polygon cell version
+'''
+
+# import pyshp  #to read and write shapefiles - provides shapefile module *
+import shapefile
+import csv, os
+from rhealpixdggs.dggs import RHEALPixDGGS
+rdggs = RHEALPixDGGS()  # make an instance
+
+import concurrent.futures
+from rhealpixdggs.dggs import Cell
+import time
+start = time.perf_counter()
+
+
+def do_a_tile(tile):
+    print('doing tile', tile)
+
+    # function to calculate cells inside a larger cell
+    resolution = 10  # resolution of final output - usually level 10
+    # define the larger Tile cell for rhealPIX DGGS to recognize it
+    c = rdggs.cell(tile)
+    print(isinstance(c, Cell)) # make sure it is an object
+
+    thisTile = str(c)  # build a text name for the output file
+
+    thisShapeFile = r'D:\Build_data\rawPolys2/' + thisTile  # dont add .shp
+    print('doing', thisShapeFile)
+
+    #set up the output schema
+    w = shapefile.Writer(thisShapeFile)
+
+    w.field('DGGSAusPIX', 'C', '20')
+    w.field('AusPIX_URI', 'C', '150')
+    w.field('LongiWGS84', 'C', '20')  # using 'C' = character = ensures the correct number
+    w.field('LatiWGS84', 'C', '20')
+    w.field('cellAreaM2', 'C', '20')
+
+    # generate a list of all the cells inside the grandparent cell at resolution required (half a million of them)
+    print('')
+    print('generating cell list using rhealpix dggs')
+    myCells = Cell.subcells(c, resolution)  # calls the rhealpix dggs engine for this info
+    print('done')
+    print('')
+    print('building out info for shapefile for each cell')
+    listCells = [] # for a list of cells, their centroids, and corner locations
+    # build out the information needed
+    for item in myCells:
+        listCells.append([str(item), item.nucleus(plane=False), item.vertices(plane=False)])  # add the centroid to the data
+        # print([str(item), item.nucleus(plane=False), item.vertices(plane=False)])
+
+    print('done - completed number of cells in this tile', len(listCells))
+
+    # all cells at a given resolution have the same area
+    area = (rdggs.cell_area(resolution, plane=False))
+    print("building attribute table for ", thisShapeFile)
+    for dggs_cell in listCells:
+        #print(dggs_cell)
+        uri = 'https://fsdf.org.au/dataset/auspix/collections/auspix/items/' + dggs_cell[0]
+        longitude = dggs_cell[1][0]
+        latitude = dggs_cell[1][1]
+        w.poly([[dggs_cell[2][0], dggs_cell[2][1], dggs_cell[2][2], dggs_cell[2][3], dggs_cell[2][0]]] )  # insert the poly into the shapefile
+        w.record(DGGSAusPIX=dggs_cell[0], AusPIX_URI=uri, LongiWGS84=longitude, LatiWGS84=(latitude), AreaM2= area)
+        #print([dggs_cell[0], uri, longitude, (latitude), area])
+    w.autobalance = 1
+    # print('number cells = ', len(listCells))
+
+    print('saving to file . . . ', thisShapeFile)
+
+    w.close()
+
+    # a simple method of writing a single projection so it can be opened in spatial software
+    prj = open("%s.prj" % thisShapeFile, "w")
+    epsg = 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]'
+    prj.write(epsg)
+    prj.close()
+    print('')
+    return
+
+
+
+if __name__ == '__main__':
+    #
+    completedTiles = r'D:\Build_data\rawPolys2/'  # folder with all the completed base dggs tiles
+
+    # read in the list of all level4 tiles for Australia - prebuilt to shape of AU - about 900 tiles
+    tiles = []
+    with open(r'D:\Build_data/Tile_list_AU.csv', newline='') as csvfile:
+        data = list(csv.reader(csvfile))
+
+    for cl in data:
+        tiles.append(cl[0])
+    tiles.pop(0)  # remove the header
+
+    print(len(tiles))
+
+    #
+    completed = []
+    # for done ones
+    for root, dirs, files in os.walk(completedTiles):
+        for file in files:
+            if file.endswith('.shp'):
+                # thisFile = (os.path.join(doneOnes, file))
+                thisFile = (file.replace('.shp', ''))
+                # print('completed one = ' + thisFile)
+                completed.append(thisFile)
+    print('num already completed', len(completed))
+
+    myToDo = []
+    for item in tiles:
+        if item not in completed:
+            myToDo.append(item)
+
+    print('num tiles to do = ' + str(len(myToDo)))
+
+    # set uo the DGGS cell ID the correct way to use the DGGS engine
+    tileList = []  # empty list ready to fill
+    for dggsCell in myToDo:  #
+        dggsLoc = list()
+        for item in dggsCell:  # build a dggs location cell as a list like dggsLoc = ['R', 7, 2, 4, 5, 6, 3, 2, 3, 4, 3, 8, 3]
+            if item.isalpha():  # the letter 'R' at the beginning
+                dggsLoc.append(item)
+            else:
+                item = int(item)  # the numbers in the cell
+                dggsLoc.append(item)
+
+        tileList.append(dggsLoc)
+
+    #     #c = rdggs.cell(dggsLoc)
+
+    print('len tile list', len(tileList))
+
+
+    # multi processor chooses all the processors it can get hold of to run the job quick
+
+    # multiprocessing has bad error reporting - get things going using a single processor
+    # with concurrent.futures.ProcessPoolExecutor(max_workers=6) as executor:
+    #     results = [executor.submit(do_a_tile, t) for t in tileList]
+
+    # to do a tile at a time and find any errors
+    for t in tileList[4:]:
+        do_a_tile(t)
+
+
+    finish = time.perf_counter()
+    print(f'Finished in {round(finish - start)} second(s)')
+    #print(f'Finished in {(finish - float(start))/3600} hours')
+
+
+
