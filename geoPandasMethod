@@ -1,0 +1,315 @@
+# import pandas as pd
+import rtree
+import geopandas as gpd
+import concurrent.futures
+import csv
+import os
+import time
+start = time.perf_counter()
+
+'''
+This script is to build crosswalk-tables for AusPIX using Python geoPandas.
+Shorter and more robust than original AusPIX code.
+All Australia is Tiled using about 900 DGGS level 4 tiles with ID's like R7832
+The Tile-list is in this Git repo - called AU_tile_list.
+The tiles need to be pre-built so each have their half million DGGS level 10 cells in them as a shapefile
+The Tile builder code is in the Git Repo too - called tileBuilder - this is for cells as their centroids
+A new script that provides the cells as little polygons has been added to Git
+The tile list and the completed built tiles are inputs into this script along with shapefile geographies to be included in the crosswalk table.
+This will build a table for each Tile. When all these tables are pushed into a PostgreSQL (GIS) database the information becomes seamless
+ and can be queried for statistics that describe the relationship between geographies.
+A query on a single cell will tell you everything at that location - like a data-drill tool.
+Designed for the LOC-I project and suitable for Digital Atlas
+'''
+
+
+def process_tile(a_tile):
+    '''
+    this function takes a prebuilt tile as DGGS 10 cells as their centroids and add the crosswalk information to it using geopandas
+    :param a_tile: a tile of prebuilt cells as a starter for adding data from geographies, the tile represents
+    about 900th of Australia
+    :return: saves as .gpkg file - or can be directly pushed to PostGIs database using geopandas(? TBA)
+    '''
+
+    print('')
+    print('now doing my tile = ', a_tile)
+    # tiles cells are in two versions, just the centoid of the cell, and the cell as a little polygon - both versions are used in this script
+    polyBasedTile = a_tile.replace('DGGScells_raw_shapes', 'rawPolys') # modify the folder address to get the poly version
+    print('a_tile            = ' + a_tile)  # the centroid version of cells
+    print('a Poly Based Tile = ' + polyBasedTile)  # the polygon version of cells
+
+
+    # build tile name for output
+    tname = a_tile.split('/')
+    tname = tname[-1]
+    tname = tname.replace('.shp', '')
+    tname = tname.replace('Area', '')
+    print('tname', tname)
+
+
+    # reading in the 'empty' tile of 500,000+ cells as centroid points
+    print('reading in a centroid Tile using geopandas and cleaning up attribute names etc')
+    centroidTile = gpd.read_file(a_tile)   # read in centroid based cells using geopandas
+    centroidTile.rename(columns={'AreaM2': 'DGGScell_area_M2'}, inplace=True)  # cleanup
+    # DGGS operates on WGS84 as a world-wide reference system
+    centroidTile.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+    print('MyTile crs = ', centroidTile.crs)
+
+    # geographic lines (road, rivers etc) will use the polygon cells,
+    # geographic polygons (Suburbs, Postcodes etc) will use the centroid version
+    # reading in the 'empty' tile of 500,000+ cells as little polygons
+    print('reading in a cells as polygons Tile using geopandas and cleaning up attribute names etc')
+    polyTile = gpd.read_file(polyBasedTile)
+    polyTile.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+    print('MyTile crs = ', polyTile.crs)
+    # columns are not need - just the spatial information
+    polyTile.drop(['DGGSAusPIX', 'AusPIX_URI', 'LongiWGS84', 'LatiWGS84', 'AreaM2'], axis=1, inplace=True)  # drop unwanted columns
+    print('done loading centoid and poly tiles')
+
+    # start reading in the geographies to be used in the crosswalk table
+
+    # read in a geography SSC16
+    print('reading in SSC and cleaning up ' + tname)
+    mySSC16 = gpd.read_file('D:\Build_data\StateSuburbs\SSC_2016_AUST.shp')  # read-in source file in its own projection
+    print('before crs = ', mySSC16.crs)
+    mySSC16.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+    print('after crs = ', mySSC16.crs)
+    mySSC16['ssc_area_m2'] = mySSC16['AREASQKM16'] * 1000 * 1000  # convert SQKM to m2
+    mySSC16 = mySSC16.drop(['AREASQKM16', 'STE_NAME16'], axis=1)  # drop unwanted columns
+    # geoPandas spatial joins between dggs Tile centroids and features in geography
+    print('spatially joining SSC to Tile ' + tname)
+    plusSSC = centroidTile.sjoin(mySSC16, how="left")  # join SSC to the tile
+    plusSSC.drop(['index_right', 'STE_CODE16'], axis=1, inplace=True)  # drop index_right or an error will occur
+    del mySSC16, centroidTile  # to free up memory
+    print('')
+
+    # read in a geography  LGA20
+    print('reading in LGA and cleaning up ' + tname)
+    myLGA20 = gpd.read_file(r'D:\Build_data\LGA\LGA_2020_WGS84fixed.shp')
+    myLGA20.rename(columns={'AREA_ALBER': 'src_LGA20_areaKM2'}, inplace=True)
+    myLGA20['LGA_area_M2'] = myLGA20['src_LGA20_areaKM2'] * 1000 * 1000  # convert
+    myLGA20.rename(columns={'LGA_CODE_2': 'LGA2020_CODE', 'LGA_NAME_2': 'LGA2020_NAME', 'LGA_area_M2': 'LGA20_areaM2' }, inplace=True)
+    myLGA20.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+    print('spatially joining LGA to Tile ' + tname)
+    plusLGA = plusSSC.sjoin(myLGA20, how="left")  # join LGA to the tile as well
+    plusLGA = plusLGA.drop(['index_right', 'id', 'STATE_CODE', 'STATE_NAME'], axis=1)  # drop index_right
+    del plusSSC, myLGA20  # free up memory
+
+    print('')
+    # # read in a geography SA1
+    print('reading in SA1 and cleaning up ' + tname)
+    mySA1 = gpd.read_file(r'D:\Build_data\SA1\SA1_2021_AUST_WGS84.shp')
+    mySA1.rename(columns={'LOCI_URI21': 'SA1_LOCI_URI21'}, inplace=True)
+    mySA1.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+    print('spatially joining SA1 to Tile ' + tname)
+    plusSA1 = plusLGA.sjoin(mySA1, how="left")  # join SA1 to the tile as well - need to account for tiny?
+    plusSA1['SA1_areaM2'] = plusSA1['AREASQKM21'] * 1000 * 1000  # convert
+    plusSA1.drop(['index_right', 'src_LGA20_areaKM2', 'CHG_FLAG21', 'CHG_LBL21', 'AREASQKM21', 'AUS_NAME21', 'AUS_CODE21',
+                  'STE_CODE21', 'STE_NAME21'], axis=1, inplace=True)
+    del mySA1, plusLGA
+
+    # Postcodes
+    print('')
+    # # read in a geography SA1
+    print('reading in Postcodes and cleaning up ' + tname)
+    myPCodes = gpd.read_file(r'D:\Build_data\Postal\POA_2016_AUST.shp')
+    myPCodes.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+    print('spatially joining SA1 to Tile ' + tname)
+    plusPCodes = plusSA1.sjoin(myPCodes, how="left")  # join Postcodes to the tile as well - need to account for tiny?
+    plusPCodes['PostC_areaM2'] = plusPCodes['AREASQKM16'] * 1000 * 1000  # convert
+    plusPCodes.drop(['index_right', 'POA_NAME16', 'AREASQKM16'], axis=1, inplace=True)
+    plusPCodes.rename(columns={'POA_CODE16': 'PostCode16'}, inplace=True)
+    del myPCodes, plusSA1
+
+    # CAPAD
+    print('')
+    # # read in a geography CAPAD
+    '''
+    Capad worked on before ingesting into this system:
+    - Many fields deleted
+    - area of each CAPAD polygon recalulated on the Ellipsoid in meters squared.
+    '''
+    print('reading in CAPAD and cleaning up ' + tname)
+    myCAPAD = gpd.read_file(r'D:\Build_data\CAPAD\CAPAD2020_terrestrial_fixed.shp')
+    myCAPAD.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+    myCAPAD.rename(columns={'PA_ID': 'CAP_PA_ID', 'NAME':'CAPAD_N', 'TYPE':'C_TYPE'}, inplace=True)
+    print('spatially joining CAPAD to Tile ' + tname)
+    plusCAP = plusPCodes.sjoin(myCAPAD, how="left")  # join CAPAD to the tile as well - need to account for tiny?
+    # plusCAP['PostC_areaM2'] = plusCAP['AREASQKM16'] * 1000 * 1000   # convert
+    plusCAP.drop(['OBJECTID', 'index_right'], axis=1, inplace=True)
+    plusCAP.rename(columns={'PA_PID': 'CAPAD2020_PA_PID', 'CAPAD_N':'CAPAD2020_NAME'}, inplace=True)
+    del myCAPAD, plusPCodes
+    print('')
+
+    print('reading in State electoral Districts (SED) and cleaning up ' + tname)
+    mySED = gpd.read_file(r'D:\Build_data\SED\SED2020GDA94fixed.shp')
+    mySED.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+    print('spatially joining SED to Tile ' + tname)
+    plusSED = plusCAP.sjoin(mySED, how="left")  # join CAPAD to the tile as well - need to account for tiny?
+    plusSED.drop(['index_right'], axis=1, inplace=True)
+    del mySED, plusCAP
+
+    print('')
+    print('reading in Commonwealth electoral Districts (CED) and cleaning up ' + tname)
+    myCED20 = gpd.read_file(r'D:/Build_data/CED/CED_2021fixed.shp')
+    myCED20.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+    myCED20.rename(columns={'LOCI_URI21': 'CEDLOCI_URI21'}, inplace=True)
+    print('spatially joining CED to Tile '  + tname)
+    plusCED = plusSED.sjoin(myCED20, how="left")  # join CAPAD to the tile as well - need to account for tiny?
+    # plusCAP['PostC_areaM2'] = plusCAP['AREASQKM16'] * 1000 * 1000   # convert
+    plusCED.drop(['index_right'], axis=1, inplace=True)
+    del myCED20, plusSED
+    print('')
+
+
+    '''
+    now build points and lines on polygon cells
+    first spatially joined on poly cells
+    Then joined back to centroid cell version
+    '''
+
+    print('PLACENAMES')
+    print('reading in Placenames and cleaning up ' + tname)
+    myPlace = gpd.read_file(r'D:\Build_data\Placenames\Gazatteer2012_B.shp')
+    myPlace.drop(['LATITUDE', 'LONGITUDE'], axis=1, inplace=True)
+    myPlace.rename(columns={'NAME': 'Place_Name', 'FEAT_CODE': 'Place_type', 'RECORD_ID': 'Place_ID',}, inplace=True)
+    myPlace.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+    myPlace.rename(columns={'NSW_Featur': 'PlaceNSW_ID', 'FEATURE_CO': 'Place_type'}, inplace=True)
+
+    print('spatially joining Placenames to poly based Tile ' + tname)
+    placeJoinPoly = polyTile.sjoin(myPlace, how="left")  # join placenames to cell polies
+    placeJoinPoly.drop(['index_right'], axis=1, inplace=True)
+
+    # join placenames to working centroid tile which is plusCED atm
+    plusPlace = plusCED.sjoin(placeJoinPoly, how="left")
+
+    plusPlace.drop(['index_right'], axis=1, inplace=True)
+
+    #drop any duplicate records
+    plusPlace.drop_duplicates(subset=['DGGSAusPIX', 'Place_Name'], inplace=True)
+
+    del myPlace, plusCED, placeJoinPoly  # to fee up memory
+
+    print('')
+    print('reading in OSM Major Named Roads and cleaning up ' + tname)
+    myRoads = gpd.read_file(r'D:\Build_data\Roads\AU_OSM_MajorRoads_Dec-2011.shp')
+    myRoads.NAME.fillna('unnamed Major Road', inplace=True)  # fix for - some Major Roads have no name
+    myRoads.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+
+    print('tidying up field names')
+    myRoads.rename(columns={'NAME': 'Road_Name', 'TYPE': 'Road_type', 'ONEWAY': 'RD_ONEWAY', 'LANES': 'Road_Lanes'}, inplace=True)
+
+    # spatial joins between dggs Tile cells as poly and features in geography
+    print('spatially joining Roads to Poly Tile ' + tname)
+    plusRoadsPoly = polyTile.sjoin(myRoads, how="left")  # join Roads to the poly tile
+    #plusRoadsPoly = myRoads.sjoin(polyTile, how="left")  # join Roads to the poly tile
+
+    plusRoadsPoly.drop(['index_right'], axis=1, inplace=True)  # drop index_right or an error will occur
+
+    print('')
+    # join placenames to working centroid tile
+    plusRoads= plusPlace.sjoin(plusRoadsPoly, how="left")
+    plusRoads.drop_duplicates(subset=['DGGSAusPIX', 'Road_Name'], inplace=True) #drop duplicates
+
+    plusRoads.drop(['index_right'], axis=1,  inplace=True)
+    del plusRoadsPoly, myRoads, plusPlace
+
+    '''
+    RIVERS
+    '''
+    print('reading in Major Rivers and cleaning up  ' + tname)
+    myRivers = gpd.read_file(r'D:\Build_data\MajorRivers\MajorRivers02.shp')
+    myRivers.River_NAME.fillna('unnamed Stream', inplace=True)  # fix for - some Major streams have no name
+    myRivers.to_crs(4326, inplace=True)  # reproject to WGS84  using geopandas
+
+    print('spatially joining Rivers to PolyTile ' + tname)
+    plusRiversPoly = polyTile.sjoin(myRivers, how="left")
+    plusRiversPoly.drop(['index_right'], axis=1, inplace=True)
+    print('')
+
+    # join back to centroid working set - currently plusRoads
+    plusRivers = plusRoads.sjoin(plusRiversPoly, how="left")
+    plusRivers.drop(['index_right'], axis=1, inplace=True)
+    plusRivers.drop_duplicates(subset=['DGGSAusPIX', 'River_NAME'], inplace=True)   # ###############################
+    del myRivers, plusRoads, plusRiversPoly
+
+
+    print(list(plusRivers.columns.values))
+
+    # save as gpkg
+    print('now saving to file ' + tname)
+
+    outfile = 'D:/Build_data/completed/' + tname + '.gpkg'
+    plusRivers.to_file(outfile, layer= tname, driver="GPKG")
+
+    finish = time.perf_counter()
+    # print(f'Finished in {round(finish - start)} second(s)')
+    print(f'Tile Finished at {(finish - start) / 60} mins ###########################' + tname)
+
+    return
+
+
+if __name__ == '__main__':
+    # bring in the tiles
+    print('starting here')
+
+    # define the source folder for centroid cells
+    directory = r'D:\Build_data\DGGScells_raw_shapes/'  # folder with all the base dggs tiles ready to fill with crosswalk (as shapefiles)
+    doneOnes = r'D:\Build_data\completed/'  # folder for output
+
+    # read in the list of all level4 tiles for Australia - prebuilt to shape of AU - about 817+ tiles
+    tiles = []
+    with open(r'D:\Build_data/Tile_list_AU.csv', newline='') as csvfile:
+        data = list(csv.reader(csvfile))
+    # convert to clean python list
+    for cl in data:
+        tiles.append(cl[0])
+    tiles.pop(0)  # remove the headers
+
+    # filter the completed tiles
+    completed = []
+    # for done ones
+    for root, dirs, files in os.walk(doneOnes):
+        for file in files:
+            if file.endswith('.gpkg'):
+                # thisFile = (os.path.join(doneOnes, file))
+                thisFile = (file.replace('.gpkg', ''))
+                # print(thisFile)
+                completed.append(thisFile)
+    print('num already done', len(completed))
+    #
+    # # put the list of desired cells to process below
+    myList = ['R7544'] #all cells with this in the name
+    #myList = ['R7805', 'R7755', 'R7847']  # empty = all
+
+    tiles = []  # make a list of all the shape files in the raw dggs folder
+    # # list all the tiles to cover Australia
+    for root, dirs, files in os.walk(directory):
+        for file in files:
+            if file.endswith('.shp'):
+                # print('directory file', file)
+                if file.replace('.shp', '') not in completed:  # filter out done ones
+                    # filter to keep the ones we are focusing on
+                    for aCell in myList:
+                        if aCell in file:  # to do all the cells in the R783 tile - so long as there is a dggs shapefile built for it
+                            thisFile = (os.path.join(directory, file))
+                            # print(thisFile)
+                            tiles.append(thisFile)
+    print('num tiles to do', len(tiles))
+
+
+    # # to multiprocess
+    #with concurrent.futures.ThreadPoolExecutor() as executor:  #use this line to use threads
+    # multi processor chooses all the processors it can get hold of to run the job quick
+
+    # with concurrent.futures.ProcessPoolExecutor(max_workers=6) as executor:  # use this one for multi processors
+    #     results = [executor.submit(process_tile, s) for s in tiles]
+
+    # code for processing one at a time to get good error feedback
+    for s in tiles:
+        print('doing now', s)
+        process_tile(s)
+
+    finish = time.perf_counter()
+    # print(f'Finished in {round(finish - start)} second(s)')
+    print(f'All Finished at {(finish - start) / 60} mins ###########################')
