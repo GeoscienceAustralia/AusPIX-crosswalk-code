@@ -1,5 +1,7 @@
 # AusPIX-DGGS-crosswalk code
 
+* Newly added geopandas code that greatly simplifies setup, is more robust and has no bespoke code. Use geopandas method.
+
 This repo maintains code for various DGGS jobs.
 
 The main code for building crosswalk tables is 
